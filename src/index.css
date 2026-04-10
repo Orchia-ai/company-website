@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,700&display=swap');
+
+:root {
+  color-scheme: light;
+  font-family: 'Manrope', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --bg: #f6f0e4;
+  --surface: rgba(255, 251, 245, 0.74);
+  --surface-strong: #fffaf2;
+  --border: rgba(40, 48, 56, 0.12);
+  --text: #44505a;
+  --text-strong: #14212b;
+  --text-muted: #6f7a83;
+  --accent: #b45309;
+  --shadow-soft: 0 24px 60px rgba(23, 29, 32, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(217, 119, 6, 0.14), transparent 32%),
+    radial-gradient(circle at 85% 25%, rgba(15, 118, 110, 0.12), transparent 26%),
+    linear-gradient(180deg, #f8f4ea 0%, var(--bg) 100%);
+}
+
+a {
+  color: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1,
+h2 {
+  margin: 0;
+  color: var(--text-strong);
+  font-family: 'Newsreader', serif;
+  font-weight: 700;
+  line-height: 0.95;
+}
+
+h1 {
+  font-size: clamp(3.4rem, 8vw, 6.4rem);
+  margin: 16px 0 22px;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  margin-bottom: 14px;
+}
+
+p {
+  margin: 0;
+}

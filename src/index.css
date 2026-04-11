@@ -1,24 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kings&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@400;500;600&display=swap');
 
 :root {
+  --heading: 'Cormorant Garamond', serif;
+  --body: 'DM Sans', sans-serif;
+
+  /* Color system — warm linen / stone */
+  --bg:              #F5F0E8;
+  --surface:         rgba(253, 250, 244, 0.86);
+  --surface-solid:   #FDFAF4;
+  --surface-variant: #EDE8DF;
+  --border:          rgba(30, 24, 18, 0.09);
+  --border-strong:   rgba(30, 24, 18, 0.16);
+
+  /* Text */
+  --text-strong:  #1A1612;
+  --text:         #3D3730;
+  --text-muted:   #7A736B;
+
+  /* Accent — warm gold, not orange */
+  --accent:           #8B6914;
+  --accent-container: #F5E9C8;
+
+  /* Shadows — warm-tinted, restrained */
+  --shadow-float: 0 2px 8px rgba(26, 22, 18, 0.04), 0 12px 40px rgba(26, 22, 18, 0.07);
+  --shadow-card:  0 1px 3px rgba(26, 22, 18, 0.04);
+
   color-scheme: light;
-  font-family: 'Manrope', sans-serif;
-  line-height: 1.5;
+  font-family: var(--body);
+  line-height: 1.55;
   font-weight: 400;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  --bg: #f6f0e4;
-  --surface: rgba(255, 251, 245, 0.74);
-  --surface-strong: #fffaf2;
-  --border: rgba(40, 48, 56, 0.12);
-  --text: #44505a;
-  --text-strong: #14212b;
-  --text-muted: #6f7a83;
-  --accent: #b45309;
-  --shadow-soft: 0 24px 60px rgba(23, 29, 32, 0.08);
 }
 
 * {
@@ -27,6 +41,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 100px;
 }
 
 body {
@@ -34,10 +49,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   color: var(--text);
-  background:
-    radial-gradient(circle at top left, rgba(217, 119, 6, 0.14), transparent 32%),
-    radial-gradient(circle at 85% 25%, rgba(15, 118, 110, 0.12), transparent 26%),
-    linear-gradient(180deg, #f8f4ea 0%, var(--bg) 100%);
+  background: var(--bg);
 }
 
 a {
@@ -48,23 +60,23 @@ a {
   min-height: 100vh;
 }
 
-h1,
-h2 {
+h1, h2 {
   margin: 0;
   color: var(--text-strong);
-  font-family: 'Newsreader', serif;
-  font-weight: 700;
-  line-height: 0.95;
+  font-family: var(--heading);
+  font-weight: 300;
+  line-height: 0.96;
+  letter-spacing: -0.01em;
 }
 
 h1 {
-  font-size: clamp(3.4rem, 8vw, 6.4rem);
-  margin: 16px 0 22px;
+  font-size: clamp(4rem, 8.5vw, 7.2rem);
+  margin: 20px 0 28px;
 }
 
 h2 {
-  font-size: clamp(2rem, 4vw, 3.1rem);
-  margin-bottom: 14px;
+  font-size: clamp(2.4rem, 4.2vw, 3.6rem);
+  margin-bottom: 16px;
 }
 
 p {

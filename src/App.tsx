@@ -41,6 +41,32 @@ const RobotIcon = () => (
   </svg>
 )
 
+/* ── Splash Screen ── */
+function SplashScreen({ onEnter }: { onEnter: () => void }) {
+  const [leaving, setLeaving] = useState(false)
+
+  const handleEnter = () => {
+    setLeaving(true)
+    setTimeout(onEnter, 700)
+  }
+
+  return (
+    <div className={`splash${leaving ? ' splash-leave' : ''}`}>
+      <div className="splash-content">
+        <div className="splash-logo">
+          <span className="splash-wordmark">Orchia</span>
+          <span className="splash-suffix">.Studio</span>
+        </div>
+        <p className="splash-tagline">Orchestrating design, infrastructure, and advanced technology — AR, 3D, and AI — into a single, cohesive product.</p>
+        <button className="splash-enter" onClick={handleEnter} aria-label="Enter site">
+          Enter
+          <span className="splash-enter-line" />
+        </button>
+      </div>
+    </div>
+  )
+}
+
 /* ── Phone Mockup ── */
 function PhoneMockup() {
   return (
@@ -147,21 +173,27 @@ const tracks = [
 const steps = [
   {
     step: '01',
-    title: 'Audit',
+    title: 'Design',
     description:
-      'We map your existing systems, data model, and every user touchpoint before writing a line of code. No assumptions.',
+      'We consolidate your design system and visual language into a coherent concept — ensuring every interface element communicates the right idea before a single line of production code is written.',
   },
   {
     step: '02',
     title: 'Build',
     description:
-      'Design and engineering in parallel — not sequenced. Interfaces are built the way they will be used, and code is structured for the version that comes after this one.',
+      'Solid technical implementation with clean architecture from day one. Structured release cycles, clear changelogs, and versioned delivery — so the codebase grows without accumulating debt.',
   },
   {
     step: '03',
-    title: 'Launch',
+    title: 'Launch & Maintain',
     description:
-      "Deployment, analytics instrumentation, and a 90-day iteration sprint post go-live. We stay engaged — we don't disappear at handoff.",
+      'Deployment, monitoring, and post-launch support. Issues are resolved as soon as they surface. We stay engaged well past handoff — your product is maintained, not abandoned.',
+  },
+  {
+    step: '04',
+    title: 'Advanced Technology',
+    description:
+      'Once the foundation is stable, we layer in technologies that expand what your product can do — AI recommendation systems, augmented reality interactions, 3D interfaces — opening new revenue streams and use cases.',
   },
 ]
 
@@ -178,19 +210,30 @@ const techStack = [
 
 /* ── Page ── */
 function App() {
+  const [entered, setEntered] = useState(false)
+  const [visible, setVisible] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
+
+  const handleEnter = () => {
+    setEntered(true)
+    setTimeout(() => setVisible(true), 50)
+  }
+
   useEffect(() => {
+    if (!entered) return
     const onScroll = () => setScrolled(window.scrollY > 40)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  }, [entered])
+
+  if (!entered) return <SplashScreen onEnter={handleEnter} />
 
   return (
-    <div className="site-shell">
+    <div className={`site-shell site-enter${visible ? ' site-visible' : ''}`}>
 
-      {/* ── Header ── */}
+      {/* ── Top bar: logo only on mobile, full bar on desktop ── */}
       <div className="topbar-wrapper">
         <header className={`topbar${scrolled ? ' scrolled' : ''}`}>
           <a className="brand" href="#hero" aria-label="Orchia home">
@@ -198,7 +241,7 @@ function App() {
               <span className="brand-name">Orchia</span><span className="brand-suffix">.Studio</span>
             </span>
           </a>
-          <nav className="nav" aria-label="Main navigation">
+          <nav className="nav nav-desktop" aria-label="Main navigation">
             <a href="#who-we-are">About</a>
             <a href="#why-us">Why us</a>
             <a href="#what-we-build">Work</a>
@@ -206,6 +249,14 @@ function App() {
           </nav>
         </header>
       </div>
+
+      {/* ── Mobile bottom nav ── */}
+      <nav className="nav-mobile" aria-label="Mobile navigation">
+        <a href="#who-we-are">About</a>
+        <a href="#why-us">Why us</a>
+        <a href="#what-we-build">Work</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
       <main>
 
@@ -250,7 +301,19 @@ function App() {
           </aside>
         </section>
 
-        {/* ── 02 · Why Choose Us ── */}
+        {/* ── 02 · Clients ── */}
+        <section className="clients-section">
+          <p className="eyebrow" style={{ marginBottom: 32 }}>Current clients</p>
+          <div className="clients-grid">
+            {[1, 2, 3].map((n) => (
+              <div key={n} className="client-logo-slot">
+                <div className="client-logo-placeholder" />
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── 03 · Why Choose Us ── */}
         <section className="why-section" id="why-us">
           <div className="why-header">
             <p className="eyebrow">Why Orchia</p>
@@ -275,7 +338,7 @@ function App() {
           </div>
         </section>
 
-        {/* ── 03 · What We Build ── */}
+        {/* ── 04 · What We Build ── */}
         <section className="section-block" id="what-we-build">
           <div className="section-heading">
             <p className="eyebrow">What we build</p>
@@ -344,13 +407,18 @@ function App() {
           </div>
           <div className="workflow">
             {steps.map((s) => (
-              <article key={s.step} className="workflow-card">
-                <div className="step-header">
-                  <span className="step-num">{s.step}</span>
-                  <span className="step-title">{s.title}</span>
-                </div>
-                <p>{s.description}</p>
-              </article>
+              <div key={s.step} className="workflow-step">
+                <article className="workflow-card">
+                  <div className="step-left">
+                    <span className="step-num">{s.step}</span>
+                    <span className="step-connector" />
+                  </div>
+                  <div className="step-right">
+                    <div className="step-title">{s.title}</div>
+                    <p>{s.description}</p>
+                  </div>
+                </article>
+              </div>
             ))}
           </div>
         </section>

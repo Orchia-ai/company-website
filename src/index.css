@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Kings&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300&family=Kings&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@400;500;600&display=swap');
 
 :root {
   --heading: 'Cormorant Garamond', serif;
@@ -70,7 +70,7 @@ h1, h2 {
 }
 
 h1 {
-  font-size: clamp(4rem, 8.5vw, 7.2rem);
+  font-size: clamp(2.8rem, 5.5vw, 4.8rem);
   margin: 20px 0 28px;
 }
 

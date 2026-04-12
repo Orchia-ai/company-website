@@ -8,6 +8,7 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    console.log('form submitted', form)
     setStatus('sending')
 
     try {

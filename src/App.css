@@ -104,39 +104,6 @@
   width: 52px;
 }
 
-/* ── Section emission ─────────────────────────────────────── */
-
-.section-wrap {
-  position: relative;
-  border-radius: 28px;
-}
-
-.section-wrap::before {
-  content: '';
-  position: absolute;
-  inset: -40px -60px;
-  border-radius: 60px;
-  background: radial-gradient(ellipse at 50% 50%,
-    rgba(139, 105, 20, 0.28) 0%,
-    rgba(139, 105, 20, 0.12) 40%,
-    transparent 72%
-  );
-  opacity: 0;
-  pointer-events: none;
-  z-index: -1;
-  transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.section-wrap.is-active::before {
-  opacity: 1;
-}
-
-.section-wrap.is-active {
-  --surface: rgba(253, 250, 244, 0.97);
-  --surface-variant: #E5DED3;
-  --shadow-float: 0 4px 16px rgba(26, 22, 18, 0.07), 0 20px 56px rgba(26, 22, 18, 0.12);
-}
-
 /* ── Shell ────────────────────────────────────────────────── */
 
 .site-shell {

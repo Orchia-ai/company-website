@@ -64,7 +64,7 @@ export default function Contact() {
           {status === 'error' && (
             <p className="contact-error">Something went wrong. Please try again.</p>
           )}
-          <button type="submit" className="button-primary" disabled={status === 'sending'}>
+          <button type="submit" className="button-primary">
             {status === 'sending' ? 'Sending…' : 'Send message'}
           </button>
         </form>

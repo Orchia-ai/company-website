@@ -20,18 +20,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     },
   })
 
-  await transporter.sendMail({
-    from: `"Orchia Website" <${process.env.SMTP_USER}>`,
-    replyTo: email,
-    to: process.env.SMTP_USER,
-    subject: `New message from ${name}`,
-    html: `
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Message:</strong></p>
-      <p>${message.replace(/\n/g, '<br>')}</p>
-    `,
-  })
-
-  res.status(200).json({ success: true })
+  try {
+    await transporter.sendMail({
+      from: `"Orchia Website" <${process.env.SMTP_USER}>`,
+      replyTo: email,
+      to: process.env.SMTP_USER,
+      subject: `New message from ${name}`,
+      html: `
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\n/g, '<br>')}</p>
+      `,
+    })
+    res.status(200).json({ success: true })
+  } catch (err) {
+    console.error('SMTP error:', err)
+    res.status(500).json({ error: String(err) })
+  }
 }

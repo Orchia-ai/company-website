@@ -1042,6 +1042,31 @@
   margin-top: 4px;
 }
 
+/* ── Contact states ───────────────────────────────────────── */
+
+.contact-sent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.contact-sent-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.contact-sent-sub {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+.contact-error {
+  font-size: 0.88rem;
+  color: #b94a48;
+}
+
 /* ── Footer ───────────────────────────────────────────────── */
 
 .site-footer {

@@ -4,27 +4,27 @@ import { createElement } from 'react'
 export const whyUs = [
   {
     num: '01',
-    title: 'Design × Engineering',
+    title: 'Design System & Brand Cohesion',
     description:
-      'Aesthetic intuition and engineering precision are the same discipline here. Every product decision is both visual and structural — neither compromised for the other.',
+      'We build with a complete design system from the start — typography, color, spacing, and component hierarchy all grounded in your brand. The result is an interface that feels intentional at every scale, not assembled.',
   },
   {
     num: '02',
-    title: 'Strong Technical Foundation',
+    title: 'Reliable Technology, Thoughtfully Applied',
     description:
-      'Clean architecture from the first commit. We write for the engineer who inherits this codebase — not just for the demo. Scalable, documented, and production-ready.',
+      'We adopt new frontend technologies when they are stable and purposeful — not because they are new. Every tool we choose is vetted for production, maintainability, and real-world performance.',
   },
   {
     num: '03',
-    title: 'Version-First Development',
+    title: 'Details Are the Product',
     description:
-      'Full versioning from day one. Structured release cycles, clear changelogs, and a codebase that grows cleanly across every iteration without accumulating debt.',
+      'Transition curves, interaction states, spacing rhythm, loading behavior — we treat these as core deliverables, not polish. The details are what users remember, and what separates craft from output.',
   },
   {
     num: '04',
-    title: 'Details That Matter',
+    title: 'Vision-Driven Development',
     description:
-      'Micro-interactions, animation curves, transition timing — the craft that separates a product people use from one they remember. We treat these as first-class concerns, not afterthoughts.',
+      'We build toward a product vision, not just a spec. Every engineering decision is weighed against where the product is going — so the foundation we lay today supports the version you ship two years from now.',
   },
 ]
 

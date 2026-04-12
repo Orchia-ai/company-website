@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import OrchiaBackground from './OrchiaBackground'
 
 interface Props {
   onEnter: () => void
@@ -14,6 +15,7 @@ export default function SplashScreen({ onEnter }: Props) {
 
   return (
     <div className={`splash${leaving ? ' splash-leave' : ''}`}>
+      <OrchiaBackground />
       <div className="splash-content">
         <div className="splash-logo">
           <span className="splash-wordmark">Orchia</span>

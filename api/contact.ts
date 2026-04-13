@@ -11,7 +11,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const transporter = nodemailer.createTransport({
-    host: 'mail.porkbun.com',
+    host: 'smtp.gmail.com',
     port: 587,
     secure: false,
     auth: {
@@ -24,7 +24,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     await transporter.sendMail({
       from: `"Orchia Website" <${process.env.SMTP_USER}>`,
       replyTo: email,
-      to: process.env.SMTP_USER,
+      to: 'info@orchia.studio',
       subject: `New message from ${name}`,
       html: `
         <p><strong>Name:</strong> ${name}</p>

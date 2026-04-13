@@ -1131,8 +1131,21 @@
   }
 
   .topbar-wrapper {
-    margin: 0 -20px 32px;
-    padding: 20px 20px;
+    margin: 0 0 32px;
+    padding: 20px 0;
+  }
+
+  .clients-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .client-logo-slot:nth-child(2) {
+    border-right: none;
+  }
+
+  .client-logo-slot:nth-child(1),
+  .client-logo-slot:nth-child(2) {
+    border-bottom: 1px solid var(--border);
   }
 }
 
@@ -1175,8 +1188,8 @@
   }
 
   .topbar-wrapper {
-    margin: 0 -20px 32px;
-    padding: 20px 20px;
+    margin: 0 0 32px;
+    padding: 20px 0;
   }
 
   .topbar {

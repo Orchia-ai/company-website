@@ -50,6 +50,7 @@ body {
   min-height: 100vh;
   color: var(--text);
   background: var(--bg);
+  overflow-x: hidden;
 }
 
 a {

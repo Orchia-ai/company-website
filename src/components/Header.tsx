@@ -1,3 +1,5 @@
+import OrchiaLogo from './OrchiaLogo'
+
 interface Props {
   scrolled: boolean
 }
@@ -12,6 +14,9 @@ export default function Header({ scrolled }: Props) {
               <span className="brand-name">Orchia</span>
               <span className="brand-suffix">.Studio</span>
             </span>
+          </a>
+          <a className="brand-emblem-link" href="#hero" aria-hidden="true" tabIndex={-1}>
+            <OrchiaLogo size={48} className="brand-emblem" />
           </a>
           <nav className="nav nav-desktop" aria-label="Main navigation">
             <a href="#who-we-are">About</a>

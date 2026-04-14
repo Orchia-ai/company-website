@@ -5,7 +5,7 @@ export default function WhyUs() {
     <section className="why-section" id="why-us">
       <div className="why-header">
         <p className="eyebrow">Why Orchia</p>
-        <h2>A rare combination of craft and technical precision.</h2>
+        <h2>Advanced technology. Reliable infrastructure. Experiences that flow.</h2>
         <p className="why-intro">
           Most studios are strong on one side. Either the design is exceptional and the
           engineering is fragile, or the engineering is solid and the design is sterile.

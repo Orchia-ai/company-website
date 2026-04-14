@@ -41,7 +41,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 100px;
+  scroll-padding-top: var(--topbar-h, 140px);
 }
 
 body {

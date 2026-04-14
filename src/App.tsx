@@ -32,6 +32,23 @@ export default function App() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [entered])
 
+  // Keep scroll-padding-top in sync with the actual sticky header height
+  useEffect(() => {
+    if (!entered) return
+    const wrapper = document.querySelector('.topbar-wrapper') as HTMLElement | null
+    if (!wrapper) return
+    const update = () => {
+      document.documentElement.style.setProperty(
+        '--topbar-h',
+        `${wrapper.offsetHeight}px`
+      )
+    }
+    update()
+    const ro = new ResizeObserver(update)
+    ro.observe(wrapper)
+    return () => ro.disconnect()
+  }, [entered])
+
   if (!entered) return <SplashScreen onEnter={handleEnter} />
 
   return (

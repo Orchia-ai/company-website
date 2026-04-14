@@ -4,16 +4,16 @@ export default function Hero() {
   return (
     <section className="hero" id="who-we-are">
       <div className="hero-copy">
-        <p className="eyebrow">Product studio</p>
-        <h1>Precise engineering. Considered design.</h1>
+        <p className="eyebrow">Craft and technical precision, unified</p>
+        <h1>Orchestrating design and technology.</h1>
         <p className="lede">
-          Orchia is a product studio working at two frontiers: AI-powered robotics systems
-          and premium e-commerce mobile experiences. We bring the same rigor, the same
-          aesthetic sensibility, and the same standard of craft to both.
+          Orchia orchestrates design and technology into products that are both considered
+          and capable. We work at the intersection of intelligent systems and human experience
+          — where reliable, advanced technology meets craft that endures.
         </p>
         <p className="lede" style={{ marginTop: 16 }}>
-          We don't separate design from engineering. Here, they are the same discipline —
-          and every product we ship is evidence of that.
+          Every product we ship is evidence of a single conviction: that engineering and
+          design are not separate disciplines, but one and the same.
         </p>
         <div className="hero-actions">
           <a className="button-primary" href="#contact">Start a conversation</a>

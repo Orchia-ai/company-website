@@ -1,21 +1,37 @@
 import { ArrowRight } from '../../icons'
 
+const TAGS = [
+  'AR Try-On',         'React Native',       'Next.js',            'Shopify Integration',
+  'AI Recommendations','Personalization',    '3D Visualization',   'Loyalty Systems',
+  'Gamification',      'Real-time Sync',     'Edge Delivery',      'Push Notifications',
+  'Voice Search',      'A/B Testing',        'PWA',                'Analytics',
+]
+
 export default function Hero() {
   return (
     <section className="hero" id="who-we-are">
       <div className="hero-copy">
-        <p className="eyebrow">Craft and technical precision, unified</p>
-        <h1>Orchestrating design and technology.</h1>
-        <p className="lede">
-          Orchia orchestrates design and technology into products that are both considered
-          and capable. We work at the intersection of intelligent systems and human experience
-          — where reliable, advanced technology meets craft that endures.
+        <p className="hero-lead" style={{ animationDelay: '0.05s' }}>
+          Orchestrating design, infrastructure, and advanced technology
         </p>
-        <p className="lede" style={{ marginTop: 16 }}>
-          Every product we ship is evidence of a single conviction: that engineering and
-          design are not separate disciplines, but one and the same.
+
+        <ul className="hero-tags" aria-label="Technology capabilities">
+          {TAGS.map((tag, i) => (
+            <li
+              key={tag}
+              className="hero-tag"
+              style={{ animationDelay: `${0.12 + i * 0.03}s` }}
+            >
+              {tag}
+            </li>
+          ))}
+        </ul>
+
+        <p className="hero-close" style={{ animationDelay: '0.65s' }}>
+          Into a single, cohesive product — customer-facing, user-friendly.
         </p>
-        <div className="hero-actions">
+
+        <div className="hero-actions" style={{ animationDelay: '0.72s' }}>
           <a className="button-primary" href="#contact">Start a conversation</a>
           <a className="text-link" href="#what-we-build">
             See our work <ArrowRight />

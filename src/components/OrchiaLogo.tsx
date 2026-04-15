@@ -125,14 +125,14 @@ export default function OrchiaLogo({
         // Dual-pendulum curves with musical frequency ratios (3:2, 4:3, 5:4 …).
         // Phases drift via Perlin noise — shape continuously morphs.
         class HarmonographTurtle {
-          A: number; B: number; C: number; D: number
-          f1: number; f2: number
-          p1: number; p2: number; p3: number; p4: number
-          noiseOff: number; t: number
+          A!: number; B!: number; C!: number; D!: number
+          f1!: number; f2!: number
+          p1!: number; p2!: number; p3!: number; p4!: number
+          noiseOff!: number; t: number
           history: { x: number; y: number }[]
-          maxHist: number
-          cr: number; cg: number; cb: number
-          alpha: number; weight: number
+          maxHist!: number
+          cr!: number; cg!: number; cb!: number
+          alpha!: number; weight!: number
 
           constructor(
             A: number, B: number, f1: number, f2: number,

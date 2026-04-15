@@ -44,6 +44,12 @@
   align-items: center;
   gap: 14px;
   pointer-events: none;
+  /* Frosted glass panel so text reads cleanly over the animated background */
+  padding: 3rem clamp(2rem, 5vw, 4.5rem) 3.5rem;
+  background: rgba(245, 240, 232, 0.44);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 3px;
 }
 
 .splash-overlay button {
@@ -356,13 +362,25 @@
 }
 
 .hero-lead {
-  font-family: var(--body);
-  font-size: clamp(0.82rem, 1.2vw, 0.92rem);
-  font-weight: 400;
-  color: var(--text-muted);
-  letter-spacing: 0.07em;
-  margin: 0 0 24px;
+  font-family: var(--heading);
+  font-weight: 300;
+  color: var(--text-strong);
+  letter-spacing: -0.01em;
+  margin: 0 0 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   animation: emerge 0.6s cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.hero-lead-word {
+  font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+  line-height: 1;
+}
+
+.hero-lead-rest {
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  line-height: 1.2;
 }
 
 .hero-tags {

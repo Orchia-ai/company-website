@@ -12,7 +12,8 @@ export default function Hero() {
     <section className="hero" id="who-we-are">
       <div className="hero-copy">
         <p className="hero-lead" style={{ animationDelay: '0.05s' }}>
-          Orchestrating design, infrastructure, and advanced technology
+          <span className="hero-lead-word">Orchestrating</span>
+          <span className="hero-lead-rest">design, infrastructure, and advanced technology</span>
         </p>
 
         <ul className="hero-tags" aria-label="Technology capabilities">

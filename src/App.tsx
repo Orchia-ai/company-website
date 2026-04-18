@@ -59,9 +59,9 @@ export default function App() {
       <main>
         <div id="hero"><Hero /></div>
         <div id="clients"><Clients /></div>
+        <div id="proof"><Proof /></div>
         <div id="why-us"><WhyUs /></div>
         <div id="what-we-build"><WhatWeBuild /></div>
-        <div id="proof"><Proof /></div>
         <div id="process"><Process /></div>
         <div id="tech"><Tech /></div>
         <div id="contact"><Contact /></div>

@@ -41,17 +41,17 @@ export default function Hero() {
       </div>
 
       <aside className="hero-card">
-        <p className="card-kicker">Active engagement — lifestyle retail, North America</p>
-        <h2>Loyalty + commerce app for a premium retail brand</h2>
+        <p className="card-kicker">Design + infrastructure — built around your use case</p>
+        <h2>A customized interface shaped by what your users actually need</h2>
         <ul>
           <li>
-            Cloud-synced loyalty balance stored in Shopify Customer Metafields — the architecture Shopify recommends for loyalty programs.
+            Good design and stable infrastructure are not a trade-off — we bring both together so your product holds up and feels right at the same time.
           </li>
           <li>
-            In-store QR code merging point-of-sale and online order history into a single unified customer record.
+            Every interface we build is specific to the use case. We take the time to understand your users before writing a single line of code.
           </li>
           <li>
-            Real-time push alerts for restock events, wired directly to inventory webhooks — no polling, instant delivery.
+            We build for your users, not for a template. The result is a product that fits the way people actually use it.
           </li>
         </ul>
       </aside>

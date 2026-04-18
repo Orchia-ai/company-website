@@ -576,7 +576,7 @@
 .phone-frame {
   width: 238px;
   height: 490px;
-  border-radius: 40px;
+  border-radius: 15px;
   border: 1.5px solid var(--border-strong);
   background: var(--surface-solid);
   overflow: hidden;
@@ -684,13 +684,22 @@
   border-radius: 3px;
 }
 
+.mock-scroll-area {
+  flex: 1;
+  overflow-y: scroll;
+  /* Hide scrollbar — matches native mobile feel */
+  scrollbar-width: none;
+}
+
+.mock-scroll-area::-webkit-scrollbar {
+  display: none;
+}
+
 .mock-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
   padding: 0 14px;
-  flex: 1;
-  overflow: hidden;
 }
 
 .mock-product {
@@ -726,7 +735,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-top: auto;
+  flex-shrink: 0;
 }
 
 .mock-tab {
@@ -736,6 +745,14 @@
   gap: 3px;
   padding: 4px 10px;
   border-radius: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.mock-tab:hover {
+  background: rgba(139, 105, 20, 0.08);
 }
 
 .mock-tab.active {
@@ -747,11 +764,220 @@
   height: 16px;
   border-radius: 3px;
   background: rgba(26, 22, 18, 0.14);
+  transition: background 0.15s;
 }
 
 .mock-tab.active .mock-tab-icon {
   background: var(--accent);
   opacity: 0.6;
+}
+
+.mock-tab-label {
+  font-family: var(--body);
+  font-size: 7px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.mock-tab.active .mock-tab-label {
+  color: var(--accent);
+}
+
+/* ── Loyalty screen ── */
+.mock-loyalty-card {
+  margin: 14px 14px 0;
+  padding: 16px;
+  background: var(--surface-variant);
+  border-radius: 12px;
+}
+
+.mock-loyalty-label {
+  width: 52px;
+  height: 6px;
+  background: rgba(26, 22, 18, 0.12);
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
+.mock-loyalty-points {
+  width: 80px;
+  height: 18px;
+  background: rgba(139, 105, 20, 0.30);
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.mock-progress-track {
+  height: 4px;
+  background: rgba(26, 22, 18, 0.10);
+  border-radius: 2px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.mock-progress-fill {
+  width: 62%;
+  height: 100%;
+  background: rgba(139, 105, 20, 0.50);
+  border-radius: 2px;
+}
+
+.mock-loyalty-tier {
+  width: 68px;
+  height: 6px;
+  background: rgba(26, 22, 18, 0.09);
+  border-radius: 3px;
+}
+
+.mock-activity-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-bottom: 1px solid rgba(26, 22, 18, 0.05);
+}
+
+.mock-activity-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--surface-variant);
+  flex-shrink: 0;
+}
+
+.mock-points-badge {
+  width: 28px;
+  height: 14px;
+  background: rgba(139, 105, 20, 0.18);
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* ── Scan screen ── */
+.mock-scan-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 16px;
+}
+
+.mock-scan-label-top {
+  width: 90px;
+  height: 7px;
+  background: rgba(26, 22, 18, 0.12);
+  border-radius: 3px;
+}
+
+.mock-qr-box {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mock-qr-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--text-strong);
+  border-style: solid;
+  opacity: 0.55;
+}
+
+.mock-qr-tl { top: 0; left: 0;  border-width: 2px 0 0 2px; }
+.mock-qr-tr { top: 0; right: 0; border-width: 2px 2px 0 0; }
+.mock-qr-bl { bottom: 0; left: 0;  border-width: 0 0 2px 2px; }
+.mock-qr-br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+
+.mock-qr-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+  padding: 10px;
+  width: 80px;
+  height: 80px;
+}
+
+.mock-qr-cell {
+  background: var(--text-strong);
+  border-radius: 1px;
+  opacity: 0.65;
+}
+
+.mock-scan-label {
+  width: 80px;
+  height: 7px;
+  background: rgba(26, 22, 18, 0.13);
+  border-radius: 3px;
+}
+
+.mock-scan-sub {
+  width: 110px;
+  height: 6px;
+  background: rgba(26, 22, 18, 0.07);
+  border-radius: 3px;
+}
+
+/* ── Profile screen ── */
+.mock-profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 14px 14px;
+  gap: 8px;
+}
+
+.mock-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface-variant);
+  border: 1px solid var(--border);
+}
+
+.mock-profile-name {
+  width: 70px;
+  height: 9px;
+  background: rgba(26, 22, 18, 0.16);
+  border-radius: 3px;
+}
+
+.mock-profile-sub {
+  width: 50px;
+  height: 7px;
+  background: rgba(26, 22, 18, 0.08);
+  border-radius: 3px;
+}
+
+.mock-settings-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  border-bottom: 1px solid rgba(26, 22, 18, 0.05);
+}
+
+.mock-settings-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  background: var(--surface-variant);
+  flex-shrink: 0;
+}
+
+.mock-settings-chevron {
+  width: 5px;
+  height: 5px;
+  border-right: 1px solid rgba(26, 22, 18, 0.25);
+  border-top: 1px solid rgba(26, 22, 18, 0.25);
+  transform: rotate(45deg);
+  flex-shrink: 0;
 }
 
 /* Proof content */
@@ -837,39 +1063,29 @@
   border-right: none;
 }
 
-@keyframes logo-breathe-a {
-  0%, 40%  { opacity: 1; }
-  50%, 90% { opacity: 0.2; }
-  100%     { opacity: 1; }
-}
-
-@keyframes logo-breathe-b {
-  0%, 40%  { opacity: 0.2; }
-  50%, 90% { opacity: 1; }
-  100%     { opacity: 0.2; }
-}
-
 .client-logo {
   height: 36px;
   width: auto;
   max-width: 140px;
   object-fit: contain;
-  transition: opacity 0.4s ease;
+  opacity: 0.22;
+  transition: opacity 0.35s ease;
 }
 
-.client-logo-slot:nth-child(1) .client-logo,
-.client-logo-slot:nth-child(4) .client-logo {
-  animation: logo-breathe-a 6s ease-in-out infinite;
+.client-name {
+  opacity: 0.22;
+  transition: opacity 0.35s ease;
 }
 
-.client-logo-slot:nth-child(2) .client-logo,
-.client-logo-slot:nth-child(3) .client-logo {
-  animation: logo-breathe-b 6s ease-in-out infinite;
-}
-
-.client-logo-slot:hover .client-logo {
-  animation: none;
+.client-logo-slot--active .client-logo,
+.client-logo-slot--active .client-name,
+.client-logo-slot:hover .client-logo,
+.client-logo-slot:hover .client-name {
   opacity: 1;
+}
+
+.client-logo--invert {
+  filter: invert(1) brightness(0.55);
 }
 
 .client-name {
@@ -879,6 +1095,20 @@
   color: var(--text-muted);
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+.client-text-logo {
+  font-family: var(--heading);
+  font-size: 1.9rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  opacity: 0.65;
+  transition: opacity 0.4s ease;
+}
+
+.client-logo-slot:hover .client-text-logo {
+  opacity: 1;
 }
 
 /* ── Why Us ───────────────────────────────────────────────── */

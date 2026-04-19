@@ -5,7 +5,7 @@ export default function Process() {
     <section className="section-block" id="process">
       <div className="section-heading">
         <p className="eyebrow">How we work</p>
-        <h2>A focused process. No theater.</h2>
+        <h2>Architecture first. Delivery in clear phases.</h2>
       </div>
       <div className="workflow">
         {steps.map((s) => (

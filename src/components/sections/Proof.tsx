@@ -198,9 +198,9 @@ function PhoneMockup() {
 // ── Callout list ─────────────────────────────────────────────
 
 const callouts = [
-  { icon: <PhoneIcon />, title: 'Native iOS & Android', desc: 'React Native across both platforms. Real device QA. App Store-ready in weeks.' },
-  { icon: <StoreIcon />, title: 'Shopify-Native Architecture', desc: 'Storefront API, POS, Metafields, Webhooks — your existing commerce stack is the backend.' },
-  { icon: <SparkleIcon />, title: 'AI-Powered Personalization', desc: 'Restock alerts, reorder predictions, and on-device recommendations.' },
+  { icon: <PhoneIcon />, title: 'Connected Mobile Journeys', desc: 'Discovery, cart, checkout, and account flows designed as one coherent product instead of separate screens.' },
+  { icon: <StoreIcon />, title: 'Loyalty-Native Commerce', desc: 'Rewards, purchase history, account value, and repeat-use behavior designed directly into the app experience.' },
+  { icon: <SparkleIcon />, title: 'Selective Advanced Features', desc: 'AI assistance, previews, and smarter engagement loops introduced only when they improve the product in a measurable way.' },
 ]
 
 export default function Proof() {
@@ -212,11 +212,11 @@ export default function Proof() {
         </div>
         <div className="proof-content-col">
           <p className="eyebrow">E-commerce track</p>
-          <h2>Designed to your brand's visual language. Built on your existing stack.</h2>
+          <h2>Commerce apps that connect discovery, loyalty, and repeat purchase.</h2>
           <p className="proof-body">
-            A native mobile experience that reflects how your brand presents itself in-store —
-            clean, unhurried, and product-first. No new backend. No fragmented data.
-            Full Shopify admin visibility from day one.
+            We design mobile retail products that do more than mirror a website. Product discovery,
+            membership value, account state, and post-purchase touchpoints all live in one coherent
+            experience built for long-term use.
           </p>
           <div className="proof-callouts">
             {callouts.map((c) => (

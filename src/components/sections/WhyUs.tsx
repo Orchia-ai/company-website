@@ -5,11 +5,11 @@ export default function WhyUs() {
     <section className="why-section" id="why-us">
       <div className="why-header">
         <p className="eyebrow">Why Orchia</p>
-        <h2>Stable infrastructure. Considered design. Features that make people look twice.</h2>
+        <h2>Design systems, retention thinking, and advanced features used with restraint.</h2>
         <p className="why-intro">
-          We build e-commerce products that hold up under real conditions — reliable architecture,
-          clean interfaces, and experimental capabilities layered in deliberately. The result
-          is a balanced product: solid enough to trust, distinctive enough to stand out.
+          We build mobile commerce products with operational depth: coherent systems, clear delivery
+          phases, and features that serve the product instead of distracting from it. The result is
+          a product that can launch cleanly and keep improving after release.
         </p>
       </div>
       <div className="why-grid">

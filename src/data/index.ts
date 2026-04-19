@@ -4,27 +4,27 @@ import { createElement } from 'react'
 export const whyUs = [
   {
     num: '01',
-    title: 'Design System & Brand Cohesion',
+    title: 'Design Systems That Scale',
     description:
-      'We build with a complete design system from the start — typography, color, spacing, and component hierarchy all grounded in your brand. The result is an interface that feels intentional at every scale, not assembled.',
+      'We build reusable systems from the start: typography, spacing, components, states, and hierarchy aligned to your brand and built to scale across features, releases, and future product expansion.',
   },
   {
     num: '02',
-    title: 'Reliable Technology, Thoughtfully Applied',
+    title: 'Phased Delivery, Not Chaos',
     description:
-      'We adopt new frontend technologies when they are stable and purposeful — not because they are new. Every tool we choose is vetted for production, maintainability, and real-world performance.',
+      'Architecture, product definition, design, implementation, testing, and launch each have a clear role. The process stays structured, which keeps scope understandable and execution predictable.',
   },
   {
     num: '03',
-    title: 'Details Are the Product',
+    title: 'Advanced Features, Used Carefully',
     description:
-      'Transition curves, interaction states, spacing rhythm, loading behavior — we treat these as core deliverables, not polish. The details are what users remember, and what separates craft from output.',
+      'AI assistance, augmented reality, smart notifications, and richer personalization only belong in the product when they clearly improve the user experience. We treat them as leverage, not decoration.',
   },
   {
     num: '04',
-    title: 'Vision-Driven Development',
+    title: 'Built for Retention',
     description:
-      'We build toward a product vision, not just a spec. Every engineering decision is weighed against where the product is going — so the foundation we lay today supports the version you ship two years from now.',
+      'We do not stop at shipping a storefront. We design for repeat use through loyalty, account depth, post-purchase touchpoints, and product flows that make returning feel natural.',
   },
 ]
 
@@ -43,12 +43,12 @@ export const tracks = [
   {
     icon: createElement(PhoneIcon),
     tag: 'E-Commerce & Mobile',
-    headline: 'Native apps that make buying feel effortless.',
+    headline: 'Mobile commerce products that turn browsing into retention.',
     points: [
-      'iOS & Android apps built on React Native',
-      'Shopify-native commerce: Storefront API, Customer Accounts, POS',
-      'Loyalty and membership programs, cloud-synced via Metafields',
-      'Push engagement wired directly to inventory and order webhooks',
+      'Discovery, cart, checkout, and account flows designed as one connected journey',
+      'Content-led shopping experiences with collections, campaigns, and editorial surfaces',
+      'Loyalty, rewards, and membership designed into the core product experience',
+      'Post-purchase engagement and account depth built for repeat customer behavior',
     ],
   },
 ]
@@ -56,27 +56,27 @@ export const tracks = [
 export const steps = [
   {
     step: '01',
-    title: 'Design',
+    title: 'Architecture & Product Definition',
     description:
-      'We consolidate your design system and visual language into a coherent concept — ensuring every interface element communicates the right idea before a single line of production code is written.',
+      'We define the system before we decorate it: product structure, critical flows, technical constraints, and the operational model behind the experience.',
   },
   {
     step: '02',
-    title: 'Build',
+    title: 'Design System & Experience',
     description:
-      'Solid technical implementation with clean architecture from day one. Structured release cycles, clear changelogs, and versioned delivery — so the codebase grows without accumulating debt.',
+      'We turn the product direction into a disciplined interface language, with reusable components and interaction patterns that can scale without losing coherence.',
   },
   {
     step: '03',
-    title: 'Launch & Maintain',
+    title: 'Build, Test & Launch',
     description:
-      'Deployment, monitoring, and post-launch support. Issues are resolved as soon as they surface. We stay engaged well past handoff — your product is maintained, not abandoned.',
+      'Implementation follows a clear release path: engineering, QA, refinement, deployment, and launch readiness handled as one coordinated delivery cycle.',
   },
   {
     step: '04',
-    title: 'Advanced Technology',
+    title: 'Retention & Growth Features',
     description:
-      'Once the foundation is stable, we layer in technologies that expand what your product can do — AI recommendation systems, augmented reality interactions, 3D interfaces — opening new revenue streams and use cases.',
+      'Once the foundation is stable, we layer in loyalty, personalization, notifications, and other higher-leverage capabilities that deepen repeat engagement.',
   },
 ]
 

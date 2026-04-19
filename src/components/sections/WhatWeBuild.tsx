@@ -5,7 +5,7 @@ export default function WhatWeBuild() {
     <section className="section-block" id="what-we-build">
       <div className="section-heading">
         <p className="eyebrow">What we build</p>
-        <h2>Two disciplines. One standard of quality.</h2>
+        <h2>Products with operational depth, not just polished screens.</h2>
       </div>
       <div className="tracks">
         {tracks.map((track) => (

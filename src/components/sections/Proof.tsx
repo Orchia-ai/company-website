@@ -1,11 +1,15 @@
-import { useState } from 'react'
+import { useState, type UIEventHandler } from 'react'
 import { PhoneIcon, StoreIcon, SparkleIcon } from '../../icons'
 
 // ── Tab screens ──────────────────────────────────────────────
 
-function ShopScreen() {
+type ScrollScreenProps = {
+  onScroll?: UIEventHandler<HTMLDivElement>
+}
+
+function ShopScreen({ onScroll }: ScrollScreenProps) {
   return (
-    <div className="mock-scroll-area">
+    <div className="mock-scroll-area" onScroll={onScroll}>
       <div className="mock-banner">
         <div className="mock-tag" />
         <div className="mock-headline-line wide" />
@@ -40,9 +44,9 @@ function ShopScreen() {
   )
 }
 
-function LoyaltyScreen() {
+function LoyaltyScreen({ onScroll }: ScrollScreenProps) {
   return (
-    <div className="mock-scroll-area">
+    <div className="mock-scroll-area" onScroll={onScroll}>
       <div className="mock-loyalty-card">
         <div className="mock-loyalty-label" />
         <div className="mock-loyalty-points" />
@@ -79,7 +83,7 @@ function ScanScreen() {
         <div className="mock-qr-corner mock-qr-br" />
         <div className="mock-qr-grid">
           {Array.from({ length: 25 }).map((_, i) => (
-            <div key={i} className="mock-qr-cell" style={{ opacity: Math.random() > 0.42 ? 1 : 0 }} />
+            <div key={i} className="mock-qr-cell" style={{ opacity: (i * 7) % 11 > 4 ? 1 : 0 }} />
           ))}
         </div>
       </div>
@@ -89,9 +93,9 @@ function ScanScreen() {
   )
 }
 
-function ProfileScreen() {
+function ProfileScreen({ onScroll }: ScrollScreenProps) {
   return (
-    <div className="mock-scroll-area">
+    <div className="mock-scroll-area" onScroll={onScroll}>
       <div className="mock-profile-header">
         <div className="mock-avatar" />
         <div className="mock-profile-name" />
@@ -113,17 +117,36 @@ function ProfileScreen() {
 
 // ── Tab definitions ──────────────────────────────────────────
 
-const TABS = [
-  { label: 'Shop',    screen: <ShopScreen /> },
-  { label: 'Points',  screen: <LoyaltyScreen /> },
-  { label: 'Scan',    screen: <ScanScreen /> },
-  { label: 'Profile', screen: <ProfileScreen /> },
-]
+const TABS = ['Shop', 'Points', 'Scan', 'Profile'] as const
 
 // ── Phone mockup ─────────────────────────────────────────────
 
 function PhoneMockup() {
   const [active, setActive] = useState(0)
+  const [hasScrolledInsidePhone, setHasScrolledInsidePhone] = useState(false)
+
+  const handleMockScroll: UIEventHandler<HTMLDivElement> = (event) => {
+    if (event.currentTarget.scrollTop > 4) {
+      setHasScrolledInsidePhone(true)
+    }
+  }
+
+  const showScrollHint = !hasScrolledInsidePhone && active !== 2
+
+  const renderActiveScreen = () => {
+    switch (active) {
+      case 0:
+        return <ShopScreen onScroll={handleMockScroll} />
+      case 1:
+        return <LoyaltyScreen onScroll={handleMockScroll} />
+      case 2:
+        return <ScanScreen />
+      case 3:
+        return <ProfileScreen onScroll={handleMockScroll} />
+      default:
+        return null
+    }
+  }
 
   return (
     <div className="phone-frame" role="img" aria-label="Mobile e-commerce app concept">
@@ -144,18 +167,26 @@ function PhoneMockup() {
           </div>
         </div>
 
-        {TABS[active].screen}
+        {renderActiveScreen()}
+
+        <div key={`scroll-hint-${active}`} className={`mock-scroll-hint ${showScrollHint ? 'visible' : ''}`} aria-hidden="true">
+          <span className="mock-scroll-hint-label">Scroll</span>
+          <span className="mock-scroll-hint-chevrons">
+            <span />
+            <span />
+          </span>
+        </div>
 
         <div className="mock-bottom-nav">
           {TABS.map((tab, i) => (
             <button
-              key={tab.label}
+              key={tab}
               className={`mock-tab ${i === active ? 'active' : ''}`}
               onClick={() => setActive(i)}
-              aria-label={tab.label}
+              aria-label={tab}
             >
               <div className="mock-tab-icon" />
-              <span className="mock-tab-label">{tab.label}</span>
+              <span className="mock-tab-label">{tab}</span>
             </button>
           ))}
         </div>

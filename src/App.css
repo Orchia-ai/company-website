@@ -585,6 +585,7 @@
 }
 
 .phone-screen {
+  position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -687,6 +688,7 @@
 .mock-scroll-area {
   flex: 1;
   overflow-y: scroll;
+  overscroll-behavior: contain;
   /* Hide scrollbar — matches native mobile feel */
   scrollbar-width: none;
 }
@@ -727,6 +729,89 @@
   height: 7px;
   background: rgba(26, 22, 18, 0.09);
   border-radius: 3px;
+}
+
+.mock-scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 7px 6px;
+  border-radius: 6px;
+  background: rgba(245, 240, 232, 0.88);
+  box-shadow: 0 12px 26px rgba(26, 22, 18, 0.11);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateX(-50%) translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  z-index: 2;
+  will-change: opacity, transform;
+}
+
+.mock-scroll-hint.visible {
+  animation: mock-scroll-hint-reveal 0.45s cubic-bezier(0.2, 0, 0, 1) 1.1s both;
+}
+
+@keyframes mock-scroll-hint-reveal {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.mock-scroll-hint-label {
+  font-family: var(--body);
+  font-size: 8px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(26, 22, 18, 0.58);
+}
+
+.mock-scroll-hint-chevrons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1px;
+}
+
+.mock-scroll-hint-chevrons span {
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid rgba(26, 22, 18, 0.55);
+  border-bottom: 1.5px solid rgba(26, 22, 18, 0.55);
+  transform: rotate(45deg);
+  animation: mock-scroll-hint-bounce 1.45s ease-in-out infinite;
+}
+
+.mock-scroll-hint-chevrons span + span {
+  margin-top: -4px;
+  opacity: 0.68;
+  animation-delay: 0.16s;
+}
+
+@keyframes mock-scroll-hint-bounce {
+  0%, 100% {
+    transform: rotate(45deg) translateY(0);
+    opacity: 0.45;
+  }
+  45% {
+    transform: rotate(45deg) translateY(3px);
+    opacity: 1;
+  }
+  70% {
+    transform: rotate(45deg) translateY(1px);
+    opacity: 0.82;
+  }
 }
 
 .mock-bottom-nav {
@@ -983,6 +1068,7 @@
 /* Proof content */
 .proof-content-col h2 {
   font-size: clamp(1.9rem, 3vw, 2.6rem);
+  line-height: 1.1;
   margin: 12px 0 20px;
 }
 

@@ -11,7 +11,6 @@ import WhyUs from './components/sections/WhyUs'
 import WhatWeBuild from './components/sections/WhatWeBuild'
 import Proof from './components/sections/Proof'
 import Process from './components/sections/Process'
-import Tech from './components/sections/Tech'
 import Contact from './components/sections/Contact'
 
 export default function App() {
@@ -63,7 +62,6 @@ export default function App() {
         <div id="why-us"><WhyUs /></div>
         <div id="what-we-build"><WhatWeBuild /></div>
         <div id="process"><Process /></div>
-        <div id="tech"><Tech /></div>
         <div id="contact"><Contact /></div>
       </main>
       <Footer />

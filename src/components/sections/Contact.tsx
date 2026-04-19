@@ -8,7 +8,6 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('form submitted', form)
     setStatus('sending')
 
     try {
@@ -33,7 +32,7 @@ export default function Contact() {
       {status === 'sent' ? (
         <div className="contact-sent">
           <p className="contact-sent-title">Message received.</p>
-          <p className="contact-sent-sub">We'll be in touch within one business day.</p>
+          <p className="contact-sent-sub">We'll be in touch shortly.</p>
         </div>
       ) : (
         <form className="contact-form" onSubmit={handleSubmit}>

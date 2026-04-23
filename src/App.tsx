@@ -13,7 +13,6 @@ import WhatWeBuild from './components/sections/WhatWeBuild'
 import Proof from './components/sections/Proof'
 import Process from './components/sections/Process'
 import Work from './components/sections/Work'
-import Recognition from './components/sections/Recognition'
 import Contact from './components/sections/Contact'
 
 export default function App() {
@@ -65,7 +64,6 @@ export default function App() {
           <div id="proof"><Proof /></div>
           <div id="why-us"><WhyUs /></div>
           <WhoWeAre />
-          <Recognition />
           <div id="what-we-build"><WhatWeBuild /></div>
           <div id="process"><Process /></div>
           <div id="contact"><Contact /></div>

@@ -1,13 +1,28 @@
 /* ── Splash ───────────────────────────────────────────────── */
 
+/* Lock the page when splash is mounted — no scrolling in any direction */
+html:has(.splash),
+body:has(.splash) {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
 .splash {
   position: fixed;
   inset: 0;
+  width: 100vw;
+  height: 100vh;
+  /* Dynamic viewport for iOS Safari — avoids URL bar layout jumps */
+  height: 100dvh;
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg);
+  overflow: hidden;
+  overscroll-behavior: contain;
+  touch-action: none;
   animation: splash-in 0.8s cubic-bezier(0.2, 0, 0, 1) both;
 }
 
@@ -30,11 +45,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 100vw;
+  max-height: 100vh;
+  max-height: 100dvh;
+  overflow: hidden;
   animation: emerge 1s cubic-bezier(0.2, 0, 0, 1) 0.2s both;
 }
 
 .splash-emblem {
   opacity: 0.88;
+  max-width: 100vw;
+  max-height: 100vh;
+  max-height: 100dvh;
 }
 
 .splash-overlay {
@@ -44,6 +66,10 @@
   align-items: center;
   gap: 14px;
   pointer-events: none;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100vh - 24px);
+  max-height: calc(100dvh - 24px);
+  overflow: hidden;
   /* Frosted glass panel so text reads cleanly over the animated background */
   padding: 3rem clamp(2rem, 5vw, 4.5rem) 3.5rem;
   background: rgba(245, 240, 232, 0.44);

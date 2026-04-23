@@ -54,6 +54,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--topbar-h, 140px);
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -62,6 +64,13 @@ body {
   min-height: 100vh;
   color: var(--text);
   background: var(--bg);
+  overflow-x: hidden;
+  max-width: 100vw;
+  position: relative;
+}
+
+#root {
+  max-width: 100vw;
   overflow-x: hidden;
 }
 

@@ -1430,6 +1430,7 @@ body:has(.splash) {
 /* ── Clients ──────────────────────────────────────────────── */
 
 .clients-wrapper {
+  margin-top: 88px;
   margin-bottom: 96px;
 }
 
@@ -2762,6 +2763,11 @@ body:has(.splash) {
   }
 
   /* ── Clients ── */
+  .clients-wrapper {
+    margin-top: 56px;
+    margin-bottom: 72px;
+  }
+
   .clients-header {
     flex-wrap: wrap;
     gap: 4px 14px;

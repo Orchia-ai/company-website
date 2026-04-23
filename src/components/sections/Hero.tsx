@@ -12,8 +12,7 @@ const MARQUEE = [
   'Human-Machine UX', 'Shopify Storefront', 'Design Systems', 'Retention Analytics',
 ]
 
-export default function Hero({ showWhatWeBuild: _unused }: { showWhatWeBuild: boolean }) {
-  void _unused
+export default function Hero() {
   return (
     <section className="hero">
       <div className="hero-copy">

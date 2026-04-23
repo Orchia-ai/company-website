@@ -17,10 +17,6 @@ import Recognition from './components/sections/Recognition'
 import Contact from './components/sections/Contact'
 
 export default function App() {
-  const showWhoWeAre = import.meta.env.VITE_ENABLE_WHO_WE_ARE === 'true'
-  const showWhyOrchia = import.meta.env.VITE_ENABLE_WHY_ORCHIA === 'true'
-  const showWhatWeBuild = import.meta.env.VITE_ENABLE_WHAT_WE_BUILD === 'true'
-  const showHowWeWork = import.meta.env.VITE_ENABLE_HOW_WE_WORK === 'true'
   const [entered, setEntered] = useState(false)
   const [visible, setVisible] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -59,30 +55,23 @@ export default function App() {
 
   return (
     <>
-    <OrchiaBackground />
-    <div className={`site-shell site-enter${visible ? ' site-visible' : ''}`} style={{ position: 'relative', zIndex: 1 }}>
-      <Header
-        scrolled={scrolled}
-        showWhatWeBuild={showWhatWeBuild}
-      />
-      <main>
-        <div id="hero"><Hero showWhatWeBuild={showWhatWeBuild} /></div>
-        <div id="clients"><Clients /></div>
-        <div id="work"><Work /></div>
-        <div id="proof"><Proof /></div>
-        <div id="why-us"><WhyUs showFullContent={showWhyOrchia} /></div>
-        <WhoWeAre showFullContent={showWhoWeAre} />
-        <Recognition />
-        {showWhatWeBuild && (
+      <OrchiaBackground />
+      <div className={`site-shell site-enter${visible ? ' site-visible' : ''}`} style={{ position: 'relative', zIndex: 1 }}>
+        <Header scrolled={scrolled} />
+        <main>
+          <div id="hero"><Hero /></div>
+          <div id="clients"><Clients /></div>
+          <div id="work"><Work /></div>
+          <div id="proof"><Proof /></div>
+          <div id="why-us"><WhyUs /></div>
+          <WhoWeAre />
+          <Recognition />
           <div id="what-we-build"><WhatWeBuild /></div>
-        )}
-        {showHowWeWork && (
           <div id="process"><Process /></div>
-        )}
-        <div id="contact"><Contact /></div>
-      </main>
-      <Footer />
-    </div>
+          <div id="contact"><Contact /></div>
+        </main>
+        <Footer />
+      </div>
     </>
   )
 }

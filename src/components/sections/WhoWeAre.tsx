@@ -1,9 +1,4 @@
-interface Props {
-  showFullContent: boolean
-}
-
-export default function WhoWeAre({ showFullContent: _unused }: Props) {
-  void _unused
+export default function WhoWeAre() {
   return (
     <section className="who-section" id="who-we-are">
       <div className="section-heading who-heading">

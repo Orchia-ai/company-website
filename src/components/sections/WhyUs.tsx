@@ -1,24 +1,6 @@
 import { whyUs } from '../../data'
 
-interface Props {
-  showFullContent: boolean
-}
-
-export default function WhyUs({ showFullContent }: Props) {
-  if (!showFullContent) {
-    return (
-      <section className="why-section" id="why-us">
-        <div className="why-header">
-          <div className="section-meta">
-            <span className="mono-label">S / 05 — Why Us</span>
-          </div>
-          <h2>Information coming soon.</h2>
-          <p className="why-intro">This section is still in construction.</p>
-        </div>
-      </section>
-    )
-  }
-
+export default function WhyUs() {
   return (
     <section className="why-section" id="why-us">
       <div className="why-header">

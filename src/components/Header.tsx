@@ -2,10 +2,9 @@ import OrchiaLogo from './OrchiaLogo'
 
 interface Props {
   scrolled: boolean
-  showWhatWeBuild: boolean
 }
 
-export default function Header({ scrolled, showWhatWeBuild }: Props) {
+export default function Header({ scrolled }: Props) {
   return (
     <>
       <div className="topbar-wrapper">
@@ -23,7 +22,7 @@ export default function Header({ scrolled, showWhatWeBuild }: Props) {
             <a href="#work">Work</a>
             <a href="#why-us">Why&nbsp;us</a>
             <a href="#who-we-are">About</a>
-            {showWhatWeBuild && <a href="#what-we-build">Capabilities</a>}
+            <a href="#what-we-build">Capabilities</a>
             <a href="#contact">Contact</a>
           </nav>
         </header>

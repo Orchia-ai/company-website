@@ -23,7 +23,7 @@ export default function Hero() {
 
         <div className="hero-meta">
           <span className="mono-label">N° 001 — Studio Index</span>
-          <span className="mono-label">Seattle · WA · 47.60° N</span>
+          <span className="mono-label">Seattle · 47.6062° N, 122.3321° W · 53 m</span>
         </div>
 
         <h1 className="hero-lead" style={{ animationDelay: '0.05s' }}>
@@ -65,7 +65,7 @@ export default function Hero() {
         <div className="hero-stamp" style={{ animationDelay: '0.82s' }}>
           <span className="mono-label">Recognised</span>
           <span className="hero-stamp-awards">Red Dot · DNA Paris · MUSE Gold</span>
-          <span className="mono-label">MMXXV</span>
+          <span className="mono-label">2025</span>
         </div>
       </div>
 

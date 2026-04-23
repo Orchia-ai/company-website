@@ -4,13 +4,21 @@ export default function WhatWeBuild() {
   return (
     <section className="section-block" id="what-we-build">
       <div className="section-heading">
-        <p className="eyebrow">What we build</p>
-        <h2>Products with operational depth, not just polished screens.</h2>
+        <div className="section-meta">
+          <span className="mono-label">S / 08 — Capabilities</span>
+          <span className="mono-label">02 Tracks</span>
+        </div>
+        <h2>
+          Products with <em>operational depth</em>,<br />
+          not just polished screens.
+        </h2>
       </div>
       <div className="tracks">
-        {tracks.map((track) => (
+        {tracks.map((track, i) => (
           <article key={track.tag} className="track-card">
-            <div className="track-image" />
+            <div className="track-image">
+              <span className="track-image-num mono-label">0{i + 1} / 02</span>
+            </div>
             <div className="track-content">
               <div className="track-header">
                 <span className="track-icon">{track.icon}</span>

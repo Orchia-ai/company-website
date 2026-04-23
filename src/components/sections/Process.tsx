@@ -4,8 +4,13 @@ export default function Process() {
   return (
     <section className="section-block" id="process">
       <div className="section-heading">
-        <p className="eyebrow">How we work</p>
-        <h2>Architecture first. Delivery in clear phases.</h2>
+        <div className="section-meta">
+          <span className="mono-label">S / 09 — Method</span>
+          <span className="mono-label">04 Phases</span>
+        </div>
+        <h2>
+          Architecture <em>first</em>.<br />Delivery in clear phases.
+        </h2>
       </div>
       <div className="workflow">
         {steps.map((s) => (

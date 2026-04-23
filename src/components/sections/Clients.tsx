@@ -23,7 +23,10 @@ export default function Clients() {
 
   return (
     <div className="clients-wrapper">
-      <p className="eyebrow clients-eyebrow">Clients we have served</p>
+      <div className="clients-header">
+        <span className="mono-label">S / 02 — Clients Served</span>
+        <span className="mono-label">{clients.length.toString().padStart(2, '0')} Partners · 2022&thinsp;—&thinsp;2025</span>
+      </div>
       <section className="clients-section">
         <div className="clients-grid">
           {clients.map((c, i) => (

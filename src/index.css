@@ -1,10 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300&family=Kings&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300&family=Kings&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root {
   --heading: 'Cormorant Garamond', serif;
   --body: 'DM Sans', sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
 
-  /* Color system — warm linen / stone */
+  /* Warm linen base */
   --bg:              #F5F0E8;
   --surface:         rgba(253, 250, 244, 0.86);
   --surface-solid:   #FDFAF4;
@@ -12,18 +13,29 @@
   --border:          rgba(30, 24, 18, 0.09);
   --border-strong:   rgba(30, 24, 18, 0.16);
 
+  /* Deep ink (for inverted sections) */
+  --ink:             #1A140C;
+  --ink-soft:        #221A10;
+  --ink-surface:     #2A2015;
+  --ink-text:        #EDE1CA;
+  --ink-text-muted:  #9F927B;
+  --ink-border:      rgba(237, 225, 202, 0.14);
+  --ink-border-strong: rgba(237, 225, 202, 0.28);
+
   /* Text */
   --text-strong:  #1A1612;
   --text:         #3D3730;
   --text-muted:   #7A736B;
 
-  /* Accent — warm gold, not orange */
+  /* Accents — warm gold spectrum */
   --accent:           #8B6914;
+  --accent-bright:    #C49A3C;
   --accent-container: #F5E9C8;
 
-  /* Shadows — warm-tinted, restrained */
+  /* Shadows */
   --shadow-float: 0 2px 8px rgba(26, 22, 18, 0.04), 0 12px 40px rgba(26, 22, 18, 0.07);
   --shadow-card:  0 1px 3px rgba(26, 22, 18, 0.04);
+  --shadow-deep:  0 32px 80px rgba(12, 8, 4, 0.45), 0 8px 24px rgba(12, 8, 4, 0.22);
 
   color-scheme: light;
   font-family: var(--body);
@@ -53,6 +65,18 @@ body {
   overflow-x: hidden;
 }
 
+/* Subtle noise texture overlay — tactility without cost */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 200;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+
 a {
   color: inherit;
 }
@@ -66,20 +90,36 @@ h1, h2 {
   color: var(--text-strong);
   font-family: var(--heading);
   font-weight: 300;
-  line-height: 0.96;
-  letter-spacing: -0.01em;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
 }
 
 h1 {
-  font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+  font-size: clamp(3.4rem, 8vw, 7rem);
   margin: 20px 0 28px;
 }
 
 h2 {
-  font-size: clamp(2.4rem, 4.2vw, 3.6rem);
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
   margin-bottom: 16px;
 }
 
 p {
   margin: 0;
+}
+
+/* ── Reusable mono-metadata pieces ───────────────────────── */
+.mono-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.mono-caret::before {
+  content: '◊ ';
+  color: var(--accent);
+  font-size: 0.85em;
 }

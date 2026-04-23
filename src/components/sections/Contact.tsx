@@ -24,9 +24,18 @@ export default function Contact() {
 
   return (
     <section className="cta" id="contact">
+      <div className="cta-corner cta-corner-tl" aria-hidden="true" />
+      <div className="cta-corner cta-corner-tr" aria-hidden="true" />
+      <div className="cta-corner cta-corner-bl" aria-hidden="true" />
+      <div className="cta-corner cta-corner-br" aria-hidden="true" />
       <div className="cta-copy">
-        <p className="eyebrow">Ready to move</p>
-        <h2>Let's talk about what you're building.</h2>
+        <div className="section-meta">
+          <span className="mono-label">S / 10 — Contact</span>
+          <span className="mono-label">Reply &lt; 48h</span>
+        </div>
+        <h2>
+          Let's talk about<br /><em>what you're building.</em>
+        </h2>
       </div>
 
       {status === 'sent' ? (

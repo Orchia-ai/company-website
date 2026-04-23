@@ -205,25 +205,37 @@ const callouts = [
 
 export default function Proof() {
   return (
-    <section className="proof-section">
+    <section className="proof-section proof-section--dark">
+      <div className="proof-corner proof-corner-tl" aria-hidden="true" />
+      <div className="proof-corner proof-corner-tr" aria-hidden="true" />
+      <div className="proof-corner proof-corner-bl" aria-hidden="true" />
+      <div className="proof-corner proof-corner-br" aria-hidden="true" />
       <div className="proof-inner">
         <div className="proof-mockup-col">
           <PhoneMockup />
         </div>
         <div className="proof-content-col">
-          <p className="eyebrow">E-commerce track</p>
-          <h2>Commerce apps that connect discovery, loyalty, and repeat purchase.</h2>
+          <div className="section-meta proof-meta">
+            <span className="mono-label">S / 04 — E-commerce Track</span>
+            <span className="mono-label">Live Prototype</span>
+          </div>
+          <h2>
+            Commerce apps that <em>connect</em> discovery,<br />loyalty, and repeat purchase.
+          </h2>
           <p className="proof-body">
             We design mobile retail products that do more than mirror a website. Product discovery,
             membership value, account state, and post-purchase touchpoints all live in one coherent
             experience built for long-term use.
           </p>
           <div className="proof-callouts">
-            {callouts.map((c) => (
+            {callouts.map((c, i) => (
               <div key={c.title} className="proof-callout">
                 <span className="proof-callout-icon">{c.icon}</span>
                 <div>
-                  <h3>{c.title}</h3>
+                  <h3>
+                    <span className="proof-callout-num mono-label">0{i + 1}</span>
+                    {c.title}
+                  </h3>
                   <p>{c.desc}</p>
                 </div>
               </div>

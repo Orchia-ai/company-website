@@ -6,14 +6,21 @@ import OrchiaBackground from './components/OrchiaBackground'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Hero from './components/sections/Hero'
+import WhoWeAre from './components/sections/WhoWeAre'
 import Clients from './components/sections/Clients'
 import WhyUs from './components/sections/WhyUs'
 import WhatWeBuild from './components/sections/WhatWeBuild'
 import Proof from './components/sections/Proof'
 import Process from './components/sections/Process'
+import Work from './components/sections/Work'
+import Recognition from './components/sections/Recognition'
 import Contact from './components/sections/Contact'
 
 export default function App() {
+  const showWhoWeAre = import.meta.env.VITE_ENABLE_WHO_WE_ARE === 'true'
+  const showWhyOrchia = import.meta.env.VITE_ENABLE_WHY_ORCHIA === 'true'
+  const showWhatWeBuild = import.meta.env.VITE_ENABLE_WHAT_WE_BUILD === 'true'
+  const showHowWeWork = import.meta.env.VITE_ENABLE_HOW_WE_WORK === 'true'
   const [entered, setEntered] = useState(false)
   const [visible, setVisible] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -54,14 +61,24 @@ export default function App() {
     <>
     <OrchiaBackground />
     <div className={`site-shell site-enter${visible ? ' site-visible' : ''}`} style={{ position: 'relative', zIndex: 1 }}>
-      <Header scrolled={scrolled} />
+      <Header
+        scrolled={scrolled}
+        showWhatWeBuild={showWhatWeBuild}
+      />
       <main>
-        <div id="hero"><Hero /></div>
+        <div id="hero"><Hero showWhatWeBuild={showWhatWeBuild} /></div>
         <div id="clients"><Clients /></div>
+        <div id="work"><Work /></div>
         <div id="proof"><Proof /></div>
-        <div id="why-us"><WhyUs /></div>
-        <div id="what-we-build"><WhatWeBuild /></div>
-        <div id="process"><Process /></div>
+        <div id="why-us"><WhyUs showFullContent={showWhyOrchia} /></div>
+        <WhoWeAre showFullContent={showWhoWeAre} />
+        <Recognition />
+        {showWhatWeBuild && (
+          <div id="what-we-build"><WhatWeBuild /></div>
+        )}
+        {showHowWeWork && (
+          <div id="process"><Process /></div>
+        )}
         <div id="contact"><Contact /></div>
       </main>
       <Footer />

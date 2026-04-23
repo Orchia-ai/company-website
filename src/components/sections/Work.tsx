@@ -3,12 +3,12 @@ import { useState } from 'react'
 const PROJECTS = [
   {
     num: '01',
-    client: 'Artly AI',
+    client: 'Artly',
     track: 'AI & Robotics',
     slug: 'artly-ai',
     year: '2024',
     location: 'Seattle',
-    desc: 'Human-machine interface for an AI-powered robotic bar. Interaction model, real-time order status, and system-state visualization for a fully automated environment.',
+    desc: 'Human-machine interface for an AI-powered robotic barista platform. Designed the interaction model, real-time drink status, and queue management for Artly’s café robots deployed across North America.',
   },
   {
     num: '02',
@@ -16,17 +16,17 @@ const PROJECTS = [
     track: 'AI & Robotics',
     slug: 'realhand',
     year: '2024',
-    location: 'NYC',
-    desc: 'Control and configuration interface for a prosthetic limb platform. Safety-critical UX with real-time sensor feedback, calibration flows, and device management.',
+    location: 'Palo Alto',
+    desc: 'Interface design for HandOS, an AI-driven dexterous robotic hand platform. Real-time sensor feedback, tele-operation controls, and calibration flows for humanoid and industrial manipulation.',
   },
   {
     num: '03',
-    client: 'Really AR',
-    track: 'E-Commerce & Mobile',
+    client: 'Really',
+    track: 'Mobile & AR',
     slug: 'really-ar',
-    year: '2024',
-    location: 'Brooklyn',
-    desc: 'Augmented reality product experience within a mobile shopping flow. Customers preview objects in physical space before completing a purchase.',
+    year: '2023',
+    location: 'Los Angeles',
+    desc: 'Mobile AR platform for blockbuster cinema, rebranded from Moviebill. Interactive 3D characters, collectible props, and portal experiences distributed with Regal across US and APAC markets.',
   },
 ]
 
@@ -38,7 +38,7 @@ export default function Work() {
       <div className="section-heading work-heading">
         <div className="section-meta">
           <span className="mono-label">S / 03 — Selected Work</span>
-          <span className="mono-label">03 Projects · 2024</span>
+          <span className="mono-label">03 Projects · 2023&thinsp;—&thinsp;2024</span>
         </div>
         <h2>
           Built <em>end&nbsp;to&nbsp;end</em>,<br />

@@ -15,7 +15,6 @@ export default function Recognition() {
       <div className="recognition-header">
         <span className="mono-label">S / 07 — Recognition</span>
         <span className="recognition-seal" aria-hidden="true">◈</span>
-        <span className="mono-label">2025</span>
       </div>
 
       <div className="recognition-grid">

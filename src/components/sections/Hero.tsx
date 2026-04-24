@@ -65,7 +65,6 @@ export default function Hero() {
         <div className="hero-stamp" style={{ animationDelay: '0.82s' }}>
           <span className="mono-label">Recognised</span>
           <span className="hero-stamp-awards">Red Dot · DNA Paris · MUSE Gold</span>
-          <span className="mono-label">2025</span>
         </div>
       </div>
 

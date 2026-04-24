@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="footer-meta">
         <span className="mono-label">© 2026 Orchia Studio</span>
         <span className="mono-label">Seattle · 47.6062° N, 122.3321° W · 53 m</span>
-        <span className="mono-label">Built end to end ◈ 2025</span>
+        <span className="mono-label">Built end to end ◈</span>
       </div>
     </footer>
   )

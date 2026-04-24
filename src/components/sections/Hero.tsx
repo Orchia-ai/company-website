@@ -83,7 +83,6 @@ export default function Hero() {
       <aside className="hero-card">
         <div className="hero-card-meta">
           <span className="mono-label">Thesis / 001</span>
-          <span className="mono-label">Read 2 min</span>
         </div>
         <p className="card-kicker">Design + infrastructure — built around your use case</p>
         <h2>A customized interface shaped by what your users actually need.</h2>

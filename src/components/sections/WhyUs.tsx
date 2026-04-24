@@ -6,7 +6,7 @@ export default function WhyUs() {
       <div className="why-header">
         <div className="section-meta">
           <span className="mono-label">S / 05 — Why Us</span>
-          <span className="mono-label">04 Principles</span>
+          <span className="mono-label">Principles</span>
         </div>
         <h2>
           Design systems, retention thinking, and <em>advanced features</em> used with restraint.

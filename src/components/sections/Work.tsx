@@ -38,7 +38,7 @@ export default function Work() {
       <div className="section-heading work-heading">
         <div className="section-meta">
           <span className="mono-label">S / 03 — Selected Work</span>
-          <span className="mono-label">03 Projects · 2023&thinsp;—&thinsp;2024</span>
+          <span className="mono-label">Projects · 2023&thinsp;—&thinsp;2024</span>
         </div>
         <h2>
           Built <em>end&nbsp;to&nbsp;end</em>,<br />

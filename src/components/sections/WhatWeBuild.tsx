@@ -6,7 +6,7 @@ export default function WhatWeBuild() {
       <div className="section-heading">
         <div className="section-meta">
           <span className="mono-label">S / 08 — Capabilities</span>
-          <span className="mono-label">02 Tracks</span>
+          <span className="mono-label">Tracks</span>
         </div>
         <h2>
           Products with <em>operational depth</em>,<br />

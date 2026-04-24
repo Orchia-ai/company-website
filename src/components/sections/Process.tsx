@@ -6,7 +6,7 @@ export default function Process() {
       <div className="section-heading">
         <div className="section-meta">
           <span className="mono-label">S / 09 — Method</span>
-          <span className="mono-label">04 Phases</span>
+          <span className="mono-label">Phases</span>
         </div>
         <h2>
           Architecture <em>first</em>.<br />Delivery in clear phases.

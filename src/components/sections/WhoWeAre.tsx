@@ -22,7 +22,7 @@ export default function WhoWeAre() {
         </div>
         <p>
           Design, engineering, and product decisions are made by the people actually building the
-          work. That lets us move in weeks where larger agencies often move in quarters.
+          work. That keeps the loop between decision and delivery tight, with timelines measured in weeks.
         </p>
         <p>
           We engineer directly on Shopify&apos;s Storefront API, Metafields, Webhooks, and POS, and

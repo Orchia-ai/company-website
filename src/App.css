@@ -372,11 +372,21 @@ body:has(.splash) {
 
 .hero {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
+  grid-template-columns: 7fr 3fr;
+  grid-template-areas:
+    "copy mockup"
+    "marquee marquee"
+    "card card";
+  gap: 24px;
   padding: 0;
+  align-items: stretch;
   animation: emerge 0.7s cubic-bezier(0.2, 0, 0, 1) 0.05s both;
 }
+
+.hero-copy { grid-area: copy; }
+.hero-mockup { grid-area: mockup; }
+.hero-marquee { grid-area: marquee; }
+.hero-card { grid-area: card; }
 
 .hero-copy {
   position: relative;
@@ -393,8 +403,13 @@ body:has(.splash) {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 32px 0;
+  padding: 0;
   animation: emerge 0.7s cubic-bezier(0.2, 0, 0, 1) 0.15s both;
+}
+
+.hero-mockup .phone-frame {
+  width: 100%;
+  max-width: 320px;
 }
 
 .hero-card {
@@ -2495,6 +2510,19 @@ body:has(.splash) {
 /* ── Responsive ───────────────────────────────────────────── */
 
 @media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "copy"
+      "mockup"
+      "marquee"
+      "card";
+  }
+
+  .hero-mockup .phone-frame {
+    max-width: 280px;
+  }
+
   .recognition-grid {
     grid-template-columns: 1fr;
     gap: 24px;

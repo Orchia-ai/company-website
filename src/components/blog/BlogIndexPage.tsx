@@ -25,8 +25,8 @@ export default function BlogIndexPage() {
         <meta name="description" content="Case studies and field notes from Orchia Studio." />
       </Helmet>
       <OrchiaBackground />
+      <Header scrolled={scrolled} />
       <div className="site-shell site-enter site-visible" style={{ position: 'relative', zIndex: 1 }}>
-        <Header scrolled={scrolled} />
         <main>
           <section className="section-block blog-index-section">
             <div className="section-heading">

@@ -76,8 +76,8 @@ export default function App() {
   return (
     <>
       <OrchiaBackground />
+      <Header scrolled={scrolled} />
       <div className={`site-shell site-enter${visible ? ' site-visible' : ''}`} style={{ position: 'relative', zIndex: 1 }}>
-        <Header scrolled={scrolled} />
         <main>
           <div id="hero"><Hero /></div>
           <div id="clients"><Clients /></div>

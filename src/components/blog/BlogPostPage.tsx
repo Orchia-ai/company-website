@@ -42,8 +42,8 @@ export default function BlogPostPage() {
         {post?.featuredImage && <meta property="og:image" content={post.featuredImage} />}
       </Helmet>
       <OrchiaBackground />
+      <Header scrolled={scrolled} />
       <div className="site-shell site-enter site-visible" style={{ position: 'relative', zIndex: 1 }}>
-        <Header scrolled={scrolled} />
         <main>
           <article className="blog-post">
             <Link to="/blog" className="blog-post-back mono-label">← Back to journal</Link>

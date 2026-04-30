@@ -207,7 +207,7 @@ body:has(.splash) {
 .site-shell {
   max-width: 960px;
   margin: 0 auto;
-  padding: 40px 28px 100px;
+  padding: 130px 28px 100px;
 }
 
 .site-enter {
@@ -235,12 +235,20 @@ body:has(.splash) {
 /* ── Header ───────────────────────────────────────────────── */
 
 .topbar-wrapper {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
-  margin: 0 -60px 32px;
   padding: 20px 60px;
   pointer-events: none;
+  display: flex;
+  justify-content: center;
+}
+
+.topbar-wrapper > .topbar {
+  width: 100%;
+  max-width: 960px;
 }
 
 .topbar-wrapper::before {
@@ -2546,8 +2554,8 @@ body:has(.splash) {
   }
 
   .topbar-wrapper {
-    margin: 0 0 32px;
-    padding: 20px 0;
+    margin: 0 auto;
+    padding: 20px 28px;
   }
 
   .clients-grid {
@@ -2623,7 +2631,7 @@ body:has(.splash) {
   }
 
   .topbar-wrapper {
-    margin: 0 -16px 24px;
+    margin: 0 auto;
     padding: 16px;
   }
 

@@ -17,14 +17,34 @@ import Contact from './components/sections/Contact'
 import BlogTeaser from './components/blog/BlogTeaser'
 
 export default function App() {
-  const [entered, setEntered] = useState(false)
-  const [visible, setVisible] = useState(false)
+  const skipSplash =
+    typeof window !== 'undefined' &&
+    (window.sessionStorage.getItem('orchia-entered') === '1' ||
+      window.location.hash.length > 1)
+  const [entered, setEntered] = useState(skipSplash)
+  const [visible, setVisible] = useState(skipSplash)
   const [scrolled, setScrolled] = useState(false)
 
   const handleEnter = () => {
+    try {
+      window.sessionStorage.setItem('orchia-entered', '1')
+    } catch {
+      /* ignore */
+    }
     setEntered(true)
     setTimeout(() => setVisible(true), 50)
   }
+
+  // Scroll to hash anchor on initial mount when arriving from another route
+  useEffect(() => {
+    if (!entered) return
+    const hash = window.location.hash.slice(1)
+    if (!hash) return
+    const el = document.getElementById(hash)
+    if (el) {
+      requestAnimationFrame(() => el.scrollIntoView({ behavior: 'auto', block: 'start' }))
+    }
+  }, [entered])
 
   useEffect(() => {
     if (!entered) return

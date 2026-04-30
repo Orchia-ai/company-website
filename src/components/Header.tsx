@@ -20,21 +20,21 @@ export default function Header({ scrolled }: Props) {
             <OrchiaLogo size={48} className="brand-emblem" />
           </Link>
           <nav className="nav nav-desktop" aria-label="Main navigation">
-            <a href="#work">Work</a>
-            <a href="#why-us">Why&nbsp;us</a>
-            <a href="#who-we-are">About</a>
-            <a href="#what-we-build">Capabilities</a>
+            <a href="/#work">Work</a>
+            <a href="/#why-us">Why&nbsp;us</a>
+            <a href="/#who-we-are">About</a>
+            <a href="/#what-we-build">Capabilities</a>
             <a href="/blog">Journal</a>
-            <a href="#contact">Contact</a>
+            <a href="/#contact">Contact</a>
           </nav>
         </header>
       </div>
 
       <nav className="nav-mobile" aria-label="Mobile navigation">
-        <a href="#work">Work</a>
-        <a href="#why-us">Why&nbsp;us</a>
+        <a href="/#work">Work</a>
+        <a href="/#why-us">Why&nbsp;us</a>
         <a href="/blog">Journal</a>
-        <a href="#contact">Contact</a>
+        <a href="/#contact">Contact</a>
       </nav>
     </>
   )

@@ -14,6 +14,7 @@ import Proof from './components/sections/Proof'
 import Process from './components/sections/Process'
 import Work from './components/sections/Work'
 import Contact from './components/sections/Contact'
+import BlogTeaser from './components/blog/BlogTeaser'
 
 export default function App() {
   const [entered, setEntered] = useState(false)
@@ -66,6 +67,7 @@ export default function App() {
           <WhoWeAre />
           <div id="what-we-build"><WhatWeBuild /></div>
           <div id="process"><Process /></div>
+          <BlogTeaser />
           <div id="contact"><Contact /></div>
         </main>
         <Footer />

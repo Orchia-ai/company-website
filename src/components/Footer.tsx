@@ -8,6 +8,9 @@ export default function Footer() {
       <div className="footer-meta">
         <span className="mono-label">© 2026 Orchia Studio</span>
         <span className="mono-label">Seattle · 47.6062° N, 122.3321° W · 53 m</span>
+        <a className="mono-label footer-print-link" href="/blog">
+          Journal →
+        </a>
         <a className="mono-label footer-print-link" href="/print.html" target="_blank" rel="noopener">
           Download Monograph ↗
         </a>

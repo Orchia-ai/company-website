@@ -389,6 +389,14 @@ body:has(.splash) {
   overflow: hidden;
 }
 
+.hero-mockup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 0;
+  animation: emerge 0.7s cubic-bezier(0.2, 0, 0, 1) 0.15s both;
+}
+
 .hero-card {
   position: relative;
   padding: 44px 44px 48px;

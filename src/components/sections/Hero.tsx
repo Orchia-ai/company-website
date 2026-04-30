@@ -1,4 +1,5 @@
 import { ArrowRight } from '../../icons'
+import PhoneMockup from '../PhoneMockup'
 
 const TAGS = [
   'AR Try-On',         'React Native',       'Next.js',            'Shopify Integration',
@@ -63,9 +64,12 @@ export default function Hero() {
         </div>
 
         <div className="hero-stamp" style={{ animationDelay: '0.82s' }}>
-          <span className="mono-label">Recognised</span>
           <span className="hero-stamp-awards">Red Dot · DNA Paris · MUSE Gold</span>
         </div>
+      </div>
+
+      <div className="hero-mockup">
+        <PhoneMockup />
       </div>
 
       <div className="hero-marquee" aria-hidden="true">

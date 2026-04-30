@@ -27,49 +27,65 @@ export default function Hero() {
           <span className="mono-label">Seattle · 47.6062° N, 122.3321° W · 53 m</span>
         </div>
 
-        <h1 className="hero-lead" style={{ animationDelay: '0.05s' }}>
-          <span className="hero-lead-word">Orchestra<span className="hero-lead-stroke">t</span>ing</span>
-          <span className="hero-lead-rest">
-            <em>design</em>, infrastructure,
-            <br /> and advanced technology.
-          </span>
-        </h1>
+        <div className="hero-spread">
+          <div className="hero-spread-text">
+            <h1 className="hero-lead" style={{ animationDelay: '0.05s' }}>
+              <span className="hero-lead-word">Orchestra<span className="hero-lead-stroke">t</span>ing</span>
+              <span className="hero-lead-rest">
+                <em>design</em>, infrastructure,
+                <br /> and advanced technology.
+              </span>
+            </h1>
 
-        <div className="hero-rule" aria-hidden="true" />
+            <div className="hero-rule" aria-hidden="true" />
 
-        <ul className="hero-tags" aria-label="Technology capabilities">
-          {TAGS.map((tag, i) => (
-            <li
-              key={tag}
-              className="hero-tag"
-              style={{ animationDelay: `${0.12 + i * 0.03}s` }}
-            >
-              {tag}
-            </li>
-          ))}
-        </ul>
+            <ul className="hero-tags" aria-label="Technology capabilities">
+              {TAGS.map((tag, i) => (
+                <li
+                  key={tag}
+                  className="hero-tag"
+                  style={{ animationDelay: `${0.12 + i * 0.03}s` }}
+                >
+                  {tag}
+                </li>
+              ))}
+            </ul>
 
-        <p className="hero-close" style={{ animationDelay: '0.65s' }}>
-          Into a single, cohesive product — customer-facing, user-friendly.
-        </p>
+            <p className="hero-close" style={{ animationDelay: '0.65s' }}>
+              Into a single, cohesive product — customer-facing, user-friendly.
+            </p>
 
-        <div className="hero-actions" style={{ animationDelay: '0.72s' }}>
-          <a className="button-primary" href="#contact">
-            <span>Start a conversation</span>
-            <ArrowRight />
-          </a>
-          <a className="text-link" href="#work">
-            Selected work <ArrowRight />
-          </a>
+            <div className="hero-actions" style={{ animationDelay: '0.72s' }}>
+              <a className="button-primary" href="#contact">
+                <span>Start a conversation</span>
+                <ArrowRight />
+              </a>
+              <a className="text-link" href="#work">
+                Selected work <ArrowRight />
+              </a>
+            </div>
+          </div>
+
+          <aside className="hero-spread-specimen" aria-label="Mobile commerce specimen">
+            <div className="hero-specimen-header">
+              <span className="mono-label">Specimen / 01</span>
+              <span className="mono-label hero-specimen-tag">Mobile · Live</span>
+            </div>
+            <div className="hero-specimen-stage">
+              <PhoneMockup />
+            </div>
+            <div className="hero-specimen-caption">
+              <span className="mono-label">Plate i</span>
+              <span className="hero-specimen-caption-text">
+                Commerce · loyalty · scan · profile — one product, four surfaces.
+              </span>
+            </div>
+          </aside>
         </div>
 
         <div className="hero-stamp" style={{ animationDelay: '0.82s' }}>
           <span className="hero-stamp-awards">Red Dot · DNA Paris · MUSE Gold</span>
         </div>
-      </div>
-
-      <div className="hero-mockup">
-        <PhoneMockup />
       </div>
 
       <div className="hero-marquee" aria-hidden="true">

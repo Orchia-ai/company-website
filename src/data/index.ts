@@ -4,27 +4,27 @@ import { createElement } from 'react'
 export const whyUs = [
   {
     num: '01',
-    title: 'Design Systems That Scale',
+    title: 'Systems Before Screens',
     description:
-      'We build reusable systems from the start: typography, spacing, components, states, and hierarchy aligned to your brand and built to scale across features, releases, and future product expansion.',
+      'We start with the substrate: typography, spacing, components, states, hierarchy. A design system aligned to the brand from day one is what lets a product scale across features, releases, and surfaces without drifting.',
   },
   {
     num: '02',
     title: 'Phased Delivery, Not Chaos',
     description:
-      'Architecture, product definition, design, implementation, testing, and launch each have a clear role. The process stays structured, which keeps scope understandable and execution predictable.',
+      'Architecture, product definition, design, implementation, testing, and launch each have a defined role. Structure keeps scope understandable and execution predictable — and keeps the team out of the rework loop.',
   },
   {
     num: '03',
-    title: 'Advanced Features, Used Carefully',
+    title: 'Advanced Features, Used Sparingly',
     description:
-      'AI assistance, augmented reality, smart notifications, and richer personalization only belong in the product when they clearly improve the user experience. We treat them as leverage, not decoration.',
+      'AI assistance, AR, smart notifications, and personalization belong in the product only when they clearly improve the experience. We treat them as leverage, not decoration — restraint is the feature.',
   },
   {
     num: '04',
-    title: 'Built for Retention',
+    title: 'Engineered for Retention',
     description:
-      'We do not stop at shipping a storefront. We design for repeat use through loyalty, account depth, post-purchase touchpoints, and product flows that make returning feel natural.',
+      'We do not stop at a storefront. Loyalty, account depth, post-purchase touchpoints, and return flows are designed into the product so that coming back feels native, not nudged.',
   },
 ]
 

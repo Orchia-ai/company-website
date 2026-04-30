@@ -6,9 +6,8 @@ import OrchiaBackground from './components/OrchiaBackground'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Hero from './components/sections/Hero'
-import WhoWeAre from './components/sections/WhoWeAre'
 import Clients from './components/sections/Clients'
-import WhyUs from './components/sections/WhyUs'
+import StudioMethod from './components/sections/StudioMethod'
 import WhatWeBuild from './components/sections/WhatWeBuild'
 import Proof from './components/sections/Proof'
 import Process from './components/sections/Process'
@@ -83,8 +82,7 @@ export default function App() {
           <div id="clients"><Clients /></div>
           <div id="work"><Work /></div>
           <div id="proof"><Proof /></div>
-          <div id="why-us"><WhyUs /></div>
-          <WhoWeAre />
+          <StudioMethod />
           <div id="what-we-build"><WhatWeBuild /></div>
           <div id="process"><Process /></div>
           <BlogTeaser />

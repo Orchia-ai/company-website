@@ -9,7 +9,8 @@ export default function WhatWeBuild() {
           <span className="mono-label">Two Tracks</span>
         </div>
         <h2>
-          Two tracks, <em>one studio</em>.
+          Two tracks, <em>one standard</em>: interfaces designed well, built deeply,
+          and ready for real use.
         </h2>
       </div>
       <div className="tracks">

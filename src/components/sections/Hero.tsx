@@ -5,35 +5,29 @@ import PhoneMockup from '../PhoneMockup'
 const CAPABILITY_GROUPS = [
   {
     label: 'Commerce',
-    items: ['Shopify', 'Checkout', 'Loyalty', 'Account'],
+    items: ['Shopify', 'Checkout', 'Cart', 'Reviews & Ratings', 'Wishlist'],
     phoneIndex: 0,
-    previewLabel: 'Shop',
   },
   {
-    label: 'Advanced UX',
-    items: ['AR Try-On', '3D Visualization', 'AI Recommendation'],
+    label: 'Advanced Technologies',
+    items: ['AR Try-On', 'Visual Search', 'AI Recommendation', '3D Visualization'],
+    phoneIndex: 1,
+  },
+  {
+    label: 'Membership',
+    items: ['Tiers', 'Rewards', 'Birthday Perks', 'Referrals', 'Member Pricing'],
     phoneIndex: 2,
-    previewLabel: 'Scan',
-  },
-  {
-    label: 'Infrastructure',
-    items: ['Real-time Sync', 'Analytics', 'Edge Delivery'],
-    phoneIndex: 3,
-    previewLabel: 'Profile',
   },
   {
     label: 'Engagement',
-    items: ['Personalization', 'Push', 'Gamification'],
-    phoneIndex: 1,
-    previewLabel: 'Points',
+    items: ['Drops', 'Push', 'Personalization', 'Stories', 'Gamification'],
+    phoneIndex: 3,
   },
 ]
 
 export default function Hero() {
   const [hoveredGroup, setHoveredGroup] = useState<number | null>(null)
   const phoneOverride = hoveredGroup !== null ? CAPABILITY_GROUPS[hoveredGroup].phoneIndex : null
-  const previewLabel =
-    hoveredGroup !== null ? CAPABILITY_GROUPS[hoveredGroup].previewLabel : 'Live'
 
   return (
     <section className="hero">
@@ -60,8 +54,9 @@ export default function Hero() {
             <div className="hero-rule" aria-hidden="true" />
 
             <p className="hero-sub" style={{ animationDelay: '0.18s' }}>
-              Orchia Studio builds mobile commerce apps, AI tools, and human-machine
-              interfaces where polished user experience and technical depth both matter.
+              Orchia Studio designs and builds advanced product interfaces for mobile commerce,
+              AI workflows, and robotics systems — combining polished user experience with
+              serious technical execution.
             </p>
 
             <div className="hero-capability-matrix" aria-label="Capability groups">
@@ -100,7 +95,7 @@ export default function Hero() {
           <aside className="hero-spread-specimen" aria-label="Mobile commerce specimen">
             <div className="hero-specimen-header">
               <span className="mono-label">Specimen / 01</span>
-              <span className="mono-label hero-specimen-tag">Mobile · {previewLabel}</span>
+              <span className="mono-label hero-specimen-tag">Mobile Commerce Prototype</span>
             </div>
             <div className="hero-specimen-stage">
               <PhoneMockup activeOverride={phoneOverride} />
@@ -108,14 +103,17 @@ export default function Hero() {
             <div className="hero-specimen-caption">
               <span className="mono-label">Plate i</span>
               <span className="hero-specimen-caption-text">
-                Commerce · loyalty · scan · profile — one product, four surfaces.
+                A concept mobile commerce system connecting shopping, loyalty, scan-based
+                interaction, and account surfaces.
               </span>
             </div>
           </aside>
         </div>
 
         <div className="hero-stamp" style={{ animationDelay: '0.82s' }}>
-          <span className="hero-stamp-awards">Red Dot · DNA Paris · MUSE Gold</span>
+          <span className="hero-stamp-awards">
+            Recognition from prior interactive work: Red Dot · DNA Paris · MUSE Gold
+          </span>
         </div>
       </div>
     </section>

@@ -23,7 +23,7 @@ export default function StudioMethod() {
         </h2>
         <p className="studio-standfirst">
           We work as a small product and engineering studio, moving from strategy to interface
-          to production without handing the work across disconnected teams.
+          to production without passing the work between disconnected teams.
         </p>
       </div>
 

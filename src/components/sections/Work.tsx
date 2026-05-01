@@ -8,7 +8,7 @@ const PROJECTS = [
     slug: 'artly-ai',
     year: '2024',
     location: 'Seattle',
-    desc: 'Robotics deployment and control interface for configuring, previewing, and validating robot behavior.',
+    desc: 'Robotics deployment and control interface for configuring, previewing, and validating robot behavior across store environments.',
     tags: ['React', 'Three.js', 'Real-time Visualization', 'Robotics UI'],
   },
   {
@@ -28,7 +28,7 @@ const PROJECTS = [
     slug: 'really-ar',
     year: '2023',
     location: 'Los Angeles',
-    desc: 'Interactive mobile AR campaigns and camera-based experiences for entertainment and retail.',
+    desc: 'Camera-based mobile AR campaigns and interactive entertainment experiences.',
     tags: ['Unity', 'AR', 'Mobile Interaction', 'Campaign UX'],
   },
 ]
@@ -57,12 +57,21 @@ export default function Work() {
             onMouseLeave={() => setActive(null)}
           >
             <span className="work-num" aria-hidden="true">{p.num}</span>
+            <div className={`work-thumb work-thumb--${p.slug}`} aria-hidden="true">
+              <div className="work-thumb-screen">
+                <span className="work-thumb-kicker mono-label">{p.track}</span>
+                <span className="work-thumb-line work-thumb-line--wide" />
+                <span className="work-thumb-line" />
+              </div>
+            </div>
             <div className="work-meta">
               <h3 className="work-client">{p.client}</h3>
               <div className="work-tags">
                 <span className="work-track">{p.track}</span>
                 <span className="work-dot">·</span>
                 <span className="work-loc mono-label">{p.location}</span>
+                <span className="work-dot">·</span>
+                <time className="work-loc mono-label">{p.year}</time>
               </div>
               <p className="work-desc">{p.desc}</p>
               <ul className="work-tag-chips" aria-label="Stack and tags">
@@ -71,11 +80,13 @@ export default function Work() {
                 ))}
               </ul>
             </div>
-            <time className="work-year mono-label">{p.year}</time>
-            <div className={`work-thumb work-thumb--${p.slug}`} aria-hidden="true" />
           </article>
         ))}
       </div>
+      <a className="work-cta" href="#contact">
+        <span>Have a product that needs both interface design and engineering depth?</span>
+        <strong>Start a conversation →</strong>
+      </a>
     </section>
   )
 }

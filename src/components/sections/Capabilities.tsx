@@ -2,21 +2,21 @@ const COLUMNS = [
   {
     label: 'AI & Robotics',
     items: [
-      'Human-machine interface design',
-      'Real-time visualization',
-      'Control dashboards',
-      'Workflow automation',
-      'Hardware-software UX',
+      'Robot control dashboards',
+      'Real-time 3D visualization',
+      'Teleoperation interfaces',
+      'Operator workflow tools',
+      'Hardware state monitoring',
     ],
   },
   {
     label: 'E-Commerce & Mobile',
     items: [
       'Shopify-native mobile apps',
-      'Product discovery',
-      'Loyalty and membership',
-      'Account and post-purchase flows',
-      'Personalization and analytics',
+      'Product discovery interfaces',
+      'Loyalty and membership systems',
+      'Account and reorder flows',
+      'Personalization and analytics dashboards',
     ],
   },
 ]

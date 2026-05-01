@@ -114,8 +114,13 @@ function ProfileScreen({ onScroll }: ScrollScreenProps) {
 
 const TABS = ['Shop', 'Points', 'Scan', 'Profile'] as const
 
-export default function PhoneMockup() {
-  const [active, setActive] = useState(0)
+interface PhoneMockupProps {
+  activeOverride?: number | null
+}
+
+export default function PhoneMockup({ activeOverride = null }: PhoneMockupProps = {}) {
+  const [internalActive, setActive] = useState(0)
+  const active = activeOverride ?? internalActive
   const [hasScrolledInsidePhone, setHasScrolledInsidePhone] = useState(false)
 
   const handleMockScroll: UIEventHandler<HTMLDivElement> = (event) => {

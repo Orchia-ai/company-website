@@ -9,7 +9,8 @@ import Hero from './components/sections/Hero'
 import Clients from './components/sections/Clients'
 import StudioMethod from './components/sections/StudioMethod'
 import WhatWeBuild from './components/sections/WhatWeBuild'
-import Proof from './components/sections/Proof'
+import CommerceJourney from './components/sections/CommerceJourney'
+import Capabilities from './components/sections/Capabilities'
 import Process from './components/sections/Process'
 import Work from './components/sections/Work'
 import Contact from './components/sections/Contact'
@@ -80,11 +81,12 @@ export default function App() {
         <main>
           <div id="hero"><Hero /></div>
           <div id="clients"><Clients /></div>
-          <div id="work"><Work /></div>
-          <div id="proof"><Proof /></div>
-          <StudioMethod />
           <div id="what-we-build"><WhatWeBuild /></div>
+          <div id="work"><Work /></div>
+          <CommerceJourney />
           <div id="process"><Process /></div>
+          <Capabilities />
+          <StudioMethod />
           <BlogTeaser />
           <div id="contact"><Contact /></div>
         </main>

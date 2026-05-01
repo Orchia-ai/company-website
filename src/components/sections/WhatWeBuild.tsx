@@ -5,19 +5,21 @@ export default function WhatWeBuild() {
     <section className="section-block" id="what-we-build">
       <div className="section-heading">
         <div className="section-meta">
-          <span className="mono-label">S / 08 — Capabilities</span>
-          <span className="mono-label">Tracks</span>
+          <span className="mono-label">S / 03 — What We Build</span>
+          <span className="mono-label">Two Tracks</span>
         </div>
         <h2>
-          Products with <em>operational depth</em>,<br />
-          not just polished screens.
+          Two tracks, <em>one studio</em>.
         </h2>
       </div>
       <div className="tracks">
         {tracks.map((track, i) => (
           <article key={track.tag} className="track-card">
-            <div className="track-image">
+            <div className={`track-image track-image--${i === 0 ? 'commerce' : 'robotics'}`}>
               <span className="track-image-num mono-label">0{i + 1} / 02</span>
+              <span className="track-image-placeholder mono-label" aria-hidden="true">
+                {i === 0 ? 'Mobile UI' : 'Control Surface'}
+              </span>
             </div>
             <div className="track-content">
               <div className="track-header">

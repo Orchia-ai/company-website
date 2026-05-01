@@ -30,25 +30,21 @@ export const whyUs = [
 
 export const tracks = [
   {
-    icon: createElement(RobotIcon),
-    tag: 'AI & Robotics',
-    headline: 'Intelligent systems that interact with the physical world.',
+    icon: createElement(PhoneIcon),
+    tag: 'Mobile Commerce',
+    headline: 'Shopify-native mobile apps built for retention.',
     points: [
-      'Human-machine interface design for robotic platforms',
-      'AI-driven perception and decision logic',
-      'Real-time control systems with safety-critical UX',
-      'Hardware-software co-design from prototype to production',
+      'Product discovery, loyalty, and personalization in one experience',
+      'Post-purchase engagement built into the core product',
     ],
   },
   {
-    icon: createElement(PhoneIcon),
-    tag: 'E-Commerce & Mobile',
-    headline: 'Mobile commerce products that turn browsing into retention.',
+    icon: createElement(RobotIcon),
+    tag: 'AI & Robotics Interfaces',
+    headline: 'Operational interfaces for systems that touch the physical world.',
     points: [
-      'Discovery, cart, checkout, and account flows designed as one connected journey',
-      'Content-led shopping experiences with collections, campaigns, and editorial surfaces',
-      'Loyalty, rewards, and membership designed into the core product experience',
-      'Post-purchase engagement and account depth built for repeat customer behavior',
+      'Control panels, visualization tools, and dashboards',
+      'Real-time feedback for AI and hardware workflows',
     ],
   },
 ]
@@ -56,27 +52,27 @@ export const tracks = [
 export const steps = [
   {
     step: '01',
-    title: 'Architecture & Product Definition',
+    title: 'Define the system',
     description:
-      'We define the system before we decorate it: product structure, critical flows, technical constraints, and the operational model behind the experience.',
+      'Product structure, user flows, technical constraints, and operational model.',
   },
   {
     step: '02',
-    title: 'Design System & Experience',
+    title: 'Design the experience',
     description:
-      'We turn the product direction into a disciplined interface language, with reusable components and interaction patterns that can scale without losing coherence.',
+      'Design system, reusable components, states, and interaction patterns.',
   },
   {
     step: '03',
-    title: 'Build, Test & Launch',
+    title: 'Build and test',
     description:
-      'Implementation follows a clear release path: engineering, QA, refinement, deployment, and launch readiness handled as one coordinated delivery cycle.',
+      'Frontend, backend integration, QA, deployment, and launch readiness.',
   },
   {
     step: '04',
-    title: 'Retention & Growth Features',
+    title: 'Extend for growth',
     description:
-      'Once the foundation is stable, we layer in loyalty, personalization, notifications, and other higher-leverage capabilities that deepen repeat engagement.',
+      'Loyalty, personalization, AI, automation, analytics, and retention features.',
   },
 ]
 

@@ -3,12 +3,13 @@ import { useState } from 'react'
 const PROJECTS = [
   {
     num: '01',
-    client: 'Artly',
+    client: 'Artly AI',
     track: 'AI & Robotics',
     slug: 'artly-ai',
     year: '2024',
     location: 'Seattle',
-    desc: 'Human-machine interface for an AI-powered robotic barista platform. Designed the interaction model, real-time drink status, and queue management for Artly’s café robots deployed across North America.',
+    desc: 'Robotics deployment and control interface for configuring, previewing, and validating robot behavior.',
+    tags: ['React', 'Three.js', 'Real-time Visualization', 'Robotics UI'],
   },
   {
     num: '02',
@@ -17,16 +18,18 @@ const PROJECTS = [
     slug: 'realhand',
     year: '2024',
     location: 'Palo Alto',
-    desc: 'Interface design for HandOS, an AI-driven dexterous robotic hand platform. Real-time sensor feedback, tele-operation controls, and calibration flows for humanoid and industrial manipulation.',
+    desc: 'Real-time hand-tracking and teleoperation tooling for robotic hand workflows.',
+    tags: ['Python', 'MediaPipe', 'MuJoCo', 'Teleoperation'],
   },
   {
     num: '03',
-    client: 'Really',
+    client: 'Really AR',
     track: 'Mobile & AR',
     slug: 'really-ar',
     year: '2023',
     location: 'Los Angeles',
-    desc: 'Mobile AR platform for blockbuster cinema, rebranded from Moviebill. Interactive 3D characters, collectible props, and portal experiences distributed with Regal across US and APAC markets.',
+    desc: 'Interactive mobile AR campaigns and camera-based experiences for entertainment and retail.',
+    tags: ['Unity', 'AR', 'Mobile Interaction', 'Campaign UX'],
   },
 ]
 
@@ -37,7 +40,7 @@ export default function Work() {
     <section className="work-section section-block" id="work">
       <div className="section-heading work-heading">
         <div className="section-meta">
-          <span className="mono-label">S / 03 — Selected Work</span>
+          <span className="mono-label">S / 04 — Selected Work</span>
           <span className="mono-label">Projects · 2023&thinsp;—&thinsp;2024</span>
         </div>
         <h2>
@@ -62,6 +65,11 @@ export default function Work() {
                 <span className="work-loc mono-label">{p.location}</span>
               </div>
               <p className="work-desc">{p.desc}</p>
+              <ul className="work-tag-chips" aria-label="Stack and tags">
+                {p.tags.map((t) => (
+                  <li key={t} className="work-tag-chip mono-label">{t}</li>
+                ))}
+              </ul>
             </div>
             <time className="work-year mono-label">{p.year}</time>
             <div className={`work-thumb work-thumb--${p.slug}`} aria-hidden="true" />

@@ -5,11 +5,11 @@ export default function Process() {
     <section className="section-block" id="process">
       <div className="section-heading">
         <div className="section-meta">
-          <span className="mono-label">S / 09 — Method</span>
-          <span className="mono-label">Phases</span>
+          <span className="mono-label">S / 06 — How We Work</span>
+          <span className="mono-label">Method</span>
         </div>
         <h2>
-          Architecture <em>first</em>.<br />Delivery in clear phases.
+          Architecture <em>first</em>. Then interface. Then launch.
         </h2>
       </div>
       <div className="workflow">

@@ -30,7 +30,7 @@ export default function Contact() {
       <div className="cta-corner cta-corner-br" aria-hidden="true" />
       <div className="cta-copy">
         <div className="section-meta">
-          <span className="mono-label">S / 10 — Contact</span>
+          <span className="mono-label">S / 11 — Contact</span>
           <span className="mono-label">Reply &lt; 48h</span>
         </div>
         <h2>

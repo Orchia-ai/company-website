@@ -40,7 +40,7 @@ export default function Work() {
     <section className="work-section section-block" id="work">
       <div className="section-heading work-heading">
         <div className="section-meta">
-          <span className="mono-label">S / 04 — Selected Work</span>
+          <span className="mono-label">S / 05 — Selected Work</span>
           <span className="mono-label">Projects · 2023&thinsp;—&thinsp;2024</span>
         </div>
         <h2>

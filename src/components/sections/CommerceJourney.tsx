@@ -12,7 +12,7 @@ export default function CommerceJourney() {
     <section className="section-block journey-section" id="commerce-journey">
       <div className="section-heading">
         <div className="section-meta">
-          <span className="mono-label">S / 05 — Commerce Journey</span>
+          <span className="mono-label">S / 06 — Commerce Journey</span>
           <span className="mono-label">Mobile · Retention</span>
         </div>
         <h2>

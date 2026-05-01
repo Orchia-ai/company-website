@@ -9,6 +9,7 @@ import Hero from './components/sections/Hero'
 import Clients from './components/sections/Clients'
 import StudioMethod from './components/sections/StudioMethod'
 import WhatWeBuild from './components/sections/WhatWeBuild'
+import SpatialSection from './components/sections/SpatialSection'
 import CommerceJourney from './components/sections/CommerceJourney'
 import Capabilities from './components/sections/Capabilities'
 import Process from './components/sections/Process'
@@ -82,6 +83,7 @@ export default function App() {
           <div id="hero"><Hero /></div>
           <div id="clients"><Clients /></div>
           <div id="what-we-build"><WhatWeBuild /></div>
+          <SpatialSection />
           <div id="work"><Work /></div>
           <CommerceJourney />
           <div id="process"><Process /></div>

@@ -26,7 +26,7 @@ export default function Capabilities() {
     <section className="section-block capability-section" id="capabilities">
       <div className="section-heading">
         <div className="section-meta">
-          <span className="mono-label">S / 07 — Capabilities</span>
+          <span className="mono-label">S / 08 — Capabilities</span>
           <span className="mono-label">Matrix</span>
         </div>
         <h2>

@@ -4717,3 +4717,191 @@ body:has(.splash) {
 
 /* Engage screen — ensure bottom content clears the nav */
 .mock-engage { padding-bottom: 60px; }
+
+/* ──────────────────────────── Spatial / AR Demo (S/04) ──────────────────────────── */
+.spatial-section {
+  position: relative;
+}
+
+.spatial-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 56px;
+  align-items: stretch;
+}
+
+.spatial-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 8px;
+}
+.spatial-body {
+  font-family: var(--body);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--text);
+  max-width: 48ch;
+  margin: 0;
+}
+.spatial-bullets {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.spatial-bullets li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--body);
+  font-size: 0.96rem;
+  color: var(--text);
+}
+.spatial-bullet-dot {
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.spatial-foot {
+  margin-top: auto;
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  letter-spacing: 0.16em;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border);
+}
+
+.spatial-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.spatial-viewer-frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background:
+    radial-gradient(ellipse at 50% 70%, rgba(184,148,82,0.10), transparent 65%),
+    repeating-linear-gradient(0deg, rgba(30,24,18,0.04) 0 1px, transparent 1px 18px),
+    var(--surface-variant);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.spatial-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--accent);
+  pointer-events: none;
+  z-index: 2;
+}
+.spatial-corner-tl { top: 10px; left: 10px;     border-right: none; border-bottom: none; }
+.spatial-corner-tr { top: 10px; right: 10px;    border-left: none;  border-bottom: none; }
+.spatial-corner-bl { bottom: 10px; left: 10px;  border-right: none; border-top: none;    }
+.spatial-corner-br { bottom: 10px; right: 10px; border-left: none;  border-top: none;    }
+
+.spatial-viewer-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spatial-viewer-placeholder img {
+  max-width: 70%;
+  max-height: 70%;
+  opacity: 0.6;
+  object-fit: contain;
+}
+
+.spatial-ar-btn {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e1812;
+  color: #f5f0e8;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(26,22,18,0.18);
+  z-index: 3;
+}
+.spatial-ar-btn:hover {
+  background: var(--accent);
+  color: #1e1812;
+}
+
+.spatial-handoff {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: rgba(253,250,244,0.6);
+}
+.spatial-handoff--mobile {
+  justify-content: center;
+}
+.spatial-handoff-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.spatial-handoff-text p {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--text-muted);
+  max-width: 36ch;
+}
+.spatial-handoff-text strong {
+  color: var(--text-strong);
+  font-weight: 500;
+}
+.spatial-qr {
+  width: 88px;
+  height: 88px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(245,240,232,0.8);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 6px;
+}
+.spatial-qr img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.spatial-plate {
+  position: absolute;
+  bottom: 24px;
+  right: 28px;
+  letter-spacing: 0.22em;
+  opacity: 0.6;
+}
+
+@media (max-width: 900px) {
+  .spatial-grid { grid-template-columns: 1fr; gap: 32px; }
+  .spatial-foot { border-top: none; padding-top: 0; }
+  .spatial-plate { position: static; text-align: right; margin-top: 16px; }
+}
+@media (max-width: 520px) {
+  .spatial-handoff { flex-direction: column; align-items: flex-start; }
+}

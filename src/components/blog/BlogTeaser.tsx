@@ -11,7 +11,7 @@ export default function BlogTeaser() {
     <section className="section-block" id="journal">
       <div className="section-heading">
         <div className="section-meta">
-          <span className="mono-label">S / 09 — Journal</span>
+          <span className="mono-label">S / 10 — Journal</span>
           <span className="mono-label">Case Studies</span>
         </div>
         <h2>

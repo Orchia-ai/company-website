@@ -15,7 +15,7 @@ export default function StudioMethod() {
 
       <div className="studio-header studio-header--centered">
         <div className="section-meta">
-          <span className="mono-label">S / 08 — Studio</span>
+          <span className="mono-label">S / 09 — Studio</span>
           <span className="mono-label">Est. 2022 · Seattle</span>
         </div>
         <h2 className="studio-headline">

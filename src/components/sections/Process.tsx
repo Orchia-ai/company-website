@@ -5,7 +5,7 @@ export default function Process() {
     <section className="section-block" id="process">
       <div className="section-heading">
         <div className="section-meta">
-          <span className="mono-label">S / 06 — How We Work</span>
+          <span className="mono-label">S / 07 — How We Work</span>
           <span className="mono-label">Method</span>
         </div>
         <h2>

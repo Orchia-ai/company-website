@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@google/model-viewer": "^4.2.0",
     "@mui/icons-material": "^9.0.0",
     "@mui/lab": "^9.0.0-beta.2",
     "@mui/material": "^9.0.0",
@@ -24,6 +25,7 @@
     "immer": "^11.1.4",
     "nodemailer": "^8.0.5",
     "p5": "^2.2.3",
+    "qrcode": "^1.5.4",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-error-boundary": "^6.1.1",
@@ -39,6 +41,7 @@
     "@eslint/js": "^9.39.4",
     "@types/node": "^24.12.2",
     "@types/nodemailer": "^8.0.0",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vercel/node": "^5.7.4",

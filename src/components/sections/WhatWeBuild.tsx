@@ -5,7 +5,7 @@ export default function WhatWeBuild() {
     <section className="section-block" id="what-we-build">
       <div className="section-heading">
         <div className="section-meta">
-          <span className="mono-label">S / 03 — What We Build</span>
+          <span className="mono-label">S / 04 — What We Build</span>
           <span className="mono-label">Two Tracks</span>
         </div>
         <h2>

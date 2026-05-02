@@ -57,18 +57,15 @@ export default function BlogIndexPage() {
                       to={`/blog/${post.slug}`}
                       className="track-card blog-track-card"
                     >
-                      <div
-                        className="track-image"
-                        style={
-                          post.featuredImage
-                            ? {
-                                backgroundImage: `url(${post.featuredImage})`,
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                              }
-                            : undefined
-                        }
-                      >
+                      <div className="track-image">
+                        {post.featuredImage && (
+                          <img
+                            className="track-image-img"
+                            src={post.featuredImage}
+                            alt=""
+                            loading="lazy"
+                          />
+                        )}
                         <span className="track-image-num mono-label">
                           {String(i + 1).padStart(2, '0')} / {total}
                         </span>

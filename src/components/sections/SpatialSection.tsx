@@ -83,7 +83,7 @@ export default function SpatialSection() {
     <section className="section-block spatial-section" id="spatial" ref={wrapperRef}>
       <div className="section-heading">
         <div className="section-meta">
-          <span className="mono-label">S / 04 — Spatial</span>
+          <span className="mono-label">S / 05 — Spatial</span>
           <span className="mono-label">Live AR Demo</span>
         </div>
         <h2>
@@ -164,6 +164,47 @@ export default function SpatialSection() {
               </>
             )}
           </div>
+        </div>
+      </div>
+
+      <div className="spatial-credit">
+        <div className="spatial-credit-media">
+          <video
+            src="https://www.lingyizhou.com/assets/cargo-import/marvel-s-flerken-ar-filter-commercial-ar-campaign/1697673358881.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label="Marvel's Flerken AR Filter campaign clip"
+          />
+          <span className="spatial-credit-badge mono-label">Live AR · 2023</span>
+        </div>
+        <div className="spatial-credit-copy">
+          <span className="mono-label spatial-credit-kicker">Track Record · Cinema → Commerce</span>
+          <h3 className="spatial-credit-headline">
+            From <em>cinema marketing</em> to commerce.
+          </h3>
+          <p>
+            We built the official AR filter for Marvel’s <em>The Marvels</em> — an interactive
+            Flerken transformation powered by real-time object detection, deployed across TikTok
+            and the Regal Cinema app. The same camera-based capability now lives inside mobile
+            commerce: place furniture in your room, try on a product, scan to unlock a drop.
+          </p>
+          <ul className="spatial-credit-tags">
+            <li className="mono-label">Lens Studio</li>
+            <li className="mono-label">Effect House</li>
+            <li className="mono-label">Object Detection</li>
+            <li className="mono-label">HLSL</li>
+          </ul>
+          <a
+            className="spatial-credit-link mono-label"
+            href="https://www.lingyizhou.com/projects/marvels-flerken-ar-filter"
+            target="_blank"
+            rel="noreferrer"
+          >
+            View full case study →
+          </a>
         </div>
       </div>
 

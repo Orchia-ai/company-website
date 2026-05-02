@@ -24,7 +24,7 @@ export default function Clients() {
   return (
     <div className="clients-wrapper">
       <div className="clients-header">
-        <span className="mono-label">S / 02 — Clients Served</span>
+        <span className="mono-label">S / 03 — Clients Served</span>
         <span className="mono-label">Partners · 2022&thinsp;—&thinsp;2025</span>
       </div>
       <section className="clients-section">

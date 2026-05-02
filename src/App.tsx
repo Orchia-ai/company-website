@@ -8,14 +8,9 @@ import Footer from './components/Footer'
 import Hero from './components/sections/Hero'
 import Clients from './components/sections/Clients'
 import StudioMethod from './components/sections/StudioMethod'
-import WhatWeBuild from './components/sections/WhatWeBuild'
-import SpatialSection from './components/sections/SpatialSection'
-import CommerceJourney from './components/sections/CommerceJourney'
 import Capabilities from './components/sections/Capabilities'
-import Process from './components/sections/Process'
 import Work from './components/sections/Work'
 import Contact from './components/sections/Contact'
-import BlogTeaser from './components/blog/BlogTeaser'
 
 export default function App() {
   const skipSplash =
@@ -81,15 +76,12 @@ export default function App() {
       <div className={`site-shell site-enter${visible ? ' site-visible' : ''}`} style={{ position: 'relative', zIndex: 1 }}>
         <main>
           <div id="hero"><Hero /></div>
+          <div id="case-study">
+            <div id="work"><Work /></div>
+          </div>
           <div id="clients"><Clients /></div>
-          <div id="what-we-build"><WhatWeBuild /></div>
-          <SpatialSection />
-          <div id="work"><Work /></div>
-          <CommerceJourney />
-          <div id="process"><Process /></div>
-          <Capabilities />
-          <StudioMethod />
-          <BlogTeaser />
+          <div id="services"><Capabilities /></div>
+          <div id="about"><StudioMethod /></div>
           <div id="contact"><Contact /></div>
         </main>
         <Footer />

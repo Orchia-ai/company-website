@@ -1,8 +1,8 @@
 const PROOF_NOTES = [
   'Seattle studio',
-  'Founded 2022',
   'Roots at Parsons and Snap Inc.',
   'AR · AI · Robotics · Commerce',
+  'Design + engineering, one team',
 ]
 
 export default function StudioMethod() {
@@ -15,8 +15,8 @@ export default function StudioMethod() {
 
       <div className="studio-header studio-header--centered">
         <div className="section-meta">
-          <span className="mono-label">S / 09 — Studio</span>
-          <span className="mono-label">Est. 2022 · Seattle</span>
+          <span className="mono-label">S / 05 — About</span>
+          <span className="mono-label">Seattle</span>
         </div>
         <h2 className="studio-headline">
           The people <em>shaping</em> the product are the people <em>building</em> it.

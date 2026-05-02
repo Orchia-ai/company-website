@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
+import rehypeRaw from 'rehype-raw'
 import 'highlight.js/styles/github.css'
 import Header from '../Header'
 import Footer from '../Footer'
@@ -60,7 +61,7 @@ export default function BlogPostPage() {
                   </div>
                 )}
                 <div className="blog-post-body post-body">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, rehypeHighlight]}>
                     {post.body}
                   </ReactMarkdown>
                 </div>

@@ -1,15 +1,5 @@
 const COLUMNS = [
   {
-    label: 'AI & Robotics',
-    items: [
-      'Robot control dashboards',
-      'Real-time 3D visualization',
-      'Teleoperation interfaces',
-      'Operator workflow tools',
-      'Hardware state monitoring',
-    ],
-  },
-  {
     label: 'E-Commerce & Mobile',
     items: [
       'Shopify-native mobile apps',
@@ -19,6 +9,16 @@ const COLUMNS = [
       'Personalization and analytics dashboards',
     ],
   },
+  {
+    label: 'AI & Robotics',
+    items: [
+      'Robot control dashboards',
+      'Real-time 3D visualization',
+      'Teleoperation interfaces',
+      'Operator workflow tools',
+      'Hardware state monitoring',
+    ],
+  },
 ]
 
 export default function Capabilities() {
@@ -26,8 +26,8 @@ export default function Capabilities() {
     <section className="section-block capability-section" id="capabilities">
       <div className="section-heading">
         <div className="section-meta">
-          <span className="mono-label">S / 08 — Capabilities</span>
-          <span className="mono-label">Matrix</span>
+          <span className="mono-label">S / 04 — Services</span>
+          <span className="mono-label">Capabilities Matrix</span>
         </div>
         <h2>
           Where the work <em>actually</em> lives.

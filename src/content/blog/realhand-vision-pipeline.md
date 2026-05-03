@@ -1,22 +1,11 @@
 ---
-title: "From Robot Hands to Showrooms: Real-Time 3D in the Browser"
+title: "When Photos Aren't Enough: Interactive 3D That Makes Complex Products Click"
 slug: "realhand-vision-pipeline"
-date: "2026-04-30"
-excerpt: "Browser-based hand tracking that drives 31 robotic hand models from a webcam — and the same engine that turns a flat product photo into a showroom you can rotate and place."
+date: "2026-04-29"
+excerpt: "When a flat image can't carry scale, motion, or material, customers hesitate. Interactive 3D — like the webcam-driven robotic hand demo we built for Realhand — turns the product itself into the explanation."
 featuredImage: "https://img.youtube.com/vi/xwrGzC8Z14s/maxresdefault.jpg"
+hideHero: true
 ---
-
-A product photo stops working the moment a customer wants to know how thick the cushion is, what the back joinery looks like, or whether the brass leg is satin or polished. They reach for "more photos." If there aren't more photos, they leave.
-
-The fix is not more photos. The fix is the product itself, in the browser, that they can pick up and turn over.
-
-This is the same engineering pattern we used to ship Realhand's real-time teleoperation interface — and it is what we now bring into commerce.
-
-## Realhand — the proof case
-
-A real-time 3D visualization platform that uses webcam-based hand tracking to control robotic hand models entirely in the browser. Built with MediaPipe and Three.js, it tracks 21 hand keypoints via AI and maps them to 31 different robotic hand models with zero installation required.
-
-The product question behind the work was straightforward: how do you let an operator inspect, calibrate, and demonstrate a robotic hand without shipping hardware to every prospective customer or engineer? Putting the simulator in the browser collapses the entire onboarding loop — open a URL, allow the camera, the robot moves with your hand.
 
 <div class="post-video">
   <iframe
@@ -28,56 +17,113 @@ The product question behind the work was straightforward: how do you let an oper
   ></iframe>
 </div>
 
-### Approach
+Many products become more compelling when customers can understand them before they ever see the real thing. With the right interactive experience, a product image can become a clear sense of form, scale, movement, and use.
 
-Three constraints shaped the architecture:
+A robotic hand, a machine, a piece of furniture, or a technical tool carries more than appearance. It has proportion, material, motion, behavior, and context. Interactive 3D helps customers explore those qualities directly — turning a product from something customers look at into something they can experience.
 
-1. **Camera-first input.** MediaPipe Hands runs in the browser and emits 21 keypoints per frame. The pipeline normalizes those keypoints into a joint-angle vector that any URDF-described hand can consume — input is hand-agnostic, output is hand-specific. That is what unlocks 31-model coverage from a single pipeline.
-2. **Real-time 3D rendering.** Three.js (via React Three Fiber and Drei) handles the scene graph, the URDF loader, lighting, and orbit controls. Every frame has to do CV inference, joint mapping, and a render — the React tree stays shallow and most state lives in Zustand outside React's render path.
-3. **Zero install.** A static web app. No native binaries, no plugins, no marketplace approvals. A prospective customer can scan a QR code on a trade-show floor and be teleoperating a robotic hand on their phone within seconds.
+<aside class="post-cta post-cta--split">
+  <div class="post-cta-copy">
+    <span class="post-cta-eyebrow mono-label">Try it yourself</span>
+    <h3 class="post-cta-headline">Move your hand. Watch the robot follow.</h3>
+    <p class="post-cta-body">No install, no download. Open the demo, allow your camera, and a robotic hand mirrors your motion in your browser — exactly the experience in the video above.</p>
+    <a class="post-cta-button" href="https://www.realhand.com/demo" target="_blank" rel="noreferrer">
+      Try the live demo at realhand.com →
+    </a>
+  </div>
+  <div class="post-cta-media">
+    <img src="/realhand-demo-preview.png" alt="Realhand interactive demo — webcam-driven robotic hand model with selectable hand variants" loading="lazy" />
+  </div>
+</aside>
 
-### Stack
+## Project: Realhand
 
-- **React 18** for the application shell
-- **Zustand** for high-frequency state outside the render path
-- **Three.js** as the 3D engine
-- **React Three Fiber** to bind Three.js into React idioms
-- **React Three Drei** for orbit controls, environment, and helpers
-- **MediaPipe Hands** for the 21-keypoint webcam pipeline
-- **URDF** parsing for the 31 hand models
+A real-time 3D experience that lets anyone control a robotic hand model with their webcam — no install, no SDK, just a link.
 
-Chosen for fit, not novelty. Every layer is the boring, well-supported answer to its slot — which is what real-time work needs.
+Realhand needed to make robotic hand models easier to understand before customers had access to the hardware. A video could show the product moving. A diagram could explain the parts. Neither could let a user feel the basic interaction. So we built a web experience where users open a link, move their own hand, and watch a robotic hand respond on screen.
 
-[Try the live build →](https://www.realhand.com/demo)
+The result:
 
-## What this means for commerce
+- The product became easier to understand
+- Users could see the robotic hand from different angles
+- Users could connect their own gesture to the robot's motion
+- Different hand models could be compared in one place
+- Sales, demo, and onboarding conversations became more concrete
 
-The difference between rotating a robotic hand at 60 frames per second and rotating a side table at 60 frames per second is the model and the lighting rig — not the engine. The technical work is already done. We adapt a system that already runs at frame rate against camera input, and point it at a catalogue.
+<figure class="post-figure">
+  <img src="/blog-extras/realhand-demo-recording.gif" alt="Realhand model picker — selecting between RealHand O6, L10, L20, Shadow Hand, Allegro Hand, Inspire Hand, Leap Hand, Schunk SVH, Barrett, DClaw, Panda Gripper, and others" loading="lazy" />
+  <figcaption>Browsing supported hand models — RealHand O-series, L-series, Shadow, Allegro, Inspire, Leap, Schunk SVH, Barrett, DClaw, Panda Gripper, and more, all controllable from the same webcam pipeline.</figcaption>
+</figure>
 
-What 3D actually does on a product page comes down to three things, and only one of them is "looks cool."
+The most important outcome wasn't that the experience felt advanced — it was that the product stopped feeling abstract.
 
-1. **Eliminates the photo-deficit gap.** A 3D model is every angle, simultaneously. The customer who wants to see the seam under the armrest gets it without commissioning another shoot. On furniture sites where photo coverage was the constraint, this collapses the bounce-off-PDP rate.
-2. **Sets honest expectations.** Real-scale rendering with accurate materials means fewer returns. Brands like **Crate & Barrel**, **Pottery Barn**, and **Burrow** ship `<model-viewer>` on their PDPs for exactly this reason — the return cost of a sofa that's "smaller than I expected" is worse than the engineering cost of giving people the truth up front.
-3. **Becomes the AR entry point for free.** Once you have a clean glTF model, the same asset launches a native AR session on iOS (Quick Look) and Android (Scene Viewer). One file, two surfaces.
+## From display to understanding
 
-Imagine the kind of brand that takes its photography seriously — **Muji**, **Hay**, **Menu**, **Common Projects**. Their product pages already do most of the work through composition. What 3D adds is the next half-inch of confidence:
+For complex physical products, photos and copy can only carry so much. Customers are left wondering how big it is, what the back looks like, how parts move, what the material feels like. Interactive 3D answers those questions: the customer rotates, inspects, and in some cases interacts with the product directly. The page stops being a gallery and becomes a product experience.
 
-- A walnut stool the customer can flip over to see the join.
-- A linen napkin that picks up real light on its weave when you orbit it.
-- A ceramic vase that, with two taps, drops onto your living room floor at real scale through the camera.
+Example products that benefit from this:
 
-None of that requires changing the brand voice. The 3D viewer slots into the existing PDP layout. The photography stays. The 3D is what happens when the customer is hovering on the buy button and not quite sure.
+- **Furniture and lighting** — proportion, finish, fit in a room
+- **Robotics and hardware** — how moving parts operate
+- **Wearables, footwear, and bags** — fabric, structure, real-world fit
+- **Ceramics, tools, and instruments** — material detail and hand-feel
+- **Bikes, audio gear, and outdoor equipment** — geometry, controls, setup
 
-## What we hand off
+## Extension: AR for marketing
 
-- A reusable React 3D viewer component (orbit controls, restrained interaction prompts, brand-tinted lighting environment).
-- A glTF/USDZ asset pipeline — Blender or Reality Composer to a binary `.glb` and a paired `.usdz` for iOS AR Quick Look — sized for fast first paint (~2 MB target).
-- AR fallback via Google's `<model-viewer>` so the same model launches the native AR session on both iOS and Android.
-- A QR bridge for desktop visitors so they can scan-to-continue on phone with the AR session pre-armed.
-- Asset CMS plumbing — uploading a new `.glb` should not require a deploy.
+The same real-time vision and rendering stack that drives Realhand's webcam-controlled hand tracking also powers marketing-side AR. We built the official AR filter for Marvel's *The Marvels* — a real-time object-detection effect that recognizes cats in the camera feed and transforms them into Flerkens — deployed across TikTok and the Regal Cinema app during the film's launch window.
 
-## The pitch, plainly
+<div class="reading-grid">
+  <a class="reading-card" href="/blog/marvels-flerken-ar-campaign">
+    <div class="reading-card-img">
+      <img src="https://www.lingyizhou.com/assets/spectacles-1771906913985.gif" alt="" loading="lazy" />
+    </div>
+    <div class="reading-card-body">
+      <h4 class="reading-card-title">Marvel's Flerken — AR marketing for The Marvels</h4>
+      <div class="reading-card-meta">
+        <span class="reading-card-source">orchia.studio · case study</span>
+        <span class="reading-card-arrow">→</span>
+      </div>
+    </div>
+  </a>
+</div>
 
-If you are a lifestyle or furniture brand whose product page is doing 80% of the conversion work and the last 20% is "I can't quite tell from the photos," 3D is the cheapest 20% you can add. The engineering is solved. The asset cost is one-time per SKU. The conversion lift, where it matters, is on items where uncertainty is the actual obstacle to checkout.
+## Further reading
 
-If that sounds like your catalogue — sofas, lighting, ceramics, furniture, anything tactile — [start a conversation](/#contact). We will show you a working viewer with one of your products inside a week.
+<div class="reading-grid">
+  <a class="reading-card" href="https://www.threekit.com/blog/10-brands-using-3d-product-visualization" target="_blank" rel="noreferrer">
+    <div class="reading-card-img">
+      <img src="/blog-extras/threekit-10brands.png" alt="" loading="lazy" />
+    </div>
+    <div class="reading-card-body">
+      <h4 class="reading-card-title">10 brands using 3D product visualization — Crate &amp; Barrel, Lovesac, Herman Miller, Roam, Modarri, and more</h4>
+      <div class="reading-card-meta">
+        <span class="reading-card-source">threekit.com</span>
+        <span class="reading-card-arrow">→</span>
+      </div>
+    </div>
+  </a>
+  <a class="reading-card" href="https://www.shopify.com/case-studies/rebecca-minkoff" target="_blank" rel="noreferrer">
+    <div class="reading-card-img">
+      <img src="https://cdn.shopify.com/s/files/1/0693/0215/7334/files/rebecca-minkoff.caseStudy01.jpg?v=1714426409" alt="" loading="lazy" />
+    </div>
+    <div class="reading-card-body">
+      <h4 class="reading-card-title">In going 3D, Rebecca Minkoff's customers became nearly 30% more likely to buy</h4>
+      <div class="reading-card-meta">
+        <span class="reading-card-source">shopify.com</span>
+        <span class="reading-card-arrow">→</span>
+      </div>
+    </div>
+  </a>
+  <a class="reading-card" href="https://www.threekit.com/case-study-taylormade" target="_blank" rel="noreferrer">
+    <div class="reading-card-img">
+      <img src="/blog-extras/threekit-taylormade.png" alt="" loading="lazy" />
+    </div>
+    <div class="reading-card-body">
+      <h4 class="reading-card-title">TaylorMade grows with Threekit — 2× traffic, hit 3-month sales in 30 days</h4>
+      <div class="reading-card-meta">
+        <span class="reading-card-source">threekit.com</span>
+        <span class="reading-card-arrow">→</span>
+      </div>
+    </div>
+  </a>
+</div>

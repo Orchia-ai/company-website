@@ -34,6 +34,7 @@ const posts: BlogPost[] = Object.values(modules)
       date: data.date ?? '',
       excerpt: data.excerpt ?? '',
       featuredImage: data.featuredImage || undefined,
+      hideHero: data.hideHero === 'true',
       body: content,
     } satisfies BlogPost
   })

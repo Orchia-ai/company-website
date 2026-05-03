@@ -4,6 +4,7 @@ export interface BlogPostMeta {
   date: string
   excerpt: string
   featuredImage?: string
+  hideHero?: boolean
 }
 
 export interface BlogPost extends BlogPostMeta {

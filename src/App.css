@@ -3412,6 +3412,20 @@ body:has(.splash) {
   /* ── Capabilities matrix ── */
   .capability-col { padding: 20px 16px 24px; }
   .capability-row { font-size: 0.9rem; padding: 10px 0; }
+
+  /* ── Hero — collapse capability groups to label-only chips ── */
+  .hero-sub { display: none; }
+  .hero-rule { margin-bottom: 12px; }
+  .hero-capability-matrix { margin: 0 0 20px; }
+  .hero-capability-group { padding: 10px 14px; gap: 0; }
+  .hero-capability-label { padding-bottom: 0; border-bottom: none; font-size: 0.65rem; }
+  .hero-capability-items { display: none; }
+
+  /* ── Work cards — tighter thumb + hide verbose description ── */
+  .work-item { padding: 16px 10px; gap: 10px 12px; }
+  .work-thumb { min-height: 100px; }
+  .work-client { font-size: 1.45rem; }
+  .work-desc { display: none; }
 }
 
 /* ── Blog / Journal (reuses .section-block + .tracks) ── */

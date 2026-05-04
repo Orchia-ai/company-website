@@ -70,7 +70,10 @@ export default function BlogPostPage() {
 
   const origin = typeof window !== 'undefined' ? window.location.origin : ''
   const canonicalUrl = typeof window !== 'undefined' ? window.location.href : ''
-  const ogImage = post?.featuredImage
+  const featuredIsVideo = post?.featuredImage
+    ? /\.(mp4|webm|mov)$/i.test(post.featuredImage)
+    : false
+  const ogImage = post?.featuredImage && !featuredIsVideo
     ? post.featuredImage.startsWith('http')
       ? post.featuredImage
       : `${origin}${post.featuredImage}`

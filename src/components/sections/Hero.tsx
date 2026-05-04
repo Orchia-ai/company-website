@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ArrowRight } from '../../icons'
 import PhoneMockup from '../PhoneMockup'
 
@@ -27,20 +27,34 @@ const CAPABILITY_GROUPS = [
 
 export default function Hero() {
   const [hoveredGroup, setHoveredGroup] = useState<number | null>(null)
-  const [scrolledGroup, setScrolledGroup] = useState(0)
-  const matrixRef = useRef<HTMLDivElement>(null)
+  const phoneOverride = hoveredGroup !== null ? CAPABILITY_GROUPS[hoveredGroup].phoneIndex : null
 
-  const activeGroup = hoveredGroup ?? scrolledGroup
-  const phoneOverride = CAPABILITY_GROUPS[activeGroup].phoneIndex
+  const matrixRef = useRef<HTMLDivElement | null>(null)
+  const [scrollProgress, setScrollProgress] = useState(0)
 
-  const handleMatrixScroll = () => {
+  useEffect(() => {
     const el = matrixRef.current
     if (!el) return
-    const card = el.firstElementChild as HTMLElement | null
-    if (!card) return
-    const cardWidth = card.offsetWidth
-    const idx = Math.round(el.scrollLeft / cardWidth)
-    setScrolledGroup(Math.min(Math.max(0, idx), CAPABILITY_GROUPS.length - 1))
+    const handleScroll = () => {
+      const max = el.scrollWidth - el.clientWidth
+      setScrollProgress(max > 0 ? el.scrollLeft / max : 0)
+    }
+    handleScroll()
+    el.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleScroll)
+    return () => {
+      el.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
+    }
+  }, [])
+
+  const thumbWidthPct = 100 / CAPABILITY_GROUPS.length
+  const thumbLeftPct = scrollProgress * (100 - thumbWidthPct)
+
+  const jumpToIndex = (i: number) => {
+    const el = matrixRef.current
+    if (!el) return
+    el.scrollTo({ left: i * el.clientWidth, behavior: 'smooth' })
   }
 
   return (
@@ -73,36 +87,55 @@ export default function Hero() {
               serious technical execution.
             </p>
 
-            {/* Inline phone — mobile only, responds to horizontal card scroll */}
-            <div className="hero-mobile-phone" aria-hidden="true">
-              <PhoneMockup activeOverride={phoneOverride} />
-            </div>
+            <div className="hero-capability-wrap">
+              <div
+                className="hero-capability-matrix"
+                aria-label="Capability groups"
+                ref={matrixRef}
+              >
+                {CAPABILITY_GROUPS.map((group, i) => (
+                  <div
+                    key={group.label}
+                    className={`hero-capability-group${hoveredGroup === i ? ' hero-capability-group--active' : ''}`}
+                    style={{ animationDelay: `${0.28 + i * 0.06}s` }}
+                    onMouseEnter={() => setHoveredGroup(i)}
+                    onMouseLeave={() => setHoveredGroup(null)}
+                    onFocus={() => setHoveredGroup(i)}
+                    onBlur={() => setHoveredGroup(null)}
+                    tabIndex={0}
+                  >
+                    <div className="hero-capability-label mono-label">{group.label}</div>
+                    <ul className="hero-capability-items">
+                      {group.items.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
 
-            <div
-              className="hero-capability-matrix"
-              aria-label="Capability groups"
-              ref={matrixRef}
-              onScroll={handleMatrixScroll}
-            >
-              {CAPABILITY_GROUPS.map((group, i) => (
-                <div
-                  key={group.label}
-                  className={`hero-capability-group${activeGroup === i ? ' hero-capability-group--active' : ''}`}
-                  style={{ animationDelay: `${0.28 + i * 0.06}s` }}
-                  onMouseEnter={() => setHoveredGroup(i)}
-                  onMouseLeave={() => setHoveredGroup(null)}
-                  onFocus={() => setHoveredGroup(i)}
-                  onBlur={() => setHoveredGroup(null)}
-                  tabIndex={0}
-                >
-                  <div className="hero-capability-label mono-label">{group.label}</div>
-                  <ul className="hero-capability-items">
-                    {group.items.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
+              <div className="hero-capability-scrollbar">
+                <div className="hero-capability-track">
+                  {CAPABILITY_GROUPS.map((group, i) => (
+                    <button
+                      key={group.label}
+                      type="button"
+                      className="hero-capability-track-segment"
+                      style={{ left: `${i * thumbWidthPct}%`, width: `${thumbWidthPct}%` }}
+                      onClick={() => jumpToIndex(i)}
+                      aria-label={`Show ${group.label}`}
+                    />
+                  ))}
+                  <div
+                    className="hero-capability-thumb"
+                    aria-hidden="true"
+                    style={{
+                      width: `${thumbWidthPct}%`,
+                      transform: `translateX(${(thumbLeftPct / thumbWidthPct) * 100}%)`,
+                    }}
+                  />
                 </div>
-              ))}
+              </div>
             </div>
 
             <div className="hero-actions" style={{ animationDelay: '0.6s' }}>

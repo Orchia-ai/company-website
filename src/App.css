@@ -3282,6 +3282,27 @@ body:has(.splash) {
     font-size: 1.35rem;
   }
 
+  /* ── Blog index cards — per-post mobile layouts ── */
+  /* Realhand: balanced 1:1 image (square) over a compact text row */
+  .blog-track-card[href$="realhand-vision-pipeline"] .track-image {
+    aspect-ratio: 1 / 1;
+    min-height: 0;
+  }
+  .blog-track-card[href$="realhand-vision-pipeline"] .track-content {
+    padding: 22px 24px 26px;
+  }
+
+  /* Really AR: side-by-side, image 3 / text 7 */
+  .blog-track-card[href$="marvels-flerken-ar-campaign"] {
+    grid-template-columns: 3fr 7fr;
+  }
+  .blog-track-card[href$="marvels-flerken-ar-campaign"] .track-image {
+    min-height: 100%;
+  }
+  .blog-track-card[href$="marvels-flerken-ar-campaign"] .track-content {
+    padding: 22px 20px 24px;
+  }
+
   /* ── Process ── */
   .workflow-card {
     grid-template-columns: 40px 1fr;
@@ -3382,92 +3403,6 @@ body:has(.splash) {
     white-space: normal;
     font-size: 0.72rem;
   }
-
-  /* ── Section spacing — tighten vertical rhythm on mobile ── */
-  .section-block { margin-bottom: 56px; }
-  .section-heading { margin-bottom: 24px; }
-
-  /* ── Hero — hide the phone specimen so the hero stays compact ── */
-  .hero-spread-specimen { display: none; }
-  .hero-spread { gap: 20px; }
-
-  /* ── Spatial — cap the 3D viewer height on small screens ── */
-  .spatial-viewer-frame { aspect-ratio: 4 / 3; max-height: 260px; }
-  .spatial-credit { margin-top: 28px; padding-top: 20px; gap: 20px; }
-  .spatial-credit-media { aspect-ratio: 16 / 9; max-height: 200px; }
-
-  /* ── Commerce Journey — reduce card height in 2-col grid ── */
-  .journey-step { min-height: 185px; padding: 10px 10px 14px; gap: 10px; }
-  .journey-phone { height: 76px; }
-  .journey-step-label { font-size: 0.98rem; }
-  .journey-step-desc { font-size: 0.78rem; line-height: 1.4; }
-
-  /* ── Studio / About section ── */
-  .studio-section { padding: 32px 18px 40px; margin: 32px 0; }
-  .studio-rule { margin: 16px 0 14px; }
-  .studio-prose { gap: 14px; }
-  .studio-prose p { font-size: 0.96rem; line-height: 1.6; }
-  .studio-closer { margin-top: 22px; }
-
-  /* ── Capabilities matrix ── */
-  .capability-col { padding: 20px 16px 24px; }
-  .capability-row { font-size: 0.9rem; padding: 10px 0; }
-
-  /* ── Hero — inline phone + horizontal scroll capability cards ── */
-  .hero-rule { margin-bottom: 12px; }
-
-  /* Show inline phone between description and matrix */
-  .hero-mobile-phone {
-    display: flex;
-    justify-content: center;
-    margin: 0 0 20px;
-  }
-  .hero-mobile-phone .phone-frame {
-    width: 152px;
-    height: 312px;
-    border-radius: 12px;
-  }
-
-  /* Horizontal scroll strip */
-  .hero-capability-matrix {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding-left: 22px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    margin: 0 -22px 20px;
-    padding: 0 0 0 22px;
-    border: none;
-    gap: 0;
-  }
-  .hero-capability-matrix::-webkit-scrollbar { display: none; }
-
-  .hero-capability-group {
-    flex: 0 0 80%;
-    scroll-snap-align: start;
-    padding: 12px 16px 16px;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    border-right: 1px solid var(--border);
-    border-left: none;
-    background: transparent;
-  }
-  .hero-capability-group:first-child { border-left: 1px solid var(--border); }
-  .hero-capability-group:last-child { margin-right: 22px; }
-  /* Override 2x2 grid nth-child border rules */
-  .hero-capability-group:nth-child(2n) { border-left: none; }
-  .hero-capability-group:nth-child(n + 3) { border-top: 1px solid var(--border); }
-
-  .hero-capability-label { font-size: 0.65rem; }
-  .hero-capability-items { gap: 4px; }
-  .hero-capability-items li { font-size: 0.8rem; line-height: 1.3; }
-
-  /* ── Work cards — tighter thumb + hide verbose description ── */
-  .work-item { padding: 16px 10px; gap: 10px 12px; }
-  .work-thumb { min-height: 100px; }
-  .work-client { font-size: 1.45rem; }
-  .work-desc { display: none; }
 }
 
 /* ── Blog / Journal (reuses .section-block + .tracks) ── */
@@ -3505,6 +3440,12 @@ body:has(.splash) {
 
 .blog-index-section {
   padding-top: calc(var(--topbar-h, 80px) + 48px);
+}
+
+@media (max-width: 640px) {
+  .blog-index-section {
+    padding-top: 16px;
+  }
 }
 
 .blog-index-empty {
@@ -3975,18 +3916,27 @@ body:has(.splash) {
   margin: 0 0 32px;
   animation: emerge 0.6s cubic-bezier(0.2, 0, 0, 1) both;
 }
-
-/* Mobile inline phone — hidden on desktop, shown between sub and matrix on mobile */
-.hero-mobile-phone { display: none; }
-.hero-capability-matrix {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0;
+.hero-capability-wrap {
   margin: 0 0 36px;
+  position: relative;
+}
+.hero-capability-matrix {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 0;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.hero-capability-matrix::-webkit-scrollbar {
+  display: none;
 }
 .hero-capability-group {
+  flex: 0 0 100%;
   padding: 16px 20px 18px;
   display: flex;
   flex-direction: column;
@@ -3996,6 +3946,11 @@ body:has(.splash) {
   transition: background 0.25s ease;
   animation: emerge 0.6s cubic-bezier(0.2, 0, 0, 1) both;
   outline: none;
+  scroll-snap-align: start;
+  border-right: 1px solid var(--border);
+}
+.hero-capability-group:last-child {
+  border-right: none;
 }
 .hero-capability-group:hover,
 .hero-capability-group--active,
@@ -4006,12 +3961,6 @@ body:has(.splash) {
 .hero-capability-group--active .hero-capability-label,
 .hero-capability-group:focus-visible .hero-capability-label {
   color: var(--text-strong);
-}
-.hero-capability-group:nth-child(2n) {
-  border-left: 1px solid var(--border);
-}
-.hero-capability-group:nth-child(n + 3) {
-  border-top: 1px solid var(--border);
 }
 .hero-capability-label {
   color: var(--accent);
@@ -4048,11 +3997,55 @@ body:has(.splash) {
   background: var(--accent);
 }
 
-@media (max-width: 520px) {
-  .hero-capability-matrix { grid-template-columns: 1fr; }
-  .hero-capability-group:nth-child(2n) { border-left: none; }
-  .hero-capability-group + .hero-capability-group { border-top: 1px solid var(--border); }
+/* Editorial scroll affordance — single hairline track with gold thumb */
+.hero-capability-scrollbar {
+  padding: 14px 2px 0;
 }
+.hero-capability-track {
+  position: relative;
+  height: 14px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.hero-capability-track::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--border);
+  transform: translateY(-50%);
+}
+.hero-capability-track-segment {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.hero-capability-track-segment:hover ~ .hero-capability-thumb,
+.hero-capability-track:hover .hero-capability-thumb {
+  background: var(--text-strong);
+}
+.hero-capability-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 6px;
+  background: var(--accent);
+  transition: transform 0.35s cubic-bezier(0.2, 0, 0, 1), background 0.2s ease;
+  transform-origin: left center;
+  margin-top: -3px;
+  pointer-events: none;
+  border-radius: 1px;
+}
+
 
 /* ──────────────────────────── Track card image placeholder ──────────────────────────── */
 .track-image-placeholder {

@@ -1,8 +1,8 @@
 ---
-title: "When Photos Aren't Enough: Interactive 3D That Makes Complex Products Click"
+title: "Bring Complex Products to Life with Interactive 3D"
 slug: "realhand-vision-pipeline"
 date: "2026-04-29"
-excerpt: "When a flat image can't carry scale, motion, or material, customers hesitate. Interactive 3D — like the webcam-driven robotic hand demo we built for Realhand — turns the product itself into the explanation."
+excerpt: "A browser-based 3D experience that helps customers understand form, scale, motion, and interaction before they ever see the physical product."
 featuredImage: "https://img.youtube.com/vi/xwrGzC8Z14s/maxresdefault.jpg"
 hideHero: true
 ---
@@ -41,20 +41,16 @@ A real-time 3D experience that lets anyone control a robotic hand model with the
 
 Realhand needed to make robotic hand models easier to understand before customers had access to the hardware. A video could show the product moving. A diagram could explain the parts. Neither could let a user feel the basic interaction. So we built a web experience where users open a link, move their own hand, and watch a robotic hand respond on screen.
 
-The result:
-
-- The product became easier to understand
-- Users could see the robotic hand from different angles
-- Users could connect their own gesture to the robot's motion
-- Different hand models could be compared in one place
-- Sales, demo, and onboarding conversations became more concrete
-
-<figure class="post-figure">
-  <img src="/blog-extras/realhand-demo-recording.gif" alt="Realhand model picker — selecting between RealHand O6, L10, L20, Shadow Hand, Allegro Hand, Inspire Hand, Leap Hand, Schunk SVH, Barrett, DClaw, Panda Gripper, and others" loading="lazy" />
-  <figcaption>Browsing supported hand models — RealHand O-series, L-series, Shadow, Allegro, Inspire, Leap, Schunk SVH, Barrett, DClaw, Panda Gripper, and more, all controllable from the same webcam pipeline.</figcaption>
-</figure>
-
-The most important outcome wasn't that the experience felt advanced — it was that the product stopped feeling abstract.
+<div class="post-result-split">
+  <div class="post-result-text">
+    <p>The result was a product demo that felt immediate. Users could see the robotic hand from different angles, move their own hand, and understand the relationship between gesture and robotic motion. For sales and onboarding, the product became easier to explain because customers could experience the core interaction directly.</p>
+    <p>The most important outcome wasn't that the experience felt advanced — it was that the product stopped feeling abstract.</p>
+  </div>
+  <figure class="post-figure">
+    <img src="/blog-extras/realhand-demo-recording.gif" alt="Realhand model picker — selecting between RealHand O6, L10, L20, Shadow Hand, Allegro Hand, Inspire Hand, Leap Hand, Schunk SVH, Barrett, DClaw, Panda Gripper, and others" loading="lazy" />
+    <figcaption>Browsing supported hand models — RealHand O-series, L-series, Shadow, Allegro, Inspire, Leap, Schunk SVH, Barrett, DClaw, Panda Gripper, and more, all controllable from the same webcam pipeline.</figcaption>
+  </figure>
+</div>
 
 ## From display to understanding
 
@@ -68,12 +64,12 @@ Example products that benefit from this:
 - **Ceramics, tools, and instruments** — material detail and hand-feel
 - **Bikes, audio gear, and outdoor equipment** — geometry, controls, setup
 
-## Extension: AR for marketing
+## Read next
 
-The same real-time vision and rendering stack that drives Realhand's webcam-controlled hand tracking also powers marketing-side AR. We built the official AR filter for Marvel's *The Marvels* — a real-time object-detection effect that recognizes cats in the camera feed and transforms them into Flerkens — deployed across TikTok and the Regal Cinema app during the film's launch window.
+The same idea also applies to AR marketing. Before Realhand, our team built camera-based AR experiences for entertainment campaigns, including interactive movie launches on Regal Cinema's mobile app. Those projects were built around the same principle: when users can interact with a product, character, or story through their camera, the experience becomes easier to understand and remember.
 
 <div class="reading-grid">
-  <a class="reading-card" href="/blog/marvels-flerken-ar-campaign">
+  <a class="reading-card reading-card--portrait" href="/blog/marvels-flerken-ar-campaign">
     <div class="reading-card-img">
       <img src="https://www.lingyizhou.com/assets/spectacles-1771906913985.gif" alt="" loading="lazy" />
     </div>
@@ -92,7 +88,7 @@ The same real-time vision and rendering stack that drives Realhand's webcam-cont
 <div class="reading-grid">
   <a class="reading-card" href="https://www.threekit.com/blog/10-brands-using-3d-product-visualization" target="_blank" rel="noreferrer">
     <div class="reading-card-img">
-      <img src="/blog-extras/threekit-10brands.png" alt="" loading="lazy" />
+      <img src="https://www.threekit.com/hubfs/crate%20and%20barrel%20couch%20customizer%20%281%29.gif" alt="" loading="lazy" />
     </div>
     <div class="reading-card-body">
       <h4 class="reading-card-title">10 brands using 3D product visualization — Crate &amp; Barrel, Lovesac, Herman Miller, Roam, Modarri, and more</h4>
@@ -104,7 +100,7 @@ The same real-time vision and rendering stack that drives Realhand's webcam-cont
   </a>
   <a class="reading-card" href="https://www.shopify.com/case-studies/rebecca-minkoff" target="_blank" rel="noreferrer">
     <div class="reading-card-img">
-      <img src="https://cdn.shopify.com/s/files/1/0693/0215/7334/files/rebecca-minkoff.caseStudy01.jpg?v=1714426409" alt="" loading="lazy" />
+      <img src="https://cdn.shopify.com/s/files/1/0693/0215/7334/files/rebecca-minkoff.socialShare.jpg?v=1717812641" alt="" loading="lazy" />
     </div>
     <div class="reading-card-body">
       <h4 class="reading-card-title">In going 3D, Rebecca Minkoff's customers became nearly 30% more likely to buy</h4>
@@ -116,7 +112,7 @@ The same real-time vision and rendering stack that drives Realhand's webcam-cont
   </a>
   <a class="reading-card" href="https://www.threekit.com/case-study-taylormade" target="_blank" rel="noreferrer">
     <div class="reading-card-img">
-      <img src="/blog-extras/threekit-taylormade.png" alt="" loading="lazy" />
+      <img src="https://www.threekit.com/hubfs/Snip20200507_54-1.png" alt="" loading="lazy" />
     </div>
     <div class="reading-card-body">
       <h4 class="reading-card-title">TaylorMade grows with Threekit — 2× traffic, hit 3-month sales in 30 days</h4>

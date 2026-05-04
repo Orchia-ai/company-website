@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 const clients: { name: string; src: string; invert?: boolean; showName?: boolean }[] = [
   { name: 'Artly AI',                 src: '/logos/artly-ai.png'      },
   { name: 'Realhand',                 src: '/logos/realhand.webp'     },
-  { name: 'Really AR',                src: '/logos/really-ar.png',    showName: true },
+  { name: 'Regal Cinema',             src: '/logos/really-ar.png',    showName: true },
   { name: 'Artly Coffee',             src: '/logos/artly-coffee.png'  },
   { name: 'NYU',                      src: '/logos/nyu.svg'           },
   { name: 'NYU Urban Systems Lab',    src: '/logos/usl.webp'          },

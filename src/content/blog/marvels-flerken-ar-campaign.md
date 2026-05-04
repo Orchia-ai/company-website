@@ -1,55 +1,148 @@
 ---
-title: "Marvel's Flerken — AR Marketing for The Marvels"
+title: "From AR Campaigns to E-Commerce Features"
 slug: "marvels-flerken-ar-campaign"
-date: "2024-11-10"
-excerpt: "Real-time object detection that turned cats into Flerkens for the official AR marketing campaign behind The Marvels — deployed on TikTok and the Regal Cinema app."
+date: "2024-11-09"
+excerpt: "Camera-based AR can help customers place furniture, try on fashion, and experience products more naturally inside a mobile commerce app."
 featuredImage: "https://www.lingyizhou.com/assets/spectacles-1771906913985.gif"
+hideHero: true
 ---
 
-## Overview
-
-An interactive AR filter built as the official AR marketing campaign for Marvel's *The Marvels*. The filter uses real-time object detection to recognize cats in the camera feed and transforms them into Flerkens — the universe's friendliest tentacled cosmic predator — in real time. Deployed across TikTok and the Regal Cinema app, the campaign reached viral distribution and significant user engagement during the film's launch window.
-
-<div class="post-video">
-  <video
-    src="https://www.lingyizhou.com/assets/cargo-import/marvel-s-flerken-ar-filter-commercial-ar-campaign/1697673358881.mp4"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="metadata"
-    aria-label="Marvel's Flerken AR Filter campaign clip"
-  ></video>
+<div class="post-hero-split">
+  <div class="post-hero-text">
+    <p>AR works best when it feels immediate, useful, and natural to the phone.</p>
+    <p>A customer opens the camera, points it at something familiar, and a product or brand moment appears in the real world. The interaction is simple, visual, and memorable.</p>
+    <p>For <em>The Marvels</em>, we built a camera-based filter that recognised a cat in the feed and transformed it into a Flerken from the Marvel universe. A fan could point the camera at their own cat, a friend's cat, a poster, or another screen — open the camera, point, watch the moment happen, and share.</p>
+    <p>The strength of the work was the clarity of the interaction. The phone camera became a playful surface for the brand, and the audience could participate instantly. The same principle can help e-commerce teams create product try-on, furniture placement, scan-to-shop, and campaign moments inside a mobile app.</p>
+  </div>
+  <div class="post-video post-video--portrait">
+    <video
+      src="https://www.lingyizhou.com/assets/cargo-import/marvel-s-flerken-ar-filter-commercial-ar-campaign/1697673358881.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      aria-label="Marvel's Flerken AR Filter campaign clip"
+    ></video>
+  </div>
 </div>
 
-## Focus
+## The room is the showroom
 
-Real-time object detection and visual overlay pipeline for a cross-platform AR marketing campaign — designed to be immediate, learn-itself-quickly, and survive the constraints of phones in cinemas and on social feeds.
+Furniture is one of the clearest use cases for AR in commerce.
 
-The interesting part of the work was making the interaction feel instant while still respecting device constraints, camera input, and the expectation that a marketing AR experience earns about three seconds before the user swipes.
+A product page can show beautiful photography. AR adds the next layer by helping customers see how a chair fits next to a table, how a lamp sits in a corner, or how a sofa feels inside their room.
 
-## Approach
+This makes the shopping experience more useful and more personal. The customer can understand scale, placement, and proportion through their own space, using the camera they already have in their hand.
 
-Three constraints shaped the build:
+For furniture, lighting, wall decor, and home objects, AR turns product browsing into product placement. It gives the customer a clearer picture of how the product belongs in their life.
 
-1. **Recognize-first interaction.** A user shouldn't have to tap, frame, or read instructions. Open the filter, point at a cat, see the cat become a Flerken. The object-detection model runs in-camera on each frame and only commits the overlay when confidence holds steady, so the Flerken doesn't pop in and out on shaky frames.
-2. **Cross-platform shipping.** The filter targeted both TikTok (Effect House) and the Regal Cinema app (custom AR runtime built on Lens Studio's pipeline). The visual layer and the detection pipeline were authored once and adapted twice — same shaders, same model, different host.
-3. **Cinema-screen safety.** Because the filter ran inside the Regal Cinema app — including in low-light theatre lobbies — exposure handling, motion smoothing, and a graceful fallback when no cat was detected all had to be tuned for environments far less forgiving than a sunlit feed shoot.
+<figure class="post-figure">
+  <img src="https://space10.com/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fag1krub5%2Fproduction%2Fbe476ad2f595cdd6ff33608cef77ad46af2b2b46-2880x1620.jpg%3Frect%3D225%2C0%2C2430%2C1620%26w%3D3200%26h%3D2133&w=3840&q=75" alt="AR furniture placement — a chair placed inside a real living room through a mobile phone camera" loading="lazy" />
+</figure>
 
-## Tools and Stack
+## Try them on
 
-- **Lens Studio** for the Snap-side build and shared visual pipeline
-- **Effect House** for the TikTok deployment
-- **JavaScript** for runtime logic and state
-- **HLSL** for custom shaders (the Flerken texture, the tentacle materials, the bloom)
-- **Object Detection** for cat recognition — the entry trigger of the entire experience
+Fashion is another strong fit for AR, especially inside a mobile commerce app.
 
-The technology was chosen for fit, not novelty — every layer is the boring, well-supported answer for a campaign that had to ship on a film release schedule.
+A customer can preview glasses, jewelry, shoes, bags, or accessories directly through the camera. They can see how a frame shape sits on their face, how a necklace catches attention, or how a shoe style works with their look.
 
-## Outcome
+This makes product discovery more immediate. The customer moves from browsing images to seeing the product on themselves, in real time, inside the same app experience.
 
-The campaign launched in 2023 alongside *The Marvels* and ran across TikTok and the Regal Cinema app, achieving viral distribution within the film's launch window. It stands as a practical AR marketing case — a clean execution where the technology stays out of the way and the brand moment lands in under three seconds.
+For fashion brands, AR can support try-on, styling, launch campaigns, loyalty moments, and shareable product interactions. It gives the mobile app a feature customers can return to, not just a place to browse.
 
-For an e-commerce equivalent, the same pattern applies: a customer points their camera at a couch, a wall, a foot, a ring finger — and the product is there at real-world scale with no instructions, no tutorial, and no app install. The detection and overlay work that made the Flerken filter feel effortless is the same engine that makes a virtual try-on feel like part of the room.
+<figure class="post-figure">
+  <img src="/blog-extras/ar-glasses-tryon.png" alt="AR glasses try-on — previewing sunglasses on a mobile phone camera with selectable frame styles" loading="lazy" />
+</figure>
 
-[See more work →](/#case-study)
+### A practical way to start
+
+The best place to begin is focused.
+
+Start with one category, one product moment, or one customer need. For furniture, that may be placement. For fashion, that may be try-on. Build one clear AR feature and learn how customers respond.
+
+From there, the same pattern can grow across product pages, campaign launches, retail apps, loyalty programs, and the broader e-commerce experience.
+
+## Read next
+
+The same camera-based pattern that turned The Marvels launch into a personal moment also drives our interactive product work — including a robotic hand that anyone can control through their browser, with no app install.
+
+<div class="reading-grid">
+  <a class="reading-card" href="/blog/realhand-vision-pipeline">
+    <div class="reading-card-img">
+      <img src="https://img.youtube.com/vi/xwrGzC8Z14s/maxresdefault.jpg" alt="" loading="lazy" />
+    </div>
+    <div class="reading-card-body">
+      <h4 class="reading-card-title">Bring complex products to life with interactive 3D</h4>
+      <div class="reading-card-meta">
+        <span class="reading-card-source">orchia.studio · case study</span>
+        <span class="reading-card-arrow">→</span>
+      </div>
+    </div>
+  </a>
+</div>
+
+## Further reading
+
+<div class="reading-grid">
+  <a class="reading-card" href="https://www.singlegrain.com/digital-marketing/ar-experiences-that-boosted-conversion-rates-by-189/" target="_blank" rel="noreferrer">
+    <div class="reading-card-img">
+      <img src="https://www.singlegrain.com/wp-content/uploads/2025/04/SG-Blog-Cover-Photos-13-2.png" alt="" loading="lazy" />
+    </div>
+    <div class="reading-card-body">
+      <h4 class="reading-card-title">AR experiences that boosted conversion rates by 189% — IKEA Place and beyond</h4>
+      <div class="reading-card-meta">
+        <span class="reading-card-source">singlegrain.com</span>
+        <span class="reading-card-arrow">→</span>
+      </div>
+    </div>
+  </a>
+  <a class="reading-card" href="https://www.shopify.com/case-studies/gunner-kennels" target="_blank" rel="noreferrer">
+    <div class="reading-card-img">
+      <img src="https://cdn.shopify.com/s/files/1/0693/0215/7334/files/gunner-kennels.socialShare.jpg?v=1717812592" alt="" loading="lazy" />
+    </div>
+    <div class="reading-card-body">
+      <h4 class="reading-card-title">Gunner Kennels used 3D/AR to reduce returns 5%, boost conversions 40%</h4>
+      <div class="reading-card-meta">
+        <span class="reading-card-source">shopify.com</span>
+        <span class="reading-card-arrow">→</span>
+      </div>
+    </div>
+  </a>
+  <a class="reading-card" href="https://www.marketingdive.com/news/warby-parker-eyes-mobile-ar-with-virtual-try-on-tool/547668/" target="_blank" rel="noreferrer">
+    <div class="reading-card-img">
+      <img src="https://imgproxy.divecdn.com/U9Jnn0_jP0iob7rKyPh14ZKQc5DDlgHbkN9eLeeZn78/g:nowe:101:66/c:1323:747/rs:fit:770:435/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS93YXJieXBhcmtlcl9DT25LSzJmLlBORw==.webp" alt="" loading="lazy" />
+    </div>
+    <div class="reading-card-body">
+      <h4 class="reading-card-title">Warby Parker eyes mobile AR with virtual try-on tool</h4>
+      <div class="reading-card-meta">
+        <span class="reading-card-source">marketingdive.com</span>
+        <span class="reading-card-arrow">→</span>
+      </div>
+    </div>
+  </a>
+  <a class="reading-card" href="https://www.marketingdive.com/news/gucci-unveils-1st-global-shoe-try-on-in-snapchat/580766/" target="_blank" rel="noreferrer">
+    <div class="reading-card-img">
+      <img src="https://imgproxy.divecdn.com/G7HWOJgisM1HXiJKCDjEuL9VOkPPDvsdd2AETDBtV7g/g:ce/rs:fit:770:435/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HdWNjaV94X1NuYXBfU2hvZV9UcnktT25fV29tZW5fMi5qcGc=.webp" alt="" loading="lazy" />
+    </div>
+    <div class="reading-card-body">
+      <h4 class="reading-card-title">Gucci unveils first global shoe try-on in Snapchat</h4>
+      <div class="reading-card-meta">
+        <span class="reading-card-source">marketingdive.com</span>
+        <span class="reading-card-arrow">→</span>
+      </div>
+    </div>
+  </a>
+  <a class="reading-card" href="https://www.retaildive.com/news/jewelry-brand-kendra-scott-introduces-ar-try-on-tool/577310/" target="_blank" rel="noreferrer">
+    <div class="reading-card-img">
+      <img src="https://imgproxy.divecdn.com/jgKFGVFPu31KzDMNO4h7EwIK9PYk5DiIh_UPVu4aF88/g:nowe:0:53/c:501:283/rs:fit:770:435/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9TY3JlZW5zaG90XzIwMjAtMDUtMDRfYXRfMTIuNTEuNDVfUE0ucG5n.webp" alt="" loading="lazy" />
+    </div>
+    <div class="reading-card-body">
+      <h4 class="reading-card-title">Jewelry brand Kendra Scott introduces AR try-on tool</h4>
+      <div class="reading-card-meta">
+        <span class="reading-card-source">retaildive.com</span>
+        <span class="reading-card-arrow">→</span>
+      </div>
+    </div>
+  </a>
+</div>

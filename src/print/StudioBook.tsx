@@ -5,25 +5,25 @@ const WORK = [
     num: '01',
     client: 'Artly',
     track: 'AI & Robotics',
-    year: '2024',
+    year: '2025',
     location: 'Seattle',
-    desc: 'Human-machine interface for an AI-powered robotic barista platform. Designed the interaction model, real-time drink status, and queue management for Artly’s café robots deployed across North America.',
+    desc: "Human-machine interface for an AI-powered robotic barista platform. Designed the interaction model, real-time drink status, and queue management for Artly's café robots deployed across café locations in North America.",
   },
   {
     num: '02',
     client: 'Realhand',
     track: 'AI & Robotics',
-    year: '2024',
+    year: '2025',
     location: 'Palo Alto',
-    desc: 'Interface design for HandOS, an AI-driven dexterous robotic hand platform. Real-time sensor feedback, tele-operation controls, and calibration flows for humanoid and industrial manipulation.',
+    desc: "Browser-based 3D vision demo and operational interface for Realhand's dexterous robotic hand platform. Real-time hand-mirroring via computer vision, tele-operation controls, and calibration flows for humanoid and industrial manipulation.",
   },
   {
     num: '03',
-    client: 'Really',
+    client: 'Really AR',
     track: 'Mobile & AR',
-    year: '2023',
+    year: '2025',
     location: 'Los Angeles',
-    desc: 'Mobile AR platform for blockbuster cinema, rebranded from Moviebill. Interactive 3D characters, collectible props, and portal experiences distributed with Regal across US and APAC markets.',
+    desc: "Mobile AR platform for Marvel and Regal Cinema. Shipped the Marvels Flerken AR campaign — a camera-based character filter deployed across iOS and Android. Interactive 3D characters, collectible props, and portal experiences distributed with Regal across US and APAC markets.",
   },
 ]
 
@@ -159,7 +159,7 @@ export default function StudioBook() {
       {/* ── CLIENTS ────────────────────────────────────── */}
       <section className="page page-clients">
         <PageCorners />
-        <PageMeta left="II — Clients Served" right="Partners · 2022 — 2025" />
+        <PageMeta left="II — Clients Served" right="Partners · 2022 — 2026" />
 
         <h2 className="page-title">
           Partners we have built <em>product</em> with.
@@ -180,7 +180,7 @@ export default function StudioBook() {
       {/* ── SELECTED WORK overview ────────────────────── */}
       <section className="page page-work-overview">
         <PageCorners />
-        <PageMeta left="III — Selected Work" right="Projects · 2023 — 2024" />
+        <PageMeta left="III — Selected Work" right="Projects · 2023 — 2025" />
 
         <h2 className="page-title page-title-large">
           Built <em>end&nbsp;to&nbsp;end</em>,<br />

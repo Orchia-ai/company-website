@@ -3413,13 +3413,55 @@ body:has(.splash) {
   .capability-col { padding: 20px 16px 24px; }
   .capability-row { font-size: 0.9rem; padding: 10px 0; }
 
-  /* ── Hero — compact capability matrix bullet lists ── */
+  /* ── Hero — inline phone + horizontal scroll capability cards ── */
   .hero-rule { margin-bottom: 12px; }
-  .hero-capability-matrix { margin: 0 0 20px; }
-  .hero-capability-group { padding: 10px 14px; gap: 6px; }
-  .hero-capability-label { padding-bottom: 6px; font-size: 0.65rem; }
-  .hero-capability-items { gap: 3px; }
-  .hero-capability-items li { font-size: 0.76rem; padding-left: 12px; line-height: 1.25; }
+
+  /* Show inline phone between description and matrix */
+  .hero-mobile-phone {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 20px;
+  }
+  .hero-mobile-phone .phone-frame {
+    width: 152px;
+    height: 312px;
+    border-radius: 12px;
+  }
+
+  /* Horizontal scroll strip */
+  .hero-capability-matrix {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 22px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 0 -22px 20px;
+    padding: 0 0 0 22px;
+    border: none;
+    gap: 0;
+  }
+  .hero-capability-matrix::-webkit-scrollbar { display: none; }
+
+  .hero-capability-group {
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+    padding: 12px 16px 16px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    border-left: none;
+    background: transparent;
+  }
+  .hero-capability-group:first-child { border-left: 1px solid var(--border); }
+  .hero-capability-group:last-child { margin-right: 22px; }
+  /* Override 2x2 grid nth-child border rules */
+  .hero-capability-group:nth-child(2n) { border-left: none; }
+  .hero-capability-group:nth-child(n + 3) { border-top: 1px solid var(--border); }
+
+  .hero-capability-label { font-size: 0.65rem; }
+  .hero-capability-items { gap: 4px; }
+  .hero-capability-items li { font-size: 0.8rem; line-height: 1.3; }
 
   /* ── Work cards — tighter thumb + hide verbose description ── */
   .work-item { padding: 16px 10px; gap: 10px 12px; }
@@ -3933,6 +3975,9 @@ body:has(.splash) {
   margin: 0 0 32px;
   animation: emerge 0.6s cubic-bezier(0.2, 0, 0, 1) both;
 }
+
+/* Mobile inline phone — hidden on desktop, shown between sub and matrix on mobile */
+.hero-mobile-phone { display: none; }
 .hero-capability-matrix {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

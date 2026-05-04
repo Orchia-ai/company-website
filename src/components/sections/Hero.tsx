@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { ArrowRight } from '../../icons'
 import PhoneMockup from '../PhoneMockup'
 
@@ -27,7 +27,21 @@ const CAPABILITY_GROUPS = [
 
 export default function Hero() {
   const [hoveredGroup, setHoveredGroup] = useState<number | null>(null)
-  const phoneOverride = hoveredGroup !== null ? CAPABILITY_GROUPS[hoveredGroup].phoneIndex : null
+  const [scrolledGroup, setScrolledGroup] = useState(0)
+  const matrixRef = useRef<HTMLDivElement>(null)
+
+  const activeGroup = hoveredGroup ?? scrolledGroup
+  const phoneOverride = CAPABILITY_GROUPS[activeGroup].phoneIndex
+
+  const handleMatrixScroll = () => {
+    const el = matrixRef.current
+    if (!el) return
+    const card = el.firstElementChild as HTMLElement | null
+    if (!card) return
+    const cardWidth = card.offsetWidth
+    const idx = Math.round(el.scrollLeft / cardWidth)
+    setScrolledGroup(Math.min(Math.max(0, idx), CAPABILITY_GROUPS.length - 1))
+  }
 
   return (
     <section className="hero">
@@ -59,11 +73,21 @@ export default function Hero() {
               serious technical execution.
             </p>
 
-            <div className="hero-capability-matrix" aria-label="Capability groups">
+            {/* Inline phone — mobile only, responds to horizontal card scroll */}
+            <div className="hero-mobile-phone" aria-hidden="true">
+              <PhoneMockup activeOverride={phoneOverride} />
+            </div>
+
+            <div
+              className="hero-capability-matrix"
+              aria-label="Capability groups"
+              ref={matrixRef}
+              onScroll={handleMatrixScroll}
+            >
               {CAPABILITY_GROUPS.map((group, i) => (
                 <div
                   key={group.label}
-                  className={`hero-capability-group${hoveredGroup === i ? ' hero-capability-group--active' : ''}`}
+                  className={`hero-capability-group${activeGroup === i ? ' hero-capability-group--active' : ''}`}
                   style={{ animationDelay: `${0.28 + i * 0.06}s` }}
                   onMouseEnter={() => setHoveredGroup(i)}
                   onMouseLeave={() => setHoveredGroup(null)}

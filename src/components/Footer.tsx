@@ -7,12 +7,8 @@ export default function Footer() {
       </div>
 
       <div className="footer-download-bar">
-        <div className="footer-download-info">
-          <span className="mono-label footer-download-label">Studio Monograph · Ed. I · 14 pp.</span>
-          <p className="footer-download-title">The Orchia <em>Capability</em> Document.</p>
-        </div>
         <a className="footer-download-link" href="/print.html" target="_blank" rel="noopener">
-          Download ↗
+          Download Monograph ↗
         </a>
       </div>
 

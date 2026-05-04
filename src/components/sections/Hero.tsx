@@ -48,6 +48,52 @@ export default function Hero() {
     }
   }, [])
 
+  // Mobile-only auto-advance every 2s; pauses on user interaction.
+  useEffect(() => {
+    const el = matrixRef.current
+    if (!el) return
+    const mq = window.matchMedia('(max-width: 768px)')
+    let timer: number | undefined
+    let paused = false
+
+    const tick = () => {
+      if (paused || !mq.matches) return
+      const w = el.clientWidth
+      if (w === 0) return
+      const total = CAPABILITY_GROUPS.length
+      const current = Math.round(el.scrollLeft / w)
+      const next = (current + 1) % total
+      el.scrollTo({ left: next * w, behavior: 'smooth' })
+    }
+    const start = () => {
+      stop()
+      if (mq.matches) timer = window.setInterval(tick, 2000)
+    }
+    const stop = () => {
+      if (timer !== undefined) {
+        window.clearInterval(timer)
+        timer = undefined
+      }
+    }
+    const pause = () => {
+      paused = true
+      window.setTimeout(() => {
+        paused = false
+      }, 6000)
+    }
+
+    start()
+    el.addEventListener('pointerdown', pause)
+    el.addEventListener('wheel', pause, { passive: true })
+    mq.addEventListener('change', start)
+    return () => {
+      stop()
+      el.removeEventListener('pointerdown', pause)
+      el.removeEventListener('wheel', pause)
+      mq.removeEventListener('change', start)
+    }
+  }, [])
+
   const thumbWidthPct = 100 / CAPABILITY_GROUPS.length
   const thumbLeftPct = scrollProgress * (100 - thumbWidthPct)
 

@@ -3382,6 +3382,36 @@ body:has(.splash) {
     white-space: normal;
     font-size: 0.72rem;
   }
+
+  /* ── Section spacing — tighten vertical rhythm on mobile ── */
+  .section-block { margin-bottom: 56px; }
+  .section-heading { margin-bottom: 24px; }
+
+  /* ── Hero — hide the phone specimen so the hero stays compact ── */
+  .hero-spread-specimen { display: none; }
+  .hero-spread { gap: 20px; }
+
+  /* ── Spatial — cap the 3D viewer height on small screens ── */
+  .spatial-viewer-frame { aspect-ratio: 4 / 3; max-height: 260px; }
+  .spatial-credit { margin-top: 28px; padding-top: 20px; gap: 20px; }
+  .spatial-credit-media { aspect-ratio: 16 / 9; max-height: 200px; }
+
+  /* ── Commerce Journey — reduce card height in 2-col grid ── */
+  .journey-step { min-height: 185px; padding: 10px 10px 14px; gap: 10px; }
+  .journey-phone { height: 76px; }
+  .journey-step-label { font-size: 0.98rem; }
+  .journey-step-desc { font-size: 0.78rem; line-height: 1.4; }
+
+  /* ── Studio / About section ── */
+  .studio-section { padding: 32px 18px 40px; margin: 32px 0; }
+  .studio-rule { margin: 16px 0 14px; }
+  .studio-prose { gap: 14px; }
+  .studio-prose p { font-size: 0.96rem; line-height: 1.6; }
+  .studio-closer { margin-top: 22px; }
+
+  /* ── Capabilities matrix ── */
+  .capability-col { padding: 20px 16px 24px; }
+  .capability-row { font-size: 0.9rem; padding: 10px 0; }
 }
 
 /* ── Blog / Journal (reuses .section-block + .tracks) ── */

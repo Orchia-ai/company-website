@@ -73,7 +73,7 @@ The same idea also applies to AR marketing. Before Realhand, our team built came
 <div class="reading-grid">
   <a class="reading-card reading-card--portrait" href="/blog/marvels-flerken-ar-campaign">
     <div class="reading-card-img">
-      <img src="https://www.lingyizhou.com/assets/spectacles-1771906913985.gif" alt="" loading="lazy" />
+      <img src="/email/flerken-thumbnail.jpg" alt="" loading="lazy" />
     </div>
     <div class="reading-card-body">
       <h4 class="reading-card-title">Marvel's Flerken — AR marketing for The Marvels</h4>

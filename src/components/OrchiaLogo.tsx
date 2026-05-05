@@ -1,10 +1,37 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
 
+export interface OrchiaLogoTuning {
+  markScale: number
+  orchiaScale: number
+  studioScale: number
+  textOffset: number
+  geometryAlpha: number
+  slimeAlpha: number
+  harmonographAlpha: number
+  flowAlpha: number
+  neuralAlpha: number
+  speed: number
+}
+
+export const DEFAULT_TUNING: OrchiaLogoTuning = {
+  markScale: 1,
+  orchiaScale: 1,
+  studioScale: 1,
+  textOffset: 1,
+  geometryAlpha: 1,
+  slimeAlpha: 1,
+  harmonographAlpha: 1,
+  flowAlpha: 1,
+  neuralAlpha: 1,
+  speed: 1,
+}
+
 interface Props {
   size?: number
   fullscreen?: boolean
   className?: string
   showText?: boolean
+  tuning?: Partial<OrchiaLogoTuning>
 }
 
 export interface OrchiaLogoHandle {
@@ -16,9 +43,15 @@ const OrchiaLogo = forwardRef<OrchiaLogoHandle, Props>(function OrchiaLogo({
   fullscreen = false,
   className = '',
   showText = false,
+  tuning,
 }: Props, ref) {
   const containerRef = useRef<HTMLDivElement>(null)
   const p5Ref = useRef<any>(null)
+  const tuningRef = useRef<OrchiaLogoTuning>({ ...DEFAULT_TUNING, ...tuning })
+
+  useEffect(() => {
+    tuningRef.current = { ...DEFAULT_TUNING, ...tuning }
+  }, [tuning])
 
   useImperativeHandle(ref, () => ({
     save: (filename = 'orchia-logo') => {
@@ -135,10 +168,11 @@ const OrchiaLogo = forwardRef<OrchiaLogoHandle, Props>(function OrchiaLogo({
 
           draw() {
             if (this.history.length < 2) return
+            const aMul = tuningRef.current.slimeAlpha
             const n = this.history.length
             for (let i = 1; i < n; i++) {
               const fade = (i / n) ** 2.2
-              p.stroke(MR, MG, MB, 58 * fade)
+              p.stroke(MR, MG, MB, 58 * fade * aMul)
               p.strokeWeight(0.65)
               p.line(this.history[i-1].x, this.history[i-1].y, this.history[i].x, this.history[i].y)
             }
@@ -185,16 +219,17 @@ const OrchiaLogo = forwardRef<OrchiaLogoHandle, Props>(function OrchiaLogo({
 
           draw() {
             if (this.history.length < 2) return
+            const aMul = tuningRef.current.harmonographAlpha
             const n = this.history.length
             p.noFill()
             for (let i = 1; i < n; i++) {
               const fade = (i / n) ** 1.5
-              p.stroke(this.cr, this.cg, this.cb, this.alpha * fade)
+              p.stroke(this.cr, this.cg, this.cb, this.alpha * fade * aMul)
               p.strokeWeight(this.weight * (0.35 + 0.65 * fade))
               p.line(this.history[i-1].x, this.history[i-1].y, this.history[i].x, this.history[i].y)
             }
             const tip = this.history[n - 1]
-            p.fill(this.cr, this.cg, this.cb, Math.min(255, this.alpha * 1.6))
+            p.fill(this.cr, this.cg, this.cb, Math.min(255, this.alpha * 1.6 * aMul))
             p.noStroke()
             p.circle(tip.x, tip.y, this.weight * 4)
           }
@@ -229,8 +264,9 @@ const OrchiaLogo = forwardRef<OrchiaLogoHandle, Props>(function OrchiaLogo({
           }
 
           draw() {
+            const aMul = tuningRef.current.flowAlpha
             const fade = Math.sin((this.life / this.maxLife) * Math.PI)
-            p.stroke(MR, MG, MB, 28 * fade)
+            p.stroke(MR, MG, MB, 28 * fade * aMul)
             p.strokeWeight(0.55)
             p.line(this.px, this.py, this.x, this.y)
           }
@@ -246,12 +282,13 @@ const OrchiaLogo = forwardRef<OrchiaLogoHandle, Props>(function OrchiaLogo({
           }
 
           draw(t: number) {
+            const aMul = tuningRef.current.neuralAlpha
             const pulse = 1 + 0.18 * Math.sin(t * this.pulseSpeed + this.phase)
-            p.noFill(); p.stroke(GR, GG, GB, 40 * pulse); p.strokeWeight(0.7)
+            p.noFill(); p.stroke(GR, GG, GB, 40 * pulse * aMul); p.strokeWeight(0.7)
             p.circle(this.x, this.y, this.r * pulse * 2)
-            p.stroke(MR, MG, MB, 25)
+            p.stroke(MR, MG, MB, 25 * aMul)
             p.circle(this.x, this.y, this.r * 0.45 * pulse * 2)
-            p.fill(GR, GG, GB, 70); p.noStroke()
+            p.fill(GR, GG, GB, 70 * aMul); p.noStroke()
             p.circle(this.x, this.y, 2.5)
           }
         }
@@ -268,6 +305,7 @@ const OrchiaLogo = forwardRef<OrchiaLogoHandle, Props>(function OrchiaLogo({
         // Hub-and-spoke: central circle, 8 radial lines, square nodes,
         // and 4 concentric rings. Drawn as the structural base layer.
         const drawGeometry = (t: number) => {
+          const gA = tuningRef.current.geometryAlpha
           // Very subtle outer-ring pulse to suggest signal propagation
           const outerPulse = 0.90 + 0.10 * Math.sin(t * 0.020)
 
@@ -278,14 +316,14 @@ const OrchiaLogo = forwardRef<OrchiaLogoHandle, Props>(function OrchiaLogo({
           const ringRatios = [0.28, 0.52, 0.76, 1.0]
           ringRatios.forEach((ratio, i) => {
             const baseAlpha = 12 + i * 7
-            const alpha = i === 3 ? baseAlpha * outerPulse : baseAlpha
+            const alpha = (i === 3 ? baseAlpha * outerPulse : baseAlpha) * gA
             p.stroke(SR, SG, SB, alpha)
             p.strokeWeight(i === 3 ? 0.85 : 0.50)
             p.circle(cx, cy, R * ratio * 2)
           })
 
           // 8 radial spokes
-          p.stroke(SR, SG, SB, 35)
+          p.stroke(SR, SG, SB, 35 * gA)
           p.strokeWeight(0.60)
           for (let i = 0; i < N_SPOKES; i++) {
             const a = spokeAngle(i)
@@ -299,20 +337,20 @@ const OrchiaLogo = forwardRef<OrchiaLogoHandle, Props>(function OrchiaLogo({
             const ny = cy + Math.sin(a) * R
             const isLarge = i % 2 === 0
             const sq = isLarge ? R * 0.050 : R * 0.031
-            p.stroke(SR, SG, SB, isLarge ? 58 : 40)
+            p.stroke(SR, SG, SB, (isLarge ? 58 : 40) * gA)
             p.strokeWeight(0.70)
-            p.fill(SR, SG, SB, isLarge ? 18 : 10)
+            p.fill(SR, SG, SB, (isLarge ? 18 : 10) * gA)
             p.rect(nx - sq, ny - sq, sq * 2, sq * 2)
           }
 
           // Hub circle (central control node)
           p.noFill()
-          p.stroke(SR, SG, SB, 65)
+          p.stroke(SR, SG, SB, 65 * gA)
           p.strokeWeight(0.85)
           p.circle(cx, cy, R * 0.096 * 2)
 
           // Hub inner fill
-          p.fill(SR, SG, SB, 22)
+          p.fill(SR, SG, SB, 22 * gA)
           p.noStroke()
           p.circle(cx, cy, R * 0.052 * 2)
 
@@ -344,18 +382,19 @@ const OrchiaLogo = forwardRef<OrchiaLogoHandle, Props>(function OrchiaLogo({
 
         const drawText = () => {
           if (!showText) return
+          const T = tuningRef.current
           const ctx = p.drawingContext as CanvasRenderingContext2D
           ctx.save()
 
-          const textY      = cy + R * 1.18
-          const orchiaSize = Math.max(10, R * 0.115)
+          const textY      = cy + R * 1.22 * T.textOffset
+          const orchiaSize = Math.max(14, R * 0.165 * T.orchiaScale)
 
           // "ORCHIA" — all caps, Josefin Sans 100, wide tracking
           renderTracked(ctx, 'ORCHIA', cx, textY, orchiaSize * 0.50, orchiaSize, 185)
 
           // "STUDIO" — smaller, framed by horizontal rules
           const studioY    = textY + orchiaSize * 1.08
-          const studioSize = Math.max(7, R * 0.064)
+          const studioSize = Math.max(10, R * 0.092 * T.studioScale)
           const studioW    = renderTracked(ctx, 'STUDIO', cx, studioY, studioSize * 0.48, studioSize, 130)
 
           ctx.restore()
@@ -458,37 +497,64 @@ const OrchiaLogo = forwardRef<OrchiaLogoHandle, Props>(function OrchiaLogo({
           buildAll()
         }
 
+        let stepAccum = 0
+
+        const stepOnce = () => {
+          globalT++
+          for (const f of flow) f.step(globalT)
+          if (globalT % 2 === 0) { grid.decay(0.965); grid.diffuse() }
+          for (const a of agents) a.step(grid, globalT)
+          for (const t of turtles) t.advance(globalT)
+        }
+
         p.draw = () => {
           p.clear()
-          globalT++
 
-          // Layer 0 — geometric skeleton (hub/spokes/nodes/rings)
+          // Speed: accumulate fractional steps so values <1 slow and >1 fast
+          stepAccum += Math.max(0, tuningRef.current.speed)
+          let safety = 8
+          while (stepAccum >= 1 && safety-- > 0) {
+            stepAccum -= 1
+            stepOnce()
+          }
+
+          const gA = tuningRef.current.geometryAlpha
+          const ms = tuningRef.current.markScale
+
+          // Wrap entire mark in markScale transform around centre
+          p.push()
+          p.translate(cx, cy)
+          p.scale(ms)
+          p.translate(-cx, -cy)
+
+          // Layer 0 — geometric skeleton
           drawGeometry(globalT)
 
           // Layer 1 — flow field particles (background haze)
-          for (const f of flow) { f.step(globalT); f.draw() }
+          for (const f of flow) f.draw()
 
-          // Layer 2 — slime mold network (grows toward geometric nodes)
-          if (globalT % 2 === 0) { grid.decay(0.965); grid.diffuse() }
-          for (const a of agents) { a.step(grid, globalT); a.draw() }
+          // Layer 2 — slime mold network
+          for (const a of agents) a.draw()
 
           // Layer 3 — neural nodes
           for (const n of nodes) n.draw(globalT)
 
-          // Layer 4 — harmonograph turtles (musical Lissajous curves)
-          for (const t of turtles) { t.advance(globalT); t.draw() }
+          // Layer 4 — harmonograph turtles
+          for (const t of turtles) t.draw()
 
           // Layer 5 — centre focal pulse (hub accent)
           const pulse = 1 + 0.12 * Math.sin(globalT * 0.038)
           p.noFill()
-          p.stroke(GR, GG, GB, 55); p.strokeWeight(1)
+          p.stroke(GR, GG, GB, 55 * gA); p.strokeWeight(1)
           p.circle(cx, cy, R * 0.065 * pulse * 2)
-          p.stroke(MR, MG, MB, 38); p.strokeWeight(0.8)
+          p.stroke(MR, MG, MB, 38 * gA); p.strokeWeight(0.8)
           p.circle(cx, cy, R * 0.028 * 2)
-          p.fill(GR, GG, GB, 110); p.noStroke()
+          p.fill(GR, GG, GB, 110 * gA); p.noStroke()
           p.circle(cx, cy, 4.5)
 
-          // Layer 6 — ORCHIA / STUDIO typography
+          p.pop()
+
+          // Layer 6 — ORCHIA / STUDIO typography (outside mark transform)
           drawText()
         }
       }

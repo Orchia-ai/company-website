@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
 
 interface Props {
   size?: number
@@ -7,13 +7,37 @@ interface Props {
   showText?: boolean
 }
 
-export default function OrchiaLogo({
+export interface OrchiaLogoHandle {
+  save: (filename?: string) => void
+}
+
+const OrchiaLogo = forwardRef<OrchiaLogoHandle, Props>(function OrchiaLogo({
   size = 280,
   fullscreen = false,
   className = '',
   showText = false,
-}: Props) {
+}: Props, ref) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const p5Ref = useRef<any>(null)
+
+  useImperativeHandle(ref, () => ({
+    save: (filename = 'orchia-logo') => {
+      const p5 = p5Ref.current
+      if (!p5) return
+      const src = p5.canvas as HTMLCanvasElement
+      const out = document.createElement('canvas')
+      out.width = src.width
+      out.height = src.height
+      const ctx = out.getContext('2d')!
+      ctx.fillStyle = '#F5F0E8'
+      ctx.fillRect(0, 0, out.width, out.height)
+      ctx.drawImage(src, 0, 0)
+      const a = document.createElement('a')
+      a.href = out.toDataURL('image/png')
+      a.download = `${filename}.png`
+      a.click()
+    },
+  }))
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -470,9 +494,10 @@ export default function OrchiaLogo({
       }
 
       p5Instance = new P5(sketch, containerRef.current!)
+      p5Ref.current = p5Instance
     })
 
-    return () => { cancelled = true; p5Instance?.remove() }
+    return () => { cancelled = true; p5Instance?.remove(); p5Ref.current = null }
   }, [size, fullscreen, showText])
 
   return (
@@ -496,4 +521,6 @@ export default function OrchiaLogo({
       }}
     />
   )
-}
+})
+
+export default OrchiaLogo

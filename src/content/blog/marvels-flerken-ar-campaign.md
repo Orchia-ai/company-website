@@ -3,7 +3,7 @@ title: "From AR Campaigns to E-Commerce Features"
 slug: "marvels-flerken-ar-campaign"
 date: "2024-11-09"
 excerpt: "Camera-based AR can help customers place furniture, try on fashion, and experience products more naturally inside a mobile commerce app."
-featuredImage: "https://www.lingyizhou.com/assets/spectacles-1771906913985.gif"
+featuredImage: "https://www.lingyizhou.com/assets/cargo-import/marvel-s-flerken-ar-filter-commercial-ar-campaign/1697673358881.mp4"
 hideHero: true
 ---
 

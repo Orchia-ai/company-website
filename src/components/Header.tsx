@@ -35,7 +35,7 @@ export default function Header({ scrolled }: Props) {
             <OrchiaLogo size={48} className="brand-emblem" />
           </Link>
           <nav className="nav nav-desktop" aria-label="Main navigation">
-            <a href="/blog">Case Study</a>
+            <a href="/#case-study">Case Study</a>
             <a href="/#services">Services</a>
             <a href="/#about">About</a>
           </nav>
@@ -43,7 +43,7 @@ export default function Header({ scrolled }: Props) {
       </div>
 
       <nav className="nav-mobile" aria-label="Mobile navigation">
-        <a href="/blog">Case Study</a>
+        <a href="/#case-study">Case Study</a>
         <a href="/#services">Services</a>
         <a href="/#about">About</a>
         <a href="/#contact">Contact</a>

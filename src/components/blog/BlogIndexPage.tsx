@@ -36,7 +36,7 @@ export default function BlogIndexPage() {
               </div>
               <h2>
                 Field notes from <em>the workshop floor</em>,<br />
-                how the work actually gets made.
+                {' '}how the work actually gets made.
               </h2>
             </div>
             {posts.length === 0 ? (
@@ -59,12 +59,24 @@ export default function BlogIndexPage() {
                     >
                       <div className="track-image">
                         {post.featuredImage && (
-                          <img
-                            className="track-image-img"
-                            src={post.featuredImage}
-                            alt=""
-                            loading="lazy"
-                          />
+                          /\.(mp4|webm|mov)$/i.test(post.featuredImage) ? (
+                            <video
+                              className="track-image-img"
+                              src={post.featuredImage}
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                              preload="metadata"
+                            />
+                          ) : (
+                            <img
+                              className="track-image-img"
+                              src={post.featuredImage}
+                              alt=""
+                              loading="lazy"
+                            />
+                          )
                         )}
                         <span className="track-image-num mono-label">
                           {String(i + 1).padStart(2, '0')} / {total}

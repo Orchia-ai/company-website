@@ -87,6 +87,11 @@ export default function BlogIndexPage() {
                           <span className="track-tag">{dateLabel}</span>
                         </div>
                         <h3 className="track-headline">{post.title}</h3>
+                        {post.tldr && (
+                          <p className="track-tldr">
+                            <span className="mono-label">TL;DR</span> {post.tldr}
+                          </p>
+                        )}
                         <ul className="track-list">
                           <li>{post.excerpt}</li>
                           <li>Read the full case study →</li>

@@ -73,10 +73,9 @@ export default function BlogPostPage() {
   const featuredIsVideo = post?.featuredImage
     ? /\.(mp4|webm|mov)$/i.test(post.featuredImage)
     : false
-  const ogImage = post?.featuredImage && !featuredIsVideo
-    ? post.featuredImage.startsWith('http')
-      ? post.featuredImage
-      : `${origin}${post.featuredImage}`
+  const rawOgImage = post?.ogImage ?? (post?.featuredImage && !featuredIsVideo ? post.featuredImage : undefined)
+  const ogImage = rawOgImage
+    ? rawOgImage.startsWith('http') ? rawOgImage : `${origin}${rawOgImage}`
     : undefined
   const pageTitle = post ? `${post.title} — Orchia Studio` : 'Not found — Orchia Studio'
 

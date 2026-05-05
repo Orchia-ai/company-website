@@ -3,7 +3,9 @@ export interface BlogPostMeta {
   slug: string
   date: string
   excerpt: string
+  tldr?: string
   featuredImage?: string
+  ogImage?: string
   hideHero?: boolean
 }
 

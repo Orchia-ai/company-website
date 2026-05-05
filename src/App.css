@@ -1843,6 +1843,21 @@ body:has(.splash) {
   line-height: 1.15;
 }
 
+.track-tldr {
+  margin: -12px 0 20px;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.track-tldr .mono-label {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
 .track-list {
   margin: 0;
   padding: 0;

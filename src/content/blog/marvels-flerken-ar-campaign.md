@@ -4,6 +4,8 @@ slug: "marvels-flerken-ar-campaign"
 date: "2024-11-09"
 excerpt: "Camera-based AR can help customers place furniture, try on fashion, and experience products more naturally inside a mobile commerce app."
 featuredImage: "https://www.lingyizhou.com/assets/cargo-import/marvel-s-flerken-ar-filter-commercial-ar-campaign/1697673358881.mp4"
+ogImage: "/email/flerken-thumbnail.jpg"
+tldr: "We built a Marvel AR filter that transforms any cat into a Flerken — the same camera-based mechanics that power product try-on and scan-to-shop in mobile commerce."
 hideHero: true
 ---
 

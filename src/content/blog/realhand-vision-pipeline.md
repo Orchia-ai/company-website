@@ -4,6 +4,8 @@ slug: "realhand-vision-pipeline"
 date: "2026-04-29"
 excerpt: "A browser-based 3D experience that helps customers understand form, scale, motion, and interaction before they ever see the physical product."
 featuredImage: "https://img.youtube.com/vi/xwrGzC8Z14s/maxresdefault.jpg"
+ogImage: "https://img.youtube.com/vi/xwrGzC8Z14s/maxresdefault.jpg"
+tldr: "A live browser demo where a robotic hand mirrors your real hand movements via camera — showing how interactive 3D helps customers experience complex products before purchase."
 hideHero: true
 ---
 

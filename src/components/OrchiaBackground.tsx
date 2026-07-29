@@ -1,7 +1,27 @@
 import { useEffect, useRef } from 'react'
 
-export default function OrchiaBackground() {
+/** Line colour as an [r, g, b] triple. Defaults to the warm gray the marketing
+ *  site uses (--text-muted); the dark film shell passes a light tone instead. */
+export type OrchiaBackgroundTone = readonly [number, number, number]
+
+const MUTED_WARM_GRAY: OrchiaBackgroundTone = [122, 115, 107]
+
+interface Props {
+  tone?: OrchiaBackgroundTone
+  /** Multiplies every stroke/fill alpha. The stock alphas were tuned for dark
+   *  lines on linen; light lines on near-black need less to read as strongly. */
+  intensity?: number
+}
+
+export default function OrchiaBackground({
+  tone = MUTED_WARM_GRAY,
+  intensity = 1,
+}: Props = {}) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const toneRef = useRef(tone)
+  const intensityRef = useRef(intensity)
+  toneRef.current = tone
+  intensityRef.current = intensity
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -47,8 +67,9 @@ export default function OrchiaBackground() {
           { fY: 1.00, row: 4 },
         ]
 
-        // Warm gray matching --text-muted (#7A736B)
-        const CR = 122, CG = 115, CB = 107
+        const [CR, CG, CB] = toneRef.current
+        const a = (alpha: number) =>
+          Math.max(0, Math.min(255, alpha * intensityRef.current))
 
         let t = 0
 
@@ -83,7 +104,7 @@ export default function OrchiaBackground() {
             const cp2y = endY   - wave
 
             // Curve
-            p.stroke(CR, CG, CB, 38)
+            p.stroke(CR, CG, CB, a(38))
             p.strokeWeight(1.1)
             p.noFill()
             p.bezier(0, startY, cp1x, cp1y, cp2x, cp2y, gLeft, endY)
@@ -92,20 +113,20 @@ export default function OrchiaBackground() {
             const u  = ((t * 0.20) + i * (1 / curves.length)) % 1.0
             const fx = p.bezierPoint(0,      cp1x, cp2x, gLeft, u)
             const fy = p.bezierPoint(startY, cp1y, cp2y, endY,  u)
-            p.fill(CR, CG, CB, 90)
+            p.fill(CR, CG, CB, a(90))
             p.noStroke()
             p.circle(fx, fy, 2.8)
 
             // Start dot
             const dr = 2.1 + Math.sin(t * 1.4 + i * 0.55) * 0.5
-            p.fill(CR, CG, CB, 65)
+            p.fill(CR, CG, CB, a(65))
             p.noStroke()
             p.circle(0, startY, dr * 2)
           }
 
           // Grid lines
           p.noFill()
-          p.stroke(CR, CG, CB, 36)
+          p.stroke(CR, CG, CB, a(36))
           p.strokeWeight(1.1)
           for (let r = 0; r < G_ROWS; r++) {
             p.line(gLeft, rowY[r], gRight, rowY[r])
@@ -122,7 +143,7 @@ export default function OrchiaBackground() {
               const x  = gLeft + c * cellW
               const y  = rowY[r]
               const dr = 2.0 + Math.sin(t * 0.85 - c * 0.55 + r * 0.40) * 0.5
-              p.fill(CR, CG, CB, 72)
+              p.fill(CR, CG, CB, a(72))
               p.circle(x, y, dr * 2)
             }
           }

@@ -15,7 +15,9 @@
   --paper-soft: #d8d2c8;
   --paper-strong: #f4f0e9;
   --muted: #a9a49a;
-  position: fixed;
+  /* Fills whatever box the host gives it, so a header and footer can sit
+     above and below the stage. */
+  position: absolute;
   inset: 0;
   overflow: hidden;
   background: #11110f;

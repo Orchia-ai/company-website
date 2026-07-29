@@ -19,9 +19,14 @@ type FillImageProps = {
   style?: CSSProperties
 }
 
+// Longhands rather than the `inset` shorthand, matching byte-for-byte what
+// `next/image` applies for `fill` — the film's CSS was authored against these.
 const FILL_STYLE: CSSProperties = {
   position: 'absolute',
-  inset: 0,
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
   width: '100%',
   height: '100%',
   color: 'transparent',

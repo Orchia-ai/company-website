@@ -404,17 +404,25 @@ export default function SpecialistWorkflowsFilm() {
       return;
     }
 
+    // The stage fits the box the host gives it, not the raw viewport, so the
+    // page can put a header and a call to action above and below it.
+    const host = stage.parentElement;
+    if (!host) {
+      return;
+    }
+
     const fitStage = () => {
       const scale = Math.min(
-        window.innerWidth / STAGE_WIDTH,
-        window.innerHeight / STAGE_HEIGHT,
+        host.clientWidth / STAGE_WIDTH,
+        host.clientHeight / STAGE_HEIGHT,
       );
       stage.style.setProperty("--stage-scale", String(scale));
     };
 
     fitStage();
-    window.addEventListener("resize", fitStage);
-    return () => window.removeEventListener("resize", fitStage);
+    const observer = new ResizeObserver(fitStage);
+    observer.observe(host);
+    return () => observer.disconnect();
   }, []);
 
   useLayoutEffect(() => {
@@ -430,7 +438,19 @@ export default function SpecialistWorkflowsFilm() {
       stage.querySelectorAll<HTMLElement>("[data-personal-human]"),
     );
     const stageBounds = stage.getBoundingClientRect();
-    const stageScale = stageBounds.width / STAGE_WIDTH || 1;
+    // Every clone position below is a measured viewport pixel converted back
+    // into stage coordinates, so this divisor has to be exactly the scale the
+    // stage is drawn at. Read the value we set ourselves rather than inferring
+    // it from a rect: a rect measured mid-layout (Safari collapsing its URL
+    // bar, a font swap, a pending resize) yields a slightly-to-wildly wrong
+    // scale, and every artifact and person then lands in the wrong place.
+    const appliedScale = Number.parseFloat(
+      stage.style.getPropertyValue("--stage-scale"),
+    );
+    const stageScale =
+      (Number.isFinite(appliedScale) && appliedScale > 0
+        ? appliedScale
+        : stageBounds.width / STAGE_WIDTH) || 1;
     const mergeLayer = document.createElement("div");
 
     mergeLayer.dataset.masterMergeLayer = "";
@@ -444,8 +464,19 @@ export default function SpecialistWorkflowsFilm() {
       pointerEvents: "none",
     });
 
+    // `offsetWidth`/`offsetHeight` are the layout size a clone needs, but they
+    // report 0 for anything the engine has not laid out yet. A 0-sized clone
+    // collapses its grid tracks, which is what turns a person card into a
+    // sliver of avatar with one letter per line. Fall back to the measured rect
+    // (converted out of stage scale) whenever the offset size is degenerate.
+    const layoutSize = (element: HTMLElement, bounds: DOMRect) => ({
+      width: element.offsetWidth || bounds.width / stageScale,
+      height: element.offsetHeight || bounds.height / stageScale,
+    });
+
     sourceArtifacts.forEach((sourceArtifact) => {
       const sourceBounds = sourceArtifact.getBoundingClientRect();
+      const size = layoutSize(sourceArtifact, sourceBounds);
       const clone = sourceArtifact.cloneNode(true) as HTMLElement;
       const artifactId = sourceArtifact.dataset.personalArtifact;
 
@@ -455,8 +486,8 @@ export default function SpecialistWorkflowsFilm() {
         position: "absolute",
         left: `${(sourceBounds.left - stageBounds.left) / stageScale}px`,
         top: `${(sourceBounds.top - stageBounds.top) / stageScale}px`,
-        width: `${sourceArtifact.offsetWidth}px`,
-        height: `${sourceArtifact.offsetHeight}px`,
+        width: `${size.width}px`,
+        height: `${size.height}px`,
         margin: "0",
         transform: "none",
         transformOrigin: "50% 50%",
@@ -470,6 +501,7 @@ export default function SpecialistWorkflowsFilm() {
       const clone = sourcePerson.cloneNode(true) as HTMLElement;
       const personRole = sourcePerson.dataset.personalHuman;
       const sourceStyle = window.getComputedStyle(sourcePerson);
+      const size = layoutSize(sourcePerson, sourceBounds);
 
       clone.removeAttribute("data-personal-human");
       clone.dataset.mergePerson = personRole ?? "";
@@ -477,8 +509,8 @@ export default function SpecialistWorkflowsFilm() {
         position: "absolute",
         left: `${(sourceBounds.left - stageBounds.left) / stageScale}px`,
         top: `${(sourceBounds.top - stageBounds.top) / stageScale}px`,
-        width: `${sourcePerson.offsetWidth}px`,
-        height: `${sourcePerson.offsetHeight}px`,
+        width: `${size.width}px`,
+        height: `${size.height}px`,
         margin: "0",
         transform: "none",
         transformOrigin: "50% 50%",
@@ -1167,12 +1199,12 @@ export default function SpecialistWorkflowsFilm() {
         <SceneThreeLayer />
         <SceneFourLayer />
 
-        <p
-          className={styles.narration}
-          data-master-narration
-          aria-hidden="true"
-          style={{ display: "none" }}
-        >
+        {/*
+          The subtitle track. It was hidden inline for clean screen recordings;
+          on the site it is the only narration, so it stays visible and the
+          timeline swaps its text as the story turns.
+        */}
+        <p className={styles.narration} data-master-narration>
           Every specialist has their own way of working.
         </p>
 

@@ -44,10 +44,9 @@ export default function HomeFilmPage() {
         </div>
 
         <div className={styles.bar}>
-          {/* Placeholder — no destination wired up yet. */}
-          <button type="button" className={styles.cta}>
+          <a className={styles.cta} href="https://app.orchia.studio">
             Use App
-          </button>
+          </a>
         </div>
       </div>
     </>

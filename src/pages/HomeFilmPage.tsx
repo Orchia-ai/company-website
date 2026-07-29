@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 
 import SpecialistWorkflowsFilm from '../film/SpecialistWorkflowsFilm'
+import FilmBackdrop from './FilmBackdrop'
 import styles from './home-film-page.module.css'
 
 /**
@@ -30,6 +31,8 @@ export default function HomeFilmPage() {
           content="Orchia connects writing, art, camera, and audience decisions so every specialist keeps control of their craft while the production stays in sync."
         />
       </Helmet>
+
+      <FilmBackdrop />
 
       <div className={styles.shell}>
         <header className={styles.bar}>

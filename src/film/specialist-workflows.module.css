@@ -20,7 +20,9 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background: #11110f;
+  /* Transparent letterbox: the host paints the backdrop, so its background
+     animation stays visible in the margins around the 16:9 stage. */
+  background: transparent;
   color: var(--paper-strong);
   font-family: var(--font-geist-sans), Arial, sans-serif;
 }

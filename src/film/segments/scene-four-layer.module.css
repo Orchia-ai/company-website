@@ -1,0 +1,1432 @@
+.layer {
+  position: absolute;
+  z-index: 46;
+  inset: 0;
+  overflow: hidden;
+  visibility: hidden;
+  background:
+    radial-gradient(circle at 10% 12%, rgb(199 103 69 / 8%), transparent 27%),
+    radial-gradient(circle at 91% 14%, rgb(62 124 120 / 6%), transparent 29%),
+    linear-gradient(rgb(30 36 32 / 3.8%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(30 36 32 / 3%) 1px, transparent 1px),
+    linear-gradient(140deg, #f3f0e8, #e6e0d5 72%);
+  background-repeat: no-repeat, no-repeat, repeat, repeat, no-repeat;
+  background-size: auto, auto, 48px 48px, 48px 48px, auto;
+  color: #1e2420;
+}
+
+.workspace {
+  position: absolute;
+  top: 56px;
+  left: 308px;
+  width: 1304px;
+  height: 888px;
+  overflow: hidden;
+  border: 1px solid rgb(30 36 32 / 22%);
+  border-radius: 8px;
+  background: #ebe5db;
+  box-shadow:
+    0 18px 42px rgb(60 51 40 / 18%),
+    0 2px 8px rgb(60 51 40 / 9%);
+}
+
+.workspaceHeader {
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  height: 58px;
+  padding: 0 18px;
+  border-bottom: 1px solid rgb(30 36 32 / 16%);
+  background: #e2dbd0;
+}
+
+.workspaceIcon,
+.botIcon {
+  display: grid;
+  place-items: center;
+  border: 1px solid rgb(30 36 32 / 18%);
+  border-radius: 5px;
+  background: #f4f0e9;
+  color: #c76745;
+}
+
+.workspaceIcon {
+  width: 36px;
+  height: 36px;
+}
+
+.workspaceIcon svg,
+.botIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.workspaceHeader > span:nth-child(2) {
+  display: grid;
+  gap: 2px;
+}
+
+.workspaceHeader strong {
+  font-size: 17px;
+  font-weight: 620;
+}
+
+.workspaceHeader small {
+  color: #706c64;
+  font-size: 11px;
+}
+
+.workspaceState {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  color: #4f514c;
+  font-size: 12px;
+}
+
+.workspaceState i,
+.presence {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #76814c;
+}
+
+.graphViewport {
+  position: absolute;
+  top: 58px;
+  right: 96px;
+  bottom: 22px;
+  left: 96px;
+  overflow: hidden;
+}
+
+.graph {
+  position: absolute;
+  top: 22px;
+  left: 26px;
+  width: 1060px;
+  height: 720px;
+  transform-origin: 50% 50%;
+}
+
+.graphEdges {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 1060px;
+  height: 720px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.graphEdges path {
+  fill: none;
+  stroke: rgb(91 82 71 / 42%);
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 1;
+}
+
+.graphEdges marker path {
+  fill: #7c7469;
+  stroke: none;
+}
+
+.workflowNode {
+  --node-accent: #8b8174;
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 31px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  width: 148px;
+  height: 50px;
+  padding: 6px 8px;
+  overflow: hidden;
+  border: 1px solid rgb(30 36 32 / 20%);
+  border-left: 3px solid var(--node-accent);
+  border-radius: 5px;
+  background: #f4f0e9;
+  color: #1e2420;
+  box-shadow: 0 5px 12px rgb(55 46 36 / 10%);
+  transform-origin: 50% 50%;
+}
+
+.nodeIcon {
+  position: relative;
+  display: grid;
+  width: 29px;
+  height: 29px;
+  overflow: hidden;
+  place-items: center;
+  border: 1px solid rgb(30 36 32 / 15%);
+  border-radius: 4px;
+  background: #ebe5dc;
+  color: var(--node-accent);
+}
+
+.nodeIcon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.nodeMediaPreview {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #ebe5dc;
+}
+
+.nodeMediaPreview > img,
+.nodeMediaPreview > video,
+.nodeMediaFrame > img {
+  object-fit: cover;
+}
+
+.nodeMediaPreview > video {
+  width: 100%;
+  height: 100%;
+}
+
+.nodeMediaGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1px;
+}
+
+.nodeMediaFrame {
+  position: relative;
+  overflow: hidden;
+}
+
+.nodeCopy {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.nodeCopy strong,
+.nodeCopy small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nodeCopy strong {
+  display: -webkit-box;
+  color: #171b18;
+  font-size: 11px;
+  font-weight: 670;
+  line-height: 1.05;
+  white-space: normal;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.nodeCopy small {
+  color: #625e57;
+  font-size: 8px;
+  font-weight: 520;
+}
+
+.roleMarks {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  gap: 2px;
+}
+
+.roleMarks i {
+  display: block;
+  width: 9px;
+  height: 2px;
+}
+
+.nodeScan {
+  position: absolute;
+  z-index: 5;
+  top: -9px;
+  right: 0;
+  left: 0;
+  height: 9px;
+  opacity: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(137 118 95 / 72%),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.station {
+  --role: #d5a15d;
+  position: absolute;
+  z-index: 8;
+  width: 412px;
+  height: 244px;
+  opacity: 0.34;
+}
+
+.foregroundOverlay {
+  position: absolute;
+  z-index: 70;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.messageStation {
+  --role: #d5a15d;
+  position: absolute;
+  width: 412px;
+  height: 244px;
+}
+
+.maya {
+  top: 86px;
+  left: 34px;
+}
+
+.nora {
+  top: 86px;
+  right: 34px;
+}
+
+.eli {
+  bottom: 106px;
+  left: 34px;
+}
+
+.owen {
+  right: 34px;
+  bottom: 106px;
+}
+
+.personCard {
+  position: absolute;
+  z-index: 3;
+  top: 52px;
+  display: grid;
+  grid-template-columns: 66px minmax(0, 1fr) 10px;
+  gap: 11px;
+  align-items: center;
+  width: 178px;
+  height: 94px;
+  padding: 10px;
+  border: 1px solid rgb(30 36 32 / 28%);
+  border-left: 3px solid var(--role);
+  border-radius: 6px;
+  background: #202621;
+  color: #f4f0e9;
+  box-shadow: 0 10px 22px rgb(52 44 35 / 18%);
+}
+
+.stationLeft .personCard {
+  left: 0;
+}
+
+.stationRight .personCard {
+  right: 0;
+}
+
+.avatar {
+  position: relative;
+  display: block;
+  width: 64px;
+  height: 72px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #151b18;
+}
+
+.avatar img {
+  object-fit: cover;
+}
+
+.personCopy {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.personCopy strong {
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.personCopy small {
+  color: #aaa49a;
+  font-size: 10px;
+}
+
+.presence {
+  width: 6px;
+  height: 6px;
+  background: var(--role);
+}
+
+.chat {
+  position: absolute;
+  z-index: 7;
+  width: 356px;
+  height: 236px;
+  overflow: visible;
+  visibility: hidden;
+  color: #1e2420;
+  pointer-events: none;
+}
+
+.stationLeft .chat {
+  left: 18px;
+}
+
+.stationRight .chat {
+  right: 18px;
+}
+
+.maya .chat,
+.nora .chat {
+  top: 150px;
+}
+
+.eli .chat,
+.owen .chat {
+  top: -210px;
+}
+
+.humanMessage,
+.agentMessage {
+  position: absolute;
+  display: grid;
+  gap: 6px;
+  width: 328px;
+  margin: 0;
+  padding: 13px 15px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.35;
+  visibility: hidden;
+  box-shadow:
+    0 11px 24px rgb(54 46 36 / 14%),
+    0 2px 5px rgb(54 46 36 / 8%);
+  transform-origin: var(--bubble-origin, 0% 50%);
+}
+
+.humanMessage > span,
+.agentMessage > span {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  color: #6d675e;
+  font-size: 9px;
+  font-weight: 690;
+}
+
+.agentMessage > span svg {
+  width: 12px;
+  height: 12px;
+  color: var(--role);
+}
+
+.humanMessage > strong,
+.agentMessage > strong {
+  font-size: 13px;
+  font-weight: 570;
+  line-height: 1.38;
+}
+
+.humanMessage {
+  --bubble-origin: 0% 50%;
+  top: 56px;
+  right: 0;
+  border: 1px solid color-mix(in srgb, var(--role) 40%, #aca397);
+  border-left: 3px solid var(--role);
+  background: color-mix(in srgb, var(--role) 12%, #f7f3ec);
+  color: #1e2420;
+}
+
+.agentMessage {
+  --bubble-origin: 100% 50%;
+  top: 146px;
+  left: 0;
+  border: 1px solid rgb(30 36 32 / 16%);
+  border-left: 3px solid #313833;
+  background: #eee8de;
+  color: #34352f;
+}
+
+/*
+ * Scene 3 uses these as temporary workspace overlays, not as a narrow chat
+ * column. Keep the composer geometry unchanged for the existing click/type/
+ * send choreography, then let the submitted message and agent response use
+ * the open center of the 1920 × 1080 stage.
+ */
+.humanMessage[data-scene3-human-message],
+.agentMessage[data-scene3-agent-reply] {
+  width: 640px;
+  min-height: 92px;
+  gap: 8px;
+  padding: 18px 21px 20px;
+  box-shadow:
+    0 18px 38px rgb(54 46 36 / 18%),
+    0 3px 8px rgb(54 46 36 / 10%);
+}
+
+.humanMessage[data-scene3-human-message] {
+  top: 56px;
+}
+
+.agentMessage[data-scene3-agent-reply] {
+  top: 180px;
+}
+
+.humanMessage[data-scene3-human-message] > span,
+.agentMessage[data-scene3-agent-reply] > span {
+  gap: 7px;
+  font-size: 11px;
+}
+
+.agentMessage[data-scene3-agent-reply] > span svg {
+  width: 15px;
+  height: 15px;
+}
+
+.humanMessage[data-scene3-human-message] > strong,
+.agentMessage[data-scene3-agent-reply] > strong {
+  font-size: 18px;
+  font-weight: 590;
+  line-height: 1.34;
+}
+
+.stationLeft .humanMessage[data-scene3-human-message],
+.stationLeft .agentMessage[data-scene3-agent-reply] {
+  --bubble-origin: 0% 50%;
+  right: auto;
+  left: 190px;
+}
+
+.stationRight .humanMessage[data-scene3-human-message],
+.stationRight .agentMessage[data-scene3-agent-reply] {
+  --bubble-origin: 100% 50%;
+  right: 190px;
+  left: auto;
+}
+
+.proposal {
+  position: absolute;
+  right: 0;
+  bottom: -62px;
+  left: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 8px;
+  align-items: center;
+  padding: 10px 11px;
+  visibility: hidden;
+  border: 1px solid color-mix(in srgb, var(--role) 55%, #9a9184);
+  border-radius: 4px;
+  background: #fbf7f0;
+  color: #1e2420;
+}
+
+.proposal span {
+  grid-column: 1 / -1;
+  color: #77736b;
+  font-size: 9px;
+}
+
+.proposal strong {
+  overflow: hidden;
+  font-size: 11px;
+  font-weight: 570;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.proposal button {
+  display: inline-flex;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--role);
+  border-radius: 3px;
+  background: var(--role);
+  color: #171713;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 670;
+}
+
+.proposal button svg {
+  width: 11px;
+  height: 11px;
+}
+
+.applied {
+  position: absolute;
+  right: 0;
+  bottom: -62px;
+  left: 0;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin: 0;
+  padding: 11px 12px;
+  visibility: hidden;
+  border: 1px solid rgb(30 36 32 / 16%);
+  border-radius: 4px;
+  background: #e4e9e2;
+  color: #30342f;
+  font-size: 11px;
+}
+
+.applied svg {
+  width: 14px;
+  height: 14px;
+  color: var(--role);
+}
+
+.composer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: 1fr 34px;
+  gap: 9px;
+  align-items: center;
+  box-sizing: border-box;
+  height: 78px;
+  padding: 8px 8px 8px 12px;
+  border: 1px solid rgb(30 36 32 / 22%);
+  border-left: 3px solid var(--role);
+  border-radius: 4px;
+  background: #fffaf2;
+  color: #77736b;
+  font-size: 11px;
+  box-shadow: 0 8px 18px rgb(54 46 36 / 12%);
+}
+
+.composerInput {
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  min-width: 0;
+  height: 54px;
+  align-items: center;
+  overflow: hidden;
+  padding-right: 2px;
+  white-space: pre-wrap;
+}
+
+.composerDraft {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  left: 4px;
+  display: block;
+  min-width: 0;
+  max-height: 51px;
+  overflow: hidden;
+  color: #2f332f;
+  font-size: 11px;
+  line-height: 17px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  word-break: normal;
+  transform: translateY(-50%);
+}
+
+.composerDraft::after {
+  display: inline-block;
+  width: 1px;
+  height: 14px;
+  margin-left: 2px;
+  background: var(--role);
+  content: "";
+  vertical-align: -2px;
+}
+
+.composerCaret {
+  display: none;
+}
+
+.composer button {
+  display: grid;
+  width: 33px;
+  height: 33px;
+  place-items: center;
+  border: 0;
+  border-radius: 3px;
+  background: var(--role);
+  color: #171713;
+}
+
+.composer button svg {
+  width: 15px;
+  height: 15px;
+}
+
+.cursor {
+  position: absolute;
+  z-index: 12;
+  top: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: 22px auto;
+  gap: 3px;
+  align-items: start;
+  visibility: hidden;
+  color: var(--role);
+  pointer-events: none;
+}
+
+.cursor svg {
+  width: 23px;
+  height: 23px;
+  fill: #fffaf2;
+  stroke: #26231f;
+  stroke-width: 2;
+}
+
+.cursor small {
+  margin-top: 16px;
+  padding: 2px 5px;
+  border-radius: 2px;
+  background: var(--role);
+  color: #171713;
+  font-size: 8px;
+  font-weight: 690;
+}
+
+.scanStatus {
+  position: absolute;
+  z-index: 14;
+  top: 76px;
+  left: 50%;
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 10px;
+  align-items: center;
+  width: 306px;
+  min-height: 57px;
+  padding: 9px 12px;
+  visibility: hidden;
+  border: 1px solid rgb(30 36 32 / 22%);
+  border-radius: 5px;
+  background: #f4f0e9;
+  color: #1e2420;
+  box-shadow: 0 12px 26px rgb(54 46 36 / 17%);
+  transform: translateX(-50%);
+}
+
+.scanStatus > svg {
+  width: 25px;
+  height: 25px;
+  color: #c76745;
+}
+
+.scanStatus span {
+  display: grid;
+  gap: 2px;
+}
+
+.scanStatus small {
+  color: #77736b;
+  font-size: 8px;
+}
+
+.scanStatus strong {
+  font-size: 11px;
+  font-weight: 620;
+}
+
+.nodeInspector {
+  --inspector-role: #3e7872;
+  position: absolute;
+  z-index: 18;
+  top: 286px;
+  left: 704px;
+  display: grid;
+  width: 512px;
+  min-height: 292px;
+  overflow: hidden;
+  visibility: hidden;
+  border: 1px solid rgb(30 36 32 / 24%);
+  border-top: 4px solid var(--inspector-role);
+  border-radius: 7px;
+  background: #f4f0e9;
+  color: #1e2420;
+  box-shadow:
+    0 24px 54px rgb(54 46 36 / 24%),
+    0 4px 12px rgb(54 46 36 / 12%);
+}
+
+.nodeInspector header {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 12px;
+  align-items: center;
+  min-height: 70px;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgb(30 36 32 / 14%);
+  background: #ebe5db;
+}
+
+.nodeInspector header > span:last-child {
+  display: grid;
+  gap: 3px;
+}
+
+.nodeInspector header small {
+  color: #6d675e;
+  font-size: 10px;
+  font-weight: 560;
+}
+
+.nodeInspector header strong {
+  font-size: 18px;
+  font-weight: 660;
+}
+
+.nodeInspectorIcon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgb(30 36 32 / 16%);
+  border-radius: 5px;
+  background: #fffaf2;
+  color: var(--inspector-role);
+}
+
+.nodeInspectorIcon svg {
+  width: 19px;
+  height: 19px;
+}
+
+.nodeInspectorBody {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 10px;
+  padding: 14px 16px;
+}
+
+.nodeInspectorBody > span {
+  position: relative;
+  display: grid;
+  min-height: 72px;
+  gap: 7px;
+  align-content: start;
+  padding: 11px 12px;
+  border: 1px solid rgb(30 36 32 / 14%);
+  border-radius: 5px;
+  background: #fffaf2;
+}
+
+.nodeInspectorBody > span:first-child {
+  grid-row: span 2;
+  min-height: 154px;
+  border-color: color-mix(
+    in srgb,
+    var(--inspector-role) 42%,
+    rgb(30 36 32 / 14%)
+  );
+}
+
+.nodeInspectorBody small {
+  color: #706c64;
+  font-size: 9px;
+  font-weight: 590;
+}
+
+.nodeInspectorBody strong {
+  color: #292d29;
+  font-size: 13px;
+  font-weight: 610;
+  line-height: 1.38;
+}
+
+.nodeInspectorBody > span:first-child strong {
+  position: absolute;
+  top: 45px;
+  right: 12px;
+  left: 12px;
+}
+
+.nodeInspector footer {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 42px;
+  padding: 10px 16px;
+  border-top: 1px solid rgb(30 36 32 / 13%);
+  background: color-mix(in srgb, var(--inspector-role) 10%, #ebe5db);
+  color: #30423e;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.nodeInspector footer svg {
+  width: 15px;
+  height: 15px;
+  color: var(--inspector-role);
+}
+
+/* Feature 5 v2: energetic, high-clarity production workspace. */
+.layer {
+  background:
+    radial-gradient(circle at 8% 8%, rgb(244 81 54 / 10%), transparent 24%),
+    radial-gradient(circle at 92% 12%, rgb(242 169 0 / 8%), transparent 23%),
+    radial-gradient(circle at 82% 90%, rgb(0 166 166 / 7%), transparent 26%),
+    linear-gradient(rgb(49 43 34 / 4.4%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(49 43 34 / 4.4%) 1px, transparent 1px),
+    #f7f0e4;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat, repeat;
+  background-size: auto, auto, auto, 48px 48px, 48px 48px;
+  color: #24221d;
+}
+
+.workspace {
+  border-color: rgb(50 43 34 / 26%);
+  background: #fff9ee;
+  box-shadow:
+    0 21px 48px rgb(64 46 28 / 20%),
+    0 0 0 1px rgb(255 255 255 / 66%);
+}
+
+.workspaceHeader {
+  border-bottom-color: rgb(50 43 34 / 18%);
+  background: #eee4d5;
+}
+
+.workspaceIcon,
+.botIcon {
+  border-color: rgb(244 81 54 / 40%);
+  background: #fffaf1;
+  color: #f45136;
+  box-shadow: 0 0 0 3px rgb(244 81 54 / 7%);
+}
+
+.workspaceState i,
+.presence {
+  background: #20a864;
+  box-shadow: 0 0 0 3px rgb(32 168 100 / 10%);
+}
+
+.graphEdges path {
+  stroke: rgb(79 68 56 / 56%);
+  stroke-width: 1.65;
+}
+
+.graphEdges marker path {
+  fill: #675d51;
+}
+
+.workflowNode {
+  border-color: color-mix(in srgb, var(--node-accent) 32%, #c6bbac);
+  border-left-width: 4px;
+  background: #fffaf1;
+  color: #24221d;
+  box-shadow:
+    0 7px 15px rgb(63 46 29 / 13%),
+    0 0 0 1px rgb(255 255 255 / 66%);
+}
+
+.nodeIcon {
+  border-color: color-mix(in srgb, var(--node-accent) 30%, #cfc4b5);
+  background: color-mix(in srgb, var(--node-accent) 8%, #fffdf7);
+}
+
+.nodeCopy strong {
+  color: #24221d;
+}
+
+.nodeCopy small {
+  color: #6c6459;
+}
+
+.nodeScan {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(32 168 100 / 92%),
+    transparent
+  );
+}
+
+.personCard {
+  border-color: rgb(255 250 240 / 16%);
+  border-left-width: 4px;
+  background: #1e231f;
+  color: #fffaf1;
+  box-shadow:
+    0 13px 28px rgb(52 41 28 / 23%),
+    0 0 0 1px rgb(255 255 255 / 4%);
+}
+
+.personCopy small {
+  color: #c2b8aa;
+}
+
+.humanMessage,
+.agentMessage {
+  border-radius: 6px;
+  box-shadow:
+    0 13px 28px rgb(57 42 25 / 17%),
+    0 0 0 1px rgb(255 255 255 / 46%);
+}
+
+.humanMessage {
+  border-color: color-mix(in srgb, var(--role) 48%, #b7ac9d);
+  border-left-width: 4px;
+  background: color-mix(in srgb, var(--role) 14%, #fffaf1);
+  color: #24221d;
+}
+
+.agentMessage {
+  border-color: rgb(50 43 34 / 18%);
+  border-left: 4px solid #20a864;
+  background: #fff9ee;
+  color: #34322d;
+}
+
+.agentMessage > span svg {
+  color: #20a864;
+}
+
+.proposal {
+  border-color: color-mix(in srgb, var(--role) 62%, #9d9284);
+  background: #fffaf1;
+  box-shadow: 0 9px 18px rgb(58 42 25 / 14%);
+}
+
+.proposal button {
+  border-color: var(--role);
+  background: var(--role);
+  color: #171713;
+}
+
+.applied {
+  border-color: rgb(32 168 100 / 34%);
+  background: #e4f5e9;
+  color: #263d2e;
+}
+
+.composer {
+  border-color: color-mix(in srgb, var(--role) 44%, #b0a596);
+  border-left-width: 4px;
+  background: #fffaf1;
+  box-shadow:
+    0 9px 20px rgb(57 42 25 / 14%),
+    0 0 0 3px color-mix(in srgb, var(--role) 7%, transparent);
+}
+
+.composer button {
+  background: var(--role);
+}
+
+.scanStatus {
+  border-color: rgb(32 168 100 / 42%);
+  background: #f5fff7;
+  box-shadow:
+    0 14px 30px rgb(34 70 44 / 18%),
+    0 0 0 4px rgb(32 168 100 / 8%);
+}
+
+.scanStatus > svg {
+  color: #20a864;
+}
+
+.nodeInspector {
+  border-color: color-mix(in srgb, var(--inspector-role) 44%, #b4a99b);
+  background: #fff9ee;
+  box-shadow:
+    0 26px 58px rgb(56 40 23 / 26%),
+    0 0 0 5px color-mix(in srgb, var(--inspector-role) 8%, transparent);
+}
+
+.nodeInspector header {
+  border-bottom-color: rgb(50 43 34 / 15%);
+  background: #eee4d5;
+}
+
+.nodeInspectorIcon,
+.nodeInspectorBody > span {
+  background: #fffaf1;
+}
+
+.nodeInspector footer {
+  background: color-mix(in srgb, var(--inspector-role) 12%, #eee4d5);
+}
+
+/* Version 2: signal-poster collaboration surface. */
+.layer {
+  background:
+    linear-gradient(90deg, #ff5a36 0 14px, transparent 14px),
+    linear-gradient(180deg, #ffd83d 0 14px, transparent 14px),
+    linear-gradient(rgb(22 22 19 / 7%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(22 22 19 / 7%) 1px, transparent 1px),
+    #fff3cb;
+  background-size:
+    100% 100%,
+    100% 100%,
+    48px 48px,
+    48px 48px,
+    auto;
+}
+
+.workspace {
+  overflow: visible;
+  border: 4px solid #161613;
+  border-radius: 2px;
+  background: #fffdf0;
+  box-shadow:
+    14px 14px 0 #2864ff,
+    -9px -9px 0 #ff4fa3;
+}
+
+.workspaceHeader {
+  border-bottom: 4px solid #161613;
+  background: #ffd83d;
+}
+
+.workspaceIcon,
+.botIcon {
+  border: 2px solid #161613;
+  border-radius: 1px;
+  background: #ff5a36;
+  color: #161613;
+  box-shadow: 3px 3px 0 #161613;
+}
+
+.workflowNode {
+  border: 2px solid #161613;
+  border-left: 10px solid var(--node-accent);
+  border-radius: 1px;
+  background: #fffdf0;
+  color: #161613;
+  box-shadow: 4px 4px 0 var(--node-accent);
+}
+
+.nodeIcon {
+  border: 2px solid #161613;
+  border-radius: 1px;
+  background: var(--node-accent);
+  color: #161613;
+}
+
+.nodeCopy small {
+  color: #4a483f;
+}
+
+.graphEdges path {
+  stroke: #161613;
+  stroke-width: 1.8;
+}
+
+.graphEdges marker path {
+  fill: #161613;
+}
+
+.personCard {
+  border: 3px solid #161613;
+  border-left: 12px solid var(--role);
+  border-radius: 2px;
+  background: #161613;
+  color: #fffdf0;
+  box-shadow: 8px 8px 0 var(--role);
+}
+
+.avatar {
+  border: 2px solid #fffdf0;
+  border-radius: 1px;
+}
+
+.presence {
+  border: 2px solid #161613;
+  background: var(--role);
+  box-shadow: 2px 2px 0 #161613;
+}
+
+.chat {
+  border: 3px solid #161613;
+  border-radius: 2px;
+  background: #fffdf0;
+  box-shadow: 8px 8px 0 var(--role);
+}
+
+.chat header {
+  border-bottom: 3px solid #161613;
+  background: var(--role);
+  color: #161613;
+}
+
+.humanMessage,
+.agentMessage {
+  z-index: 12;
+  border: 3px solid #161613;
+  border-radius: 2px;
+  color: #161613;
+  box-shadow: 7px 7px 0 #161613;
+}
+
+.humanMessage {
+  border-left: 12px solid var(--role);
+  background: color-mix(in srgb, var(--role) 28%, #fffdf0);
+}
+
+.agentMessage {
+  border-left: 12px solid #161613;
+  background: #fffdf0;
+}
+
+.agentMessage > span svg {
+  color: #161613;
+}
+
+.proposal {
+  border: 3px solid #161613;
+  border-radius: 1px;
+  background: #ffd83d;
+  box-shadow: 6px 6px 0 #161613;
+}
+
+.proposal button {
+  border: 2px solid #161613;
+  border-radius: 1px;
+  background: var(--role);
+  color: #161613;
+  box-shadow: 3px 3px 0 #161613;
+}
+
+.applied {
+  border: 3px solid #161613;
+  border-left: 10px solid #1acb79;
+  border-radius: 1px;
+  background: #cfff3d;
+  color: #161613;
+  box-shadow: 5px 5px 0 #161613;
+}
+
+.composer {
+  border: 3px solid #161613;
+  border-left: 10px solid var(--role);
+  border-radius: 1px;
+  background: #fffdf0;
+  box-shadow: 6px 6px 0 #161613;
+}
+
+.composer button {
+  border: 2px solid #161613;
+  border-radius: 1px;
+  background: var(--role);
+  color: #161613;
+}
+
+.cursor {
+  color: #161613;
+  filter: drop-shadow(2px 2px 0 #fffdf0);
+}
+
+.cursor span {
+  border: 2px solid #161613;
+  border-radius: 1px;
+  background: var(--role);
+  color: #161613;
+  box-shadow: 2px 2px 0 #161613;
+}
+
+.scanStatus {
+  border: 3px solid #161613;
+  border-radius: 1px;
+  background: #cfff3d;
+  color: #161613;
+  box-shadow: 8px 8px 0 #161613;
+}
+
+.scanStatus > svg {
+  color: #161613;
+}
+
+.nodeInspector {
+  top: 276px;
+  left: 680px;
+  grid-template-rows: auto 1fr auto;
+  width: 560px;
+  min-height: 280px;
+  border: 4px solid #161613;
+  border-left: 10px solid var(--inspector-role);
+  border-radius: 2px;
+  background: #fffdf0;
+  color: #161613;
+  box-shadow:
+    9px 9px 0 var(--inspector-role),
+    13px 13px 0 #161613;
+}
+
+.nodeInspector header {
+  grid-template-columns: 50px 1fr;
+  gap: 14px;
+  min-height: 78px;
+  padding: 12px 18px;
+  border-bottom: 3px solid #161613;
+  background: #ffd83d;
+}
+
+.nodeInspectorHeading {
+  display: grid;
+  gap: 3px;
+}
+
+.nodeInspector header small {
+  color: #4f4a41;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.nodeInspector header strong {
+  color: #161613;
+  font-size: 20px;
+  font-weight: 760;
+  line-height: 1.1;
+}
+
+.nodeInspectorIcon {
+  width: 46px;
+  height: 46px;
+  border: 2px solid #161613;
+  border-radius: 1px;
+  background: #fffdf0;
+  color: #161613;
+}
+
+.nodeInspectorIcon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.nodeInspectorBody {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: minmax(96px, auto) minmax(72px, auto);
+  gap: 12px;
+  padding: 16px 18px;
+  background: #fffdf0;
+}
+
+.nodeInspectorPrimary,
+.nodeInspectorDetail {
+  min-height: 0;
+  gap: 8px;
+  padding: 12px 14px;
+  border: 2px solid #161613;
+  border-left: 7px solid var(--inspector-role);
+  border-radius: 1px;
+  background: #fffaf1;
+  color: #161613;
+}
+
+.nodeInspectorPrimary {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  min-height: 0;
+  padding: 16px;
+  border-color: #161613;
+  border-left-width: 9px;
+  background: color-mix(in srgb, var(--inspector-role) 12%, #fffdf0);
+}
+
+.nodeInspectorBody small {
+  color: #466b66;
+  font-size: 10px;
+  font-weight: 720;
+}
+
+.nodeInspectorBody strong {
+  color: #161613;
+  font-size: 14px;
+  font-weight: 680;
+  line-height: 1.32;
+}
+
+.nodeInspectorPrimary strong {
+  top: 48px;
+  right: 16px;
+  left: 16px;
+  font-size: 18px;
+  font-weight: 760;
+  line-height: 1.24;
+}
+
+.nodeInspector footer {
+  min-height: 44px;
+  padding: 10px 18px;
+  border-top: 3px solid #161613;
+  background: color-mix(in srgb, var(--inspector-role) 18%, #fffdf0);
+  color: #173a35;
+  font-size: 12px;
+  font-weight: 720;
+}
+
+.nodeInspector footer svg {
+  width: 16px;
+  height: 16px;
+  color: #255f58;
+}
+
+/*
+ * The final collaboration sequence uses the chat element only as a positioning
+ * layer. The visible interface is the compact composer, followed by two
+ * standalone message bubbles; a full empty chat panel would imply an
+ * additional application window that is not part of this interaction.
+ */
+.chat[data-scene4-chat] {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/*
+ * Keep each conversation in the open lane beside its specialist. This leaves
+ * the production graph readable while still giving the submitted request and
+ * the agent response enough room for recording.
+ */
+.humanMessage[data-scene3-human-message],
+.agentMessage[data-scene3-agent-reply] {
+  width: 430px;
+}
+
+.stationLeft .humanMessage[data-scene3-human-message],
+.stationLeft .agentMessage[data-scene3-agent-reply] {
+  right: auto;
+  left: -18px;
+}
+
+.stationRight .humanMessage[data-scene3-human-message],
+.stationRight .agentMessage[data-scene3-agent-reply] {
+  right: -32px;
+  left: auto;
+}
+
+.eli .humanMessage[data-scene3-human-message],
+.owen .humanMessage[data-scene3-human-message] {
+  top: -8px;
+}
+
+.eli .agentMessage[data-scene3-agent-reply],
+.owen .agentMessage[data-scene3-agent-reply] {
+  top: 108px;
+}

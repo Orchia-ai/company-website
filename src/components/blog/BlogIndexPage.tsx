@@ -1,6 +1,9 @@
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+// The shared site stylesheet used to arrive via App.tsx; routes are now
+// code-split, so each page that needs it declares the dependency itself.
+import '../../App.css'
 import Header from '../Header'
 import Footer from '../Footer'
 import OrchiaBackground from '../OrchiaBackground'

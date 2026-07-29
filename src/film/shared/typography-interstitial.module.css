@@ -1,0 +1,186 @@
+.interstitial {
+  position: absolute;
+  inset: 0;
+  z-index: 72;
+  display: grid;
+  visibility: hidden;
+  place-items: center;
+  padding: 120px 170px 150px;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 16% 18%,
+      rgb(199 103 69 / 17%),
+      transparent 31%
+    ),
+    radial-gradient(
+      circle at 84% 80%,
+      rgb(62 124 120 / 12%),
+      transparent 32%
+    ),
+    linear-gradient(142deg, #f4f0e8, #e6e0d5 74%);
+  color: #1e2420;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro {
+  visibility: visible;
+  opacity: 1;
+}
+
+.bridge {
+  background: rgb(232 227 218 / 68%);
+  backdrop-filter: grayscale(0.78) saturate(0.52) brightness(0.9);
+}
+
+.bridge::before {
+  display: none;
+}
+
+.interstitial::before {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(30 36 32 / 3.8%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(30 36 32 / 3%) 1px, transparent 1px);
+  background-size: 52px 52px;
+  content: "";
+  mask-image: radial-gradient(circle at center, black, transparent 88%);
+}
+
+.copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 24px;
+  justify-items: center;
+  width: min(1460px, 100%);
+  text-align: center;
+  transform-origin: 50% 50%;
+  will-change: opacity, transform;
+}
+
+.brand {
+  margin: 0;
+  color: #b85f40;
+  font-size: 30px;
+  font-weight: 650;
+  line-height: 1;
+}
+
+.headline {
+  max-width: 1460px;
+  margin: 0;
+  color: #1e2420;
+  font-size: 88px;
+  font-weight: 620;
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.interstitial {
+  background:
+    radial-gradient(circle at 14% 18%, rgb(244 81 54 / 19%), transparent 29%),
+    radial-gradient(circle at 86% 17%, rgb(242 169 0 / 15%), transparent 26%),
+    radial-gradient(circle at 84% 84%, rgb(0 166 166 / 12%), transparent 28%),
+    #f8f1e6;
+  color: #24221d;
+}
+
+.bridge {
+  background: rgb(247 240 228 / 76%);
+  backdrop-filter: grayscale(0.58) saturate(0.72) brightness(0.98);
+}
+
+.interstitial::before {
+  background-image:
+    linear-gradient(rgb(49 43 34 / 4.4%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(49 43 34 / 4.4%) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.brand {
+  color: #f45136;
+  font-size: 32px;
+  font-weight: 720;
+}
+
+.headline {
+  color: #24221d;
+  font-weight: 700;
+  text-shadow: 0 2px 0 rgb(255 255 255 / 44%);
+}
+
+/* Feature 5 v2 — graphic title cards, not an AI-product gradient. */
+.interstitial {
+  background:
+    linear-gradient(
+      90deg,
+      #ff5a36 0 12%,
+      #161613 12% 68%,
+      #cfff3d 68% 100%
+    );
+  color: #fffdf0;
+}
+
+.interstitial::before {
+  inset: 38px;
+  border: 4px solid #fff3cb;
+  background:
+    linear-gradient(90deg, transparent 0 73%, #ff4fa3 73% 76%, transparent 76%),
+    linear-gradient(180deg, transparent 0 18%, #2864ff 18% 21%, transparent 21%);
+  content: "";
+  mask-image: none;
+}
+
+.bridge {
+  background: rgb(255 243 203 / 52%);
+  backdrop-filter: grayscale(0.24) saturate(0.88) brightness(1.02);
+}
+
+.bridge::before {
+  display: block;
+  border-color: #161613;
+  background:
+    linear-gradient(90deg, transparent 0 73%, #ff4fa3 73% 76%, transparent 76%),
+    linear-gradient(180deg, transparent 0 18%, #2864ff 18% 21%, transparent 21%);
+}
+
+.copy {
+  justify-items: start;
+  width: min(1520px, 100%);
+  padding: 74px 92px;
+  border-left: 18px solid #ffd83d;
+  text-align: left;
+}
+
+.brand {
+  padding: 8px 13px 9px;
+  background: #ffd83d;
+  color: #161613;
+  font-size: 34px;
+  font-weight: 880;
+  line-height: 1;
+}
+
+.headline {
+  max-width: 1320px;
+  color: #fffdf0;
+  font-size: 104px;
+  font-weight: 870;
+  line-height: 0.94;
+  text-align: left;
+  text-shadow: 7px 7px 0 #2864ff;
+}
+
+.bridge .brand {
+  background: #161613;
+  color: #ffd83d;
+}
+
+.bridge .headline {
+  color: #161613;
+  text-shadow: 6px 6px 0 #ff5a36;
+}

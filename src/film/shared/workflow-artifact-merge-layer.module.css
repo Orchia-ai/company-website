@@ -1,0 +1,81 @@
+.layer {
+  position: absolute;
+  z-index: 45;
+  inset: 0;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.artifact {
+  --artifact-accent: #9db6a7;
+  position: absolute;
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr);
+  gap: 6px;
+  align-items: center;
+  width: 118px;
+  height: 38px;
+  padding: 0 9px;
+  overflow: hidden;
+  border: 1px solid rgb(30 28 24 / 20%);
+  border-left: 3px solid var(--artifact-accent);
+  border-radius: 3px;
+  background: #f1ebdf;
+  color: #292722;
+  box-shadow: 0 8px 18px rgb(0 0 0 / 17%);
+  transform-origin: 50% 50%;
+}
+
+.artifact i {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--artifact-accent);
+}
+
+.artifact span {
+  overflow: hidden;
+  font-size: 9px;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.artifact {
+  border-color: color-mix(in srgb, var(--artifact-accent) 42%, #7e7569);
+  border-left-width: 4px;
+  background: #fff9ee;
+  box-shadow:
+    0 10px 22px rgb(57 42 25 / 21%),
+    0 0 0 1px rgb(255 255 255 / 55%);
+}
+
+.artifact i {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--artifact-accent) 13%, transparent);
+}
+
+/* Version 2: source artifacts retain their identity as bold poster tiles. */
+.artifact {
+  grid-template-columns: 14px minmax(0, 1fr);
+  border: 2px solid #161613;
+  border-left: 10px solid var(--artifact-accent);
+  border-radius: 1px;
+  background: #fffdf0;
+  color: #161613;
+  box-shadow: 5px 5px 0 var(--artifact-accent);
+}
+
+.artifact i {
+  width: 12px;
+  height: 12px;
+  border: 2px solid #161613;
+  border-radius: 1px;
+  background: var(--artifact-accent);
+  box-shadow: none;
+}
+
+.artifact span {
+  font-weight: 780;
+}

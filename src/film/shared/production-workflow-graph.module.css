@@ -1,0 +1,213 @@
+.graph {
+  position: absolute;
+  width: 1060px;
+  height: 720px;
+  transform-origin: 50% 50%;
+}
+
+.mergeTarget {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 2px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.edges {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 1060px;
+  height: 720px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.edges path {
+  fill: none;
+  stroke: color-mix(in srgb, var(--edge-accent) 55%, #7f9187);
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.edges marker path {
+  fill: #7f9187;
+  stroke: none;
+}
+
+.node {
+  --node-accent: #9db6a7;
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 31px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  width: 148px;
+  height: 50px;
+  padding: 6px 8px;
+  overflow: hidden;
+  border: 1px solid rgb(127 145 135 / 38%);
+  border-left: 3px solid var(--node-accent);
+  border-radius: 4px;
+  background: #28342e;
+  color: #f2f3ef;
+  transform-origin: 50% 50%;
+}
+
+.nodeIcon {
+  display: grid;
+  width: 29px;
+  height: 29px;
+  place-items: center;
+  border: 1px solid rgb(157 182 167 / 25%);
+  border-radius: 3px;
+  color: var(--node-accent);
+}
+
+.nodeIcon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.nodeCopy {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.nodeCopy strong,
+.nodeCopy small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nodeCopy strong {
+  font-size: 10px;
+  font-weight: 620;
+}
+
+.nodeCopy small {
+  color: #aebbb4;
+  font-size: 7px;
+}
+
+.roleMarks {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  gap: 2px;
+}
+
+.roleMarks i {
+  display: block;
+  width: 9px;
+  height: 2px;
+}
+
+.nodeScan {
+  position: absolute;
+  z-index: 5;
+  top: -9px;
+  right: 0;
+  left: 0;
+  height: 9px;
+  opacity: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(157 182 167 / 75%),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.edges path {
+  stroke: color-mix(in srgb, var(--edge-accent) 72%, #71695d);
+  stroke-width: 1.7;
+}
+
+.edges marker path {
+  fill: #6f675c;
+}
+
+.node {
+  border-color: color-mix(in srgb, var(--node-accent) 43%, #514a41);
+  border-left-width: 4px;
+  background: #202823;
+  color: #fffaf1;
+  box-shadow:
+    0 7px 16px rgb(18 18 15 / 24%),
+    0 0 0 1px rgb(255 255 255 / 3%);
+}
+
+.nodeIcon {
+  border-color: color-mix(in srgb, var(--node-accent) 50%, #465149);
+  background: color-mix(in srgb, var(--node-accent) 11%, #202823);
+}
+
+.nodeCopy small {
+  color: #c4c2b9;
+}
+
+.nodeScan {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(32 168 100 / 88%),
+    transparent
+  );
+}
+
+/* Version 2: hard-edged signal nodes. */
+.edges path {
+  stroke: #161613;
+  stroke-width: 2;
+}
+
+.edges marker path {
+  fill: #161613;
+}
+
+.node {
+  border: 2px solid #161613;
+  border-left: 8px solid var(--node-accent);
+  border-radius: 1px;
+  background: #fffdf0;
+  color: #161613;
+  box-shadow: 4px 4px 0 var(--node-accent);
+}
+
+.nodeIcon {
+  border: 2px solid #161613;
+  border-radius: 1px;
+  background: var(--node-accent);
+  color: #161613;
+}
+
+.nodeCopy strong {
+  font-weight: 780;
+}
+
+.nodeCopy small {
+  color: #4a483f;
+}
+
+.roleMarks i {
+  height: 4px;
+  border: 1px solid #161613;
+}
+
+.nodeScan {
+  top: -4px;
+  height: 4px;
+  background: #1acb79;
+  box-shadow: 0 2px 0 #161613;
+}

@@ -6,6 +6,9 @@ import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
 import rehypeRaw from 'rehype-raw'
 import 'highlight.js/styles/github.css'
+// The shared site stylesheet used to arrive via App.tsx; routes are now
+// code-split, so each page that needs it declares the dependency itself.
+import '../../App.css'
 import Header from '../Header'
 import Footer from '../Footer'
 import OrchiaBackground from '../OrchiaBackground'

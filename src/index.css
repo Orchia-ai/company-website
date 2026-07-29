@@ -94,7 +94,21 @@ a {
   min-height: 100vh;
 }
 
-h1, h2 {
+/* The demo film owns the whole viewport — no page scroll, no paper grain. */
+body.film-mode {
+  overflow: hidden;
+  background: #11110f;
+}
+
+body.film-mode::after {
+  display: none;
+}
+
+/* Heading defaults belong to the marketing site, not the film, which brings its
+   own typography and would otherwise inherit the serif display face. */
+/* `:where()` keeps these at their original element-selector specificity so the
+   rest of the site cascades exactly as before. */
+body:where(:not(.film-mode)) :where(h1, h2) {
   margin: 0;
   color: var(--text-strong);
   font-family: var(--heading);
@@ -103,12 +117,12 @@ h1, h2 {
   letter-spacing: -0.015em;
 }
 
-h1 {
+body:where(:not(.film-mode)) :where(h1) {
   font-size: clamp(2.4rem, 8vw, 7rem);
   margin: 20px 0 28px;
 }
 
-h2 {
+body:where(:not(.film-mode)) :where(h2) {
   font-size: clamp(1.85rem, 5vw, 4.2rem);
   margin-bottom: 16px;
 }

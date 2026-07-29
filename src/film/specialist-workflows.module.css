@@ -1,0 +1,1584 @@
+.page {
+  /*
+   * The film was authored against a host page whose body font was the
+   * Helvetica stack below; --font-geist-* were never actually defined, so both
+   * the sans and mono declarations fell back to that inherited stack. Pinning
+   * both here reproduces the approved look inside this site, which otherwise
+   * sets its own serif/sans families globally.
+   */
+  --font-geist-sans: "Helvetica Neue", "Inter", "Arial Nova", Arial;
+  --font-geist-mono: "Helvetica Neue", "Inter", "Arial Nova", Arial;
+  --ink: #171713;
+  --canvas: #22211e;
+  --canvas-raised: #2a2925;
+  --paper: #e8e3da;
+  --paper-soft: #d8d2c8;
+  --paper-strong: #f4f0e9;
+  --muted: #a9a49a;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #11110f;
+  color: var(--paper-strong);
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+}
+
+.stage {
+  --stage-scale: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  transform: translate(-50%, -50%) scale(var(--stage-scale));
+  transform-origin: 50% 50%;
+  background:
+    radial-gradient(circle at 10% 12%, rgb(199 103 69 / 10%), transparent 27%),
+    radial-gradient(circle at 91% 14%, rgb(62 124 120 / 8%), transparent 29%),
+    linear-gradient(140deg, #f3f0e8, #e6e0d5 72%);
+  box-shadow: 0 32px 110px rgb(0 0 0 / 48%);
+  isolation: isolate;
+}
+
+.paperTexture {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgb(30 36 32 / 3.8%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(30 36 32 / 3%) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: linear-gradient(to bottom, black, transparent 90%);
+  pointer-events: none;
+}
+
+.ensemble {
+  position: absolute;
+  inset: 54px 68px 182px;
+}
+
+.cluster {
+  position: absolute;
+  width: 760px;
+  height: 344px;
+  will-change: opacity;
+}
+
+.writer {
+  top: 14px;
+  left: 20px;
+  /*
+   * The cluster itself is a stacking context (`will-change: opacity` and
+   * GSAP transforms), so the human node's z-index cannot compete directly
+   * with the separately mounted Maya workflow copy. Keep the whole writer
+   * cluster above that copy; the source workflow is hidden while the copy is
+   * in flight, leaving Maya's human card as the visible foreground layer.
+   */
+  z-index: 40;
+}
+
+.camera {
+  bottom: 2px;
+  left: 20px;
+}
+
+.art {
+  top: 14px;
+  right: 20px;
+}
+
+.data {
+  right: 20px;
+  bottom: 2px;
+}
+
+.humanNode {
+  position: absolute;
+  z-index: 5;
+  top: 91px;
+  left: 0;
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  width: 310px;
+  height: 164px;
+  padding: 18px 20px;
+  border: 1px solid rgb(30 36 32 / 20%);
+  border-left: 4px solid var(--role);
+  border-radius: 5px;
+  background: #202621;
+  box-shadow: 0 12px 25px rgb(47 43 35 / 20%);
+}
+
+.writer .humanNode {
+  --role: #c76745;
+  z-index: 40;
+}
+
+.camera .humanNode {
+  --role: #3e7c78;
+}
+
+.art .humanNode {
+  --role: #c3983f;
+}
+
+.data .humanNode {
+  --role: #76814c;
+}
+
+.avatar {
+  position: relative;
+  width: 94px;
+  height: 112px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #1b1a18;
+}
+
+.avatar img {
+  object-fit: cover;
+}
+
+.humanCopy {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+}
+
+.humanCopy strong {
+  color: #f4f0e9;
+  font-size: 27px;
+  font-weight: 620;
+  letter-spacing: -0.025em;
+}
+
+.humanCopy span {
+  color: #ddd6ca;
+  font-size: 17px;
+  font-weight: 540;
+}
+
+.humanCopy small {
+  color: #aaa49a;
+  font-size: 12px;
+}
+
+.personalSystem {
+  position: absolute;
+  z-index: 2;
+  top: 28px;
+  left: 220px;
+  width: 520px;
+  height: 280px;
+}
+
+.writer .personalSystem {
+  z-index: 24;
+}
+
+.toolGrid {
+  position: relative;
+  width: 520px;
+  height: 280px;
+}
+
+.toolGrid[data-expanded-system] {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  width: 1380px;
+  height: 860px;
+}
+
+.toolCard {
+  position: absolute;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  width: 246px;
+  height: 128px;
+  padding: 12px 13px 10px;
+  overflow: hidden;
+  border: 1px solid rgb(30 28 24 / 19%);
+  border-top: 3px solid var(--role);
+  border-radius: 4px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 7px 15px rgb(0 0 0 / 18%);
+  outline: 2px solid transparent;
+  outline-offset: 4px;
+}
+
+.toolGrid[data-expanded-system] .toolCard {
+  position: relative;
+  inset: auto;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: auto;
+  height: auto;
+  padding: 21px 23px 16px;
+  transform: none;
+}
+
+.toolGrid[data-expanded-system] .toolCard header {
+  grid-template-columns: 46px 1fr;
+  gap: 13px;
+}
+
+.toolGrid[data-expanded-system] .toolIcon {
+  width: 44px;
+  height: 44px;
+}
+
+.toolGrid[data-expanded-system] .toolIcon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.toolGrid[data-expanded-system] .toolCard header small {
+  font-size: 12px;
+}
+
+.toolGrid[data-expanded-system] .toolCard header strong {
+  font-size: 22px;
+  letter-spacing: -0.015em;
+}
+
+.toolGrid[data-expanded-system] .toolVisual {
+  align-self: stretch;
+  height: auto;
+  margin: 0;
+}
+
+.toolGrid[data-expanded-system] .toolCard footer {
+  padding-top: 9px;
+  font-size: 11px;
+}
+
+.toolGrid[data-expanded-system] .toolCard footer strong {
+  font-size: 11px;
+}
+
+.expandedDetail {
+  display: grid;
+  grid-template-rows: minmax(158px, 1fr) auto;
+  gap: 12px;
+  min-height: 0;
+  margin: 13px 0 10px;
+  overflow: hidden;
+  transform-origin: 50% 0;
+  will-change: clip-path, opacity, transform;
+}
+
+.expandedInformation {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px;
+  gap: 18px;
+  min-height: 108px;
+  padding: 13px 15px;
+  border: 1px solid rgb(30 28 24 / 10%);
+  border-radius: 3px;
+  background: rgb(255 255 255 / 25%);
+}
+
+.expandedCopy {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 7px;
+  min-width: 0;
+}
+
+.expandedCopy > strong {
+  color: #39362f;
+  font-size: 12px;
+  font-weight: 690;
+}
+
+.toolCard .expandedCopy ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 16px;
+  align-content: start;
+  margin: 0;
+  padding: 0;
+  color: #625d54;
+  font-size: 10px;
+  line-height: 1.3;
+  list-style: none;
+}
+
+.expandedCopy li {
+  min-width: 0;
+}
+
+.expandedCopy li::before {
+  margin-right: 6px;
+  color: var(--role);
+  content: "•";
+}
+
+.expandedSignals {
+  display: grid;
+  gap: 6px;
+  align-content: center;
+}
+
+.expandedSignals span {
+  display: flex;
+  align-items: center;
+  min-height: 25px;
+  padding: 0 9px;
+  border-left: 3px solid var(--role);
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--role) 11%, #f5f1e9);
+  color: #4c473f;
+  font-size: 10px;
+  font-weight: 630;
+}
+
+.tool1 {
+  top: 0;
+  left: 0;
+  transform: rotate(-0.6deg);
+}
+
+.tool2 {
+  top: 4px;
+  right: 0;
+  transform: rotate(0.5deg);
+}
+
+.tool3 {
+  bottom: 0;
+  left: 6px;
+  transform: rotate(0.35deg);
+}
+
+.tool4 {
+  right: 4px;
+  bottom: 3px;
+  transform: rotate(-0.45deg);
+}
+
+.writerTool {
+  --role: #c76745;
+}
+
+.cameraTool {
+  --role: #3e7c78;
+}
+
+.artTool {
+  --role: #c3983f;
+}
+
+.dataTool {
+  --role: #76814c;
+}
+
+.toolCard header {
+  display: grid;
+  grid-template-columns: 29px 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+.toolCard header > span:last-child {
+  display: grid;
+  gap: 1px;
+}
+
+.toolIcon {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid rgb(29 27 23 / 14%);
+  border-radius: 3px;
+  background: rgb(255 255 255 / 35%);
+  color: var(--role);
+}
+
+.toolIcon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.toolCard header small {
+  color: #716d65;
+  font-size: 8px;
+}
+
+.toolCard header strong {
+  font-size: 12px;
+  font-weight: 680;
+}
+
+.toolCard ul {
+  display: none;
+  gap: 2px;
+  align-content: center;
+  margin: 5px 0 3px;
+  padding: 0;
+  color: #5f5b54;
+  font-size: 8px;
+  list-style: none;
+}
+
+.toolCard li::before {
+  margin-right: 5px;
+  color: var(--role);
+  content: "—";
+}
+
+.toolCard footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 4px;
+  border-top: 1px solid rgb(30 28 24 / 10%);
+  color: #756f66;
+  font-size: 7px;
+}
+
+.toolCard footer strong {
+  color: #3a3732;
+  font-size: 7px;
+  font-weight: 650;
+}
+
+.toolVisual {
+  position: relative;
+  align-self: center;
+  height: 42px;
+  margin: 4px 0 2px;
+  overflow: hidden;
+  border: 1px solid rgb(30 28 24 / 10%);
+  border-radius: 2px;
+  background: rgb(255 255 255 / 24%);
+}
+
+.toolVisual i {
+  position: absolute;
+  display: block;
+  background: color-mix(in srgb, var(--role) 55%, #b7b0a4);
+}
+
+.chatVisual i:nth-child(1),
+.chatVisual i:nth-child(2) {
+  top: 5px;
+  width: 58%;
+  height: 12px;
+  border-radius: 6px 6px 6px 2px;
+}
+
+.chatVisual i:nth-child(1) {
+  left: 6px;
+}
+
+.chatVisual i:nth-child(2) {
+  top: 21px;
+  right: 6px;
+  width: 48%;
+  background: #c9c2b7;
+  border-radius: 6px 6px 2px 6px;
+}
+
+.chatVisual i:nth-child(n + 3),
+.filesVisual i:nth-child(n + 5) {
+  display: none;
+}
+
+.toolGrid[data-expanded-system] .chatVisual i:nth-child(1),
+.toolGrid[data-expanded-system] .chatVisual i:nth-child(2) {
+  top: 16px;
+  height: 31px;
+  border-radius: 15px 15px 15px 4px;
+}
+
+.toolGrid[data-expanded-system] .chatVisual i:nth-child(1) {
+  left: 15px;
+  width: 64%;
+}
+
+.toolGrid[data-expanded-system] .chatVisual i:nth-child(2) {
+  top: 61px;
+  right: 15px;
+  width: 54%;
+  border-radius: 15px 15px 4px 15px;
+}
+
+.toolGrid[data-expanded-system] .chatVisual::before,
+.toolGrid[data-expanded-system] .chatVisual::after {
+  position: absolute;
+  bottom: 16px;
+  display: block;
+  height: 38px;
+  border-radius: 3px;
+  content: "";
+}
+
+.toolGrid[data-expanded-system] .chatVisual::before {
+  left: 15px;
+  width: 42%;
+  background:
+    linear-gradient(
+      to bottom,
+      rgb(199 103 69 / 62%) 0 5px,
+      transparent 5px 12px,
+      rgb(158 152 142 / 72%) 12px 16px,
+      transparent 16px 23px,
+      rgb(158 152 142 / 52%) 23px 27px,
+      transparent 27px
+    );
+}
+
+.toolGrid[data-expanded-system] .chatVisual::after {
+  right: 15px;
+  width: 28%;
+  border: 1px solid rgb(30 28 24 / 10%);
+  background:
+    linear-gradient(90deg, rgb(199 103 69 / 28%), transparent),
+    rgb(255 255 255 / 26%);
+}
+
+.referenceThumbVisual {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 10px;
+}
+
+.toolGrid[data-expanded-system] .referenceThumbVisual {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: minmax(0, 1fr);
+  gap: 12px;
+  padding: 10px;
+}
+
+.referenceThumb {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgb(30 28 24 / 14%);
+  border-radius: 2px;
+  background: #ccc4b8;
+}
+
+.referenceThumb img {
+  object-fit: contain;
+  object-position: center;
+}
+
+.filesVisual i:nth-child(1),
+.filesVisual i:nth-child(2),
+.filesVisual i:nth-child(3) {
+  top: 6px;
+  left: 8px;
+  width: 14px;
+  height: 9px;
+  border-radius: 1px;
+  background: #c9c2b7;
+}
+
+.filesVisual i:nth-child(2) {
+  top: 17px;
+}
+
+.filesVisual i:nth-child(3) {
+  top: 28px;
+}
+
+.filesVisual i:nth-child(4) {
+  top: 7px;
+  right: 8px;
+  bottom: 7px;
+  left: 29px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #9e988e 0 2px,
+    transparent 2px 8px
+  );
+}
+
+.outlineVisual i:nth-child(odd),
+.draftVisual i:nth-child(odd),
+.rulesVisual i:nth-child(odd),
+.queryVisual i:nth-child(odd),
+.reportVisual i:nth-child(odd) {
+  left: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.outlineVisual i:nth-child(even),
+.draftVisual i:nth-child(even),
+.rulesVisual i:nth-child(even),
+.queryVisual i:nth-child(even),
+.reportVisual i:nth-child(even) {
+  right: 8px;
+  left: 21px;
+  height: 3px;
+}
+
+.outlineVisual i:nth-child(1),
+.outlineVisual i:nth-child(2),
+.draftVisual i:nth-child(1),
+.draftVisual i:nth-child(2),
+.rulesVisual i:nth-child(1),
+.rulesVisual i:nth-child(2),
+.queryVisual i:nth-child(1),
+.queryVisual i:nth-child(2),
+.reportVisual i:nth-child(1),
+.reportVisual i:nth-child(2) {
+  top: 7px;
+}
+
+.outlineVisual i:nth-child(3),
+.outlineVisual i:nth-child(4),
+.draftVisual i:nth-child(3),
+.draftVisual i:nth-child(4),
+.rulesVisual i:nth-child(3),
+.rulesVisual i:nth-child(4),
+.queryVisual i:nth-child(3),
+.queryVisual i:nth-child(4),
+.reportVisual i:nth-child(3),
+.reportVisual i:nth-child(4) {
+  top: 18px;
+}
+
+.outlineVisual i:nth-child(5),
+.outlineVisual i:nth-child(6),
+.draftVisual i:nth-child(5),
+.draftVisual i:nth-child(6),
+.rulesVisual i:nth-child(5),
+.rulesVisual i:nth-child(6),
+.queryVisual i:nth-child(5),
+.queryVisual i:nth-child(6),
+.reportVisual i:nth-child(5),
+.reportVisual i:nth-child(6) {
+  top: 29px;
+}
+
+.outlineVisual i:nth-child(n + 7),
+.draftVisual i:nth-child(n + 7),
+.rulesVisual i:nth-child(n + 7),
+.queryVisual i:nth-child(n + 7),
+.reportVisual i:nth-child(n + 7) {
+  display: none;
+}
+
+.toolGrid[data-expanded-system] :is(.outlineVisual, .draftVisual) {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 10px 12px;
+  align-items: center;
+  padding: 14px 16px;
+}
+
+.toolGrid[data-expanded-system] :is(.outlineVisual, .draftVisual) i {
+  position: static;
+  display: block;
+}
+
+.toolGrid[data-expanded-system]
+  :is(.outlineVisual, .draftVisual)
+  i:nth-child(odd) {
+  width: 10px;
+  height: 10px;
+}
+
+.toolGrid[data-expanded-system]
+  :is(.outlineVisual, .draftVisual)
+  i:nth-child(even) {
+  width: auto;
+  height: 5px;
+}
+
+.draftVisual i:nth-child(odd) {
+  width: 4px;
+  height: 4px;
+  border-radius: 0;
+  background: #c76745;
+}
+
+.framesVisual,
+.moodVisual,
+.assetsVisual,
+.conceptVisual {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+  padding: 4px;
+}
+
+.framesVisual i,
+.moodVisual i,
+.assetsVisual i,
+.conceptVisual i {
+  position: static;
+  border-radius: 1px;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--role) 62%, #eee7dc), #c6beb1);
+}
+
+.framesVisual i:nth-child(n + 5),
+.moodVisual i:nth-child(n + 7),
+.assetsVisual i:nth-child(n + 7),
+.conceptVisual i:nth-child(n + 5) {
+  display: none;
+}
+
+.moodVisual {
+  grid-template-columns: 1.4fr 1fr 1fr;
+}
+
+.tableVisual,
+.sheetVisual {
+  background:
+    linear-gradient(rgb(71 71 65 / 16%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(71 71 65 / 16%) 1px, transparent 1px),
+    rgb(255 255 255 / 24%);
+  background-size: 18px 10px;
+}
+
+.tableVisual i,
+.sheetVisual i {
+  display: none;
+}
+
+.pathVisual i:nth-child(1) {
+  top: 19px;
+  left: 10px;
+  width: 72%;
+  height: 2px;
+  transform: rotate(-8deg);
+}
+
+.pathVisual i:nth-child(2),
+.pathVisual i:nth-child(3),
+.pathVisual i:nth-child(4) {
+  top: 13px;
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--role);
+  border-radius: 50%;
+  background: #eee9e0;
+}
+
+.pathVisual i:nth-child(2) {
+  left: 12px;
+}
+
+.pathVisual i:nth-child(3) {
+  left: 47%;
+}
+
+.pathVisual i:nth-child(4) {
+  right: 12px;
+}
+
+.pathVisual i:nth-child(n + 5) {
+  display: none;
+}
+
+.checkVisual i:nth-child(odd) {
+  left: 8px;
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--role);
+  background: transparent;
+}
+
+.checkVisual i:nth-child(even) {
+  right: 8px;
+  left: 23px;
+  height: 3px;
+}
+
+.checkVisual i:nth-child(1),
+.checkVisual i:nth-child(2) {
+  top: 6px;
+}
+
+.checkVisual i:nth-child(3),
+.checkVisual i:nth-child(4) {
+  top: 18px;
+}
+
+.checkVisual i:nth-child(5),
+.checkVisual i:nth-child(6) {
+  top: 30px;
+}
+
+.checkVisual i:nth-child(n + 7) {
+  display: none;
+}
+
+.barsVisual,
+.reportVisual {
+  border-bottom: 1px solid rgb(30 28 24 / 16%);
+}
+
+.barsVisual i {
+  bottom: 4px;
+  width: 10px;
+  border-radius: 1px 1px 0 0;
+}
+
+.barsVisual i:nth-child(1) {
+  left: 10px;
+  height: 12px;
+}
+
+.barsVisual i:nth-child(2) {
+  left: 27px;
+  height: 27px;
+}
+
+.barsVisual i:nth-child(3) {
+  left: 44px;
+  height: 19px;
+}
+
+.barsVisual i:nth-child(4) {
+  left: 61px;
+  height: 33px;
+}
+
+.barsVisual i:nth-child(5) {
+  left: 78px;
+  height: 23px;
+}
+
+.barsVisual i:nth-child(n + 6) {
+  display: none;
+}
+
+.toolGrid[data-role="camera"] .tool1 {
+  width: 322px;
+  height: 91px;
+}
+
+.toolGrid[data-role="camera"] .tool2 {
+  width: 184px;
+  height: 91px;
+}
+
+.toolGrid[data-role="camera"] .tool3 {
+  bottom: 0;
+  width: 216px;
+  height: 174px;
+}
+
+.toolGrid[data-role="camera"] .tool4 {
+  width: 288px;
+  height: 174px;
+}
+
+.toolGrid[data-role="art"] .tool1 {
+  width: 294px;
+  height: 174px;
+}
+
+.toolGrid[data-role="art"] .tool2 {
+  width: 214px;
+  height: 104px;
+}
+
+.toolGrid[data-role="art"] .tool3 {
+  top: 116px;
+  right: 0;
+  bottom: auto;
+  left: auto;
+  width: 214px;
+  height: 151px;
+}
+
+.toolGrid[data-role="art"] .tool4 {
+  right: auto;
+  bottom: 0;
+  left: 4px;
+  width: 282px;
+  height: 94px;
+}
+
+.toolGrid[data-role="data"] .tool1 {
+  width: 520px;
+  height: 76px;
+}
+
+.toolGrid[data-role="data"] .tool2 {
+  top: 86px;
+  right: auto;
+  left: 0;
+  width: 252px;
+  height: 88px;
+}
+
+.toolGrid[data-role="data"] .tool3 {
+  top: 86px;
+  right: 0;
+  bottom: auto;
+  left: auto;
+  width: 256px;
+  height: 88px;
+}
+
+.toolGrid[data-role="data"] .tool4 {
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 520px;
+  height: 94px;
+}
+
+.mayaCopy {
+  position: absolute;
+  z-index: 30;
+  width: 1380px;
+  height: 860px;
+  visibility: hidden;
+  will-change: top, left, transform, opacity;
+}
+
+.narration {
+  position: absolute;
+  z-index: 60;
+  right: 180px;
+  bottom: 96px;
+  left: 180px;
+  margin: 0;
+  color: #1e2420;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.recordingStartOverlay {
+  position: absolute;
+  z-index: 120;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgb(17 17 15 / 24%);
+}
+
+.recordingStartButton {
+  display: grid;
+  width: 132px;
+  height: 132px;
+  padding: 0;
+  place-items: center;
+  border: 2px solid rgb(244 240 233 / 78%);
+  border-radius: 50%;
+  background: rgb(32 38 33 / 96%);
+  box-shadow:
+    0 22px 56px rgb(23 21 17 / 34%),
+    inset 0 0 0 1px rgb(199 103 69 / 40%);
+  color: #f4f0e9;
+  cursor: pointer;
+}
+
+.recordingStartButton:hover {
+  background: #2b332d;
+  transform: scale(1.04);
+}
+
+.recordingStartButton:focus-visible {
+  outline: 4px solid rgb(199 103 69 / 72%);
+  outline-offset: 7px;
+}
+
+.recordingStartButton svg {
+  width: 50px;
+  height: 50px;
+  margin-left: 7px;
+  fill: currentcolor;
+  stroke-width: 1.6;
+}
+
+.controls {
+  position: absolute;
+  z-index: 80;
+  right: 62px;
+  bottom: 24px;
+  left: 62px;
+  display: grid;
+  grid-template-columns: 44px 44px 1fr 64px;
+  gap: 10px;
+  align-items: center;
+  min-height: 54px;
+  padding: 6px 9px;
+  border: 1px solid rgb(224 216 202 / 18%);
+  border-radius: 4px;
+  background: rgb(24 23 20 / 93%);
+  box-shadow: 0 10px 32px rgb(0 0 0 / 30%);
+}
+
+.controls button {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgb(224 216 202 / 22%);
+  border-radius: 3px;
+  background: #312f2a;
+  color: #eee8dd;
+  cursor: pointer;
+}
+
+.controls button:hover {
+  background: #3a3731;
+}
+
+.controls button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.progressTrack {
+  position: relative;
+  height: 4px;
+  overflow: hidden;
+  background: #4c4942;
+}
+
+.progressTrack > span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: #c47b5c;
+}
+
+.progressTrack input {
+  position: absolute;
+  inset: -13px 0;
+  width: 100%;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.renderBar {
+  position: absolute;
+  z-index: 80;
+  right: 62px;
+  bottom: 88px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.renderButton {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgb(224 216 202 / 22%);
+  border-radius: 3px;
+  background: #312f2a;
+  color: #eee8dd;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.renderButton:hover:not(:disabled) {
+  background: #3a3731;
+}
+
+.renderButton:disabled {
+  cursor: default;
+  opacity: 0.75;
+}
+
+.renderButton svg {
+  width: 18px;
+  height: 18px;
+}
+
+.renderLink {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgb(196 123 92 / 55%);
+  border-radius: 3px;
+  background: #c47b5c;
+  color: #201d19;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.renderError {
+  max-width: 320px;
+  color: #e6a08a;
+  font-size: 13px;
+}
+
+.timecode {
+  color: #b9b2a7;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  text-align: right;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page *,
+  .page *::before,
+  .page *::after {
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * Feature 5 v2 — controlled dopamine system
+ *
+ * The film choreography is unchanged. These overrides provide a warmer,
+ * higher-energy visual system with crisp geometry and restrained focal color.
+ */
+.page {
+  --ink: #24221d;
+  --canvas: #1b1b18;
+  --canvas-raised: #25241f;
+  --paper: #fff9ee;
+  --paper-soft: #eee6d8;
+  --paper-strong: #fffdf7;
+  --muted: #8b8478;
+  --dopamine-coral: #f45136;
+  --dopamine-violet: #7657e8;
+  --dopamine-cyan: #00a6a6;
+  --dopamine-amber: #f2a900;
+  --dopamine-green: #20a864;
+  background: #171713;
+}
+
+.stage {
+  background:
+    radial-gradient(circle at 8% 8%, rgb(244 81 54 / 12%), transparent 24%),
+    radial-gradient(circle at 92% 12%, rgb(242 169 0 / 10%), transparent 22%),
+    radial-gradient(circle at 82% 88%, rgb(0 166 166 / 8%), transparent 26%),
+    #f7f0e4;
+  box-shadow:
+    0 34px 112px rgb(0 0 0 / 52%),
+    0 0 0 1px rgb(255 255 255 / 7%);
+}
+
+.paperTexture {
+  background-image:
+    linear-gradient(rgb(49 43 34 / 4.4%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(49 43 34 / 4.4%) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.humanNode {
+  border-color: rgb(255 250 240 / 16%);
+  border-left-width: 5px;
+  background: #1e231f;
+  box-shadow:
+    0 15px 30px rgb(52 41 28 / 22%),
+    0 0 0 1px rgb(255 255 255 / 4%);
+}
+
+.writer .humanNode,
+.writerTool {
+  --role: var(--dopamine-coral);
+}
+
+.camera .humanNode,
+.cameraTool {
+  --role: var(--dopamine-cyan);
+}
+
+.art .humanNode,
+.artTool {
+  --role: var(--dopamine-amber);
+}
+
+.data .humanNode,
+.dataTool {
+  --role: var(--dopamine-violet);
+}
+
+.avatar {
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 8%);
+}
+
+.humanCopy strong {
+  color: #fffaf0;
+}
+
+.humanCopy span {
+  color: #f0e7d9;
+}
+
+.humanCopy small {
+  color: #bfb5a7;
+}
+
+.toolCard {
+  border-color: rgb(50 43 34 / 19%);
+  border-top-width: 4px;
+  background: #fff9ee;
+  box-shadow:
+    0 9px 20px rgb(55 42 26 / 17%),
+    0 0 0 1px rgb(255 255 255 / 52%);
+}
+
+.toolGrid[data-expanded-system] .toolCard {
+  box-shadow:
+    0 14px 32px rgb(55 42 26 / 18%),
+    0 0 0 1px rgb(255 255 255 / 58%);
+}
+
+.toolIcon {
+  border-color: color-mix(in srgb, var(--role) 24%, #d8cfc0);
+  background: color-mix(in srgb, var(--role) 9%, #fffdf7);
+}
+
+.toolVisual {
+  border-color: rgb(50 43 34 / 13%);
+  background: #fbf4e8;
+}
+
+.expandedInformation {
+  border-color: color-mix(in srgb, var(--role) 20%, #d9d0c3);
+  background: color-mix(in srgb, var(--role) 5%, #fffdf7);
+}
+
+.expandedSignals span {
+  border-left-width: 4px;
+  background: color-mix(in srgb, var(--role) 13%, #fff9ee);
+  color: #3c3932;
+}
+
+.narration {
+  color: #22201b;
+  font-size: 38px;
+  font-weight: 690;
+  letter-spacing: -0.028em;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 56%);
+}
+
+.recordingStartOverlay {
+  background: rgb(26 24 19 / 32%);
+  backdrop-filter: saturate(1.12);
+}
+
+.recordingStartButton {
+  border-color: rgb(255 249 238 / 88%);
+  background: #1e231f;
+  box-shadow:
+    0 24px 58px rgb(35 29 21 / 36%),
+    inset 0 0 0 2px rgb(244 81 54 / 66%),
+    0 0 0 8px rgb(244 81 54 / 12%);
+}
+
+.recordingStartButton:hover {
+  background: #293029;
+}
+
+.recordingStartButton:focus-visible {
+  outline-color: rgb(244 81 54 / 84%);
+}
+
+.controls {
+  border-color: rgb(255 249 238 / 21%);
+  background: rgb(27 27 24 / 95%);
+  box-shadow:
+    0 12px 34px rgb(0 0 0 / 34%),
+    0 0 0 1px rgb(255 255 255 / 3%);
+}
+
+.controls button {
+  border-color: rgb(255 249 238 / 25%);
+  background: #292923;
+  color: #fff9ee;
+}
+
+.controls button:hover {
+  border-color: rgb(244 81 54 / 65%);
+  background: #35342d;
+}
+
+.progressTrack {
+  background: #4a4840;
+}
+
+.progressTrack > span {
+  background: var(--dopamine-coral);
+  box-shadow: 0 0 10px rgb(244 81 54 / 50%);
+}
+
+.timecode {
+  color: #d3c9bb;
+}
+
+/*
+ * Feature 5 v2 — signal poster
+ *
+ * A deliberately graphic, high-energy direction: flat color fields, hard
+ * outlines, offset shadows, asymmetric accents, and role colors that remain
+ * legible at recording speed. The choreography and 1920 × 1080 stage stay
+ * unchanged.
+ */
+.page {
+  --ink: #161613;
+  --canvas: #161613;
+  --canvas-raised: #24241f;
+  --paper: #fff8dc;
+  --paper-soft: #f0e7c7;
+  --paper-strong: #fffdf0;
+  --muted: #6f6b5f;
+  --signal-orange: #ff5a36;
+  --signal-blue: #2864ff;
+  --signal-lime: #cfff3d;
+  --signal-pink: #ff4fa3;
+  --signal-yellow: #ffd83d;
+  --signal-green: #1acb79;
+  background: #151512;
+}
+
+.stage {
+  background:
+    linear-gradient(90deg, var(--signal-orange) 0 18px, transparent 18px),
+    linear-gradient(180deg, var(--signal-yellow) 0 18px, transparent 18px),
+    #fff3cb;
+  box-shadow:
+    24px 24px 0 #080807,
+    0 46px 120px rgb(0 0 0 / 58%);
+}
+
+.stage::before,
+.stage::after {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.stage::before {
+  top: -108px;
+  right: -72px;
+  width: 380px;
+  height: 250px;
+  background: var(--signal-pink);
+  clip-path: polygon(14% 0, 100% 0, 100% 78%, 0 100%);
+}
+
+.stage::after {
+  bottom: 72px;
+  left: -110px;
+  width: 330px;
+  height: 96px;
+  background: var(--signal-blue);
+  clip-path: polygon(0 0, 100% 24%, 88% 100%, 0 78%);
+}
+
+.paperTexture {
+  z-index: 1;
+  background-image:
+    linear-gradient(rgb(22 22 19 / 8%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(22 22 19 / 8%) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: none;
+  opacity: 0.48;
+}
+
+.ensemble,
+.mayaCopy {
+  z-index: 3;
+}
+
+.humanNode {
+  border: 3px solid #161613;
+  border-left: 14px solid #161613;
+  border-radius: 2px;
+  background: var(--role);
+  color: #161613;
+  box-shadow: 10px 10px 0 #161613;
+}
+
+.writer .humanNode,
+.writerTool {
+  --role: var(--signal-orange);
+}
+
+.camera .humanNode,
+.cameraTool {
+  --role: var(--signal-blue);
+}
+
+.art .humanNode,
+.artTool {
+  --role: var(--signal-lime);
+}
+
+.data .humanNode,
+.dataTool {
+  --role: var(--signal-pink);
+}
+
+.avatar {
+  border: 3px solid #161613;
+  border-radius: 1px;
+  background: #161613;
+  box-shadow: none;
+}
+
+.humanNode .humanCopy strong,
+.humanNode .humanCopy span,
+.humanNode .humanCopy small {
+  color: inherit;
+}
+
+.humanNode .humanCopy strong {
+  font-size: 30px;
+  font-weight: 820;
+  line-height: 0.96;
+}
+
+.humanNode .humanCopy span {
+  font-weight: 720;
+}
+
+.humanNode .humanCopy small {
+  font-weight: 620;
+  opacity: 0.72;
+}
+
+.toolCard {
+  border: 2px solid #161613;
+  border-top: 10px solid var(--role);
+  border-radius: 2px;
+  background: #fffdf0;
+  box-shadow: 8px 8px 0 #161613;
+  outline-color: transparent;
+}
+
+.toolGrid[data-expanded-system] .toolCard {
+  border-width: 3px;
+  border-top-width: 14px;
+  box-shadow: 14px 14px 0 #161613;
+}
+
+.toolIcon {
+  border: 2px solid #161613;
+  border-radius: 1px;
+  background: var(--role);
+  color: #161613;
+}
+
+.toolCard header small {
+  color: #625f54;
+  font-weight: 650;
+}
+
+.toolCard header strong {
+  color: #161613;
+  font-weight: 820;
+}
+
+.toolVisual {
+  border: 2px solid #161613;
+  border-radius: 1px;
+  background: #f5eccb;
+}
+
+.expandedInformation {
+  border: 2px solid #161613;
+  border-radius: 1px;
+  background: #fff7d6;
+}
+
+.expandedSignals span {
+  border: 2px solid #161613;
+  border-left: 9px solid var(--role);
+  border-radius: 0;
+  background: #fffdf0;
+  color: #161613;
+  font-weight: 720;
+}
+
+.toolCard footer {
+  border-top-color: #161613;
+  color: #5a564c;
+}
+
+.toolCard footer strong {
+  color: #161613;
+}
+
+.narration {
+  color: #161613;
+  font-size: 42px;
+  font-weight: 850;
+  line-height: 1.04;
+  text-shadow:
+    3px 3px 0 #fff3cb,
+    6px 6px 0 rgb(255 90 54 / 28%);
+}
+
+.recordingStartOverlay {
+  background: rgb(22 22 19 / 48%);
+  backdrop-filter: none;
+}
+
+.recordingStartButton {
+  border: 4px solid #161613;
+  background: var(--signal-yellow);
+  color: #161613;
+  box-shadow:
+    12px 12px 0 #161613,
+    0 0 0 6px var(--signal-orange);
+}
+
+.recordingStartButton:hover {
+  background: var(--signal-lime);
+}
+
+.recordingStartButton:focus-visible {
+  outline-color: var(--signal-blue);
+}
+
+.controls {
+  border: 3px solid #161613;
+  border-radius: 1px;
+  background: #161613;
+  box-shadow: 9px 9px 0 var(--signal-orange);
+}
+
+.controls button {
+  border: 2px solid #fff3cb;
+  border-radius: 1px;
+  background: #161613;
+  color: #fff3cb;
+}
+
+.controls button:hover {
+  border-color: #161613;
+  background: var(--signal-lime);
+  color: #161613;
+}
+
+.progressTrack {
+  height: 7px;
+  background: #4d4d46;
+}
+
+.progressTrack > span {
+  background: var(--signal-yellow);
+  box-shadow: none;
+}
+
+.timecode {
+  color: #fff3cb;
+  font-weight: 720;
+}

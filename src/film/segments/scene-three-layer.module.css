@@ -1,0 +1,529 @@
+.layer {
+  position: absolute;
+  inset: 0;
+  z-index: 44;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.workspace {
+  position: absolute;
+  top: 124px;
+  left: 280px;
+  width: 1360px;
+  height: 724px;
+  overflow: hidden;
+  border: 1px solid #4c4e47;
+  border-radius: 6px;
+  background:
+    linear-gradient(rgb(247 240 226 / 3%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(247 240 226 / 3%) 1px, transparent 1px),
+    #191c1a;
+  background-size: 32px 32px;
+  color: #f2eee6;
+  box-shadow: 0 28px 66px rgb(48 39 30 / 29%);
+}
+
+.workspaceHeader {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  gap: 13px;
+  align-items: center;
+  height: 76px;
+  padding: 0 22px;
+  border-bottom: 1px solid #3e413c;
+  background: #202320;
+}
+
+.workspaceIcon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid #a86544;
+  border-radius: 4px;
+  background: #2b2823;
+  color: #d58a62;
+}
+
+.workspaceIcon svg {
+  width: 19px;
+  height: 19px;
+}
+
+.workspaceHeader > span:nth-child(2) {
+  display: grid;
+  gap: 2px;
+}
+
+.workspaceHeader small {
+  color: #9d9b92;
+  font-size: 11px;
+  font-weight: 520;
+}
+
+.workspaceHeader strong {
+  color: #f2eee6;
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+
+.workspaceHeader > i {
+  visibility: hidden;
+  padding: 8px 11px;
+  border: 1px solid #55574f;
+  border-radius: 3px;
+  background: #292c28;
+  color: #dcd7cc;
+  font-size: 11px;
+  font-style: normal;
+  opacity: 0;
+}
+
+.graph {
+  position: absolute;
+  top: 92px;
+  left: 40px;
+  width: 1280px;
+  height: 548px;
+}
+
+.lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.lines path {
+  fill: none;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 1.7;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.writerLine {
+  stroke: #c87757;
+}
+
+.artLine {
+  stroke: #c49a4e;
+}
+
+.cameraLine {
+  stroke: #62968e;
+}
+
+.dataLine {
+  stroke: #879a61;
+}
+
+.crossLine {
+  stroke: #a8a79e;
+  stroke-dasharray: 0.035 0.018 !important;
+}
+
+.node {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 29px minmax(0, 1fr);
+  grid-template-rows: 1fr auto;
+  gap: 3px 8px;
+  align-items: center;
+  height: 68px;
+  padding: 9px 10px 7px;
+  border: 1px solid #4b4d47;
+  border-top: 3px solid var(--role);
+  border-radius: 3px;
+  background: #252825;
+  box-shadow: 0 8px 16px rgb(0 0 0 / 19%);
+  transform-origin: 50% 50%;
+}
+
+.writerNode {
+  --role: #c87757;
+}
+
+.artNode {
+  --role: #c49a4e;
+}
+
+.cameraNode {
+  --role: #62968e;
+}
+
+.dataNode {
+  --role: #879a61;
+}
+
+.nodeIcon {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  grid-row: 1;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--role) 56%, #4a4c46);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--role) 10%, #292c29);
+  color: var(--role);
+}
+
+.nodeIcon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.nodeCopy {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.nodeCopy small {
+  color: #929188;
+  font-size: 8px;
+}
+
+.nodeCopy strong {
+  overflow: hidden;
+  color: #f0ece4;
+  font-size: 11px;
+  font-weight: 640;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.artifact {
+  grid-column: 1 / -1;
+  overflow: hidden;
+  padding-top: 4px;
+  border-top: 1px solid #393c38;
+  color: #aaa79e;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 7px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.focusLabel {
+  position: absolute;
+  z-index: 8;
+  top: 4px;
+  left: 50%;
+  visibility: hidden;
+  min-width: 206px;
+  padding: 9px 13px;
+  border: 1px solid #5b5b52;
+  border-radius: 3px;
+  background: #2a2d29;
+  color: #f1ede5;
+  font-size: 12px;
+  font-weight: 620;
+  text-align: center;
+  transform: translateX(-50%);
+  opacity: 0;
+}
+
+.systemCursor {
+  position: absolute;
+  z-index: 46;
+  top: 472px;
+  left: 936px;
+  display: grid;
+  grid-template-columns: 27px auto;
+  gap: 5px;
+  align-items: end;
+  color: #26231f;
+}
+
+.systemCursor > svg {
+  position: relative;
+  z-index: 2;
+  width: 27px;
+  height: 27px;
+  fill: #f5eee2;
+  stroke: #29251f;
+  stroke-width: 2;
+}
+
+.systemCursor > span {
+  padding: 5px 8px;
+  border: 1px solid #5f493b;
+  border-radius: 3px;
+  background: #a86544;
+  color: #fffaf1;
+  font-size: 10px;
+  font-weight: 620;
+  line-height: 1;
+}
+
+.systemCursor > i {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 23px;
+  height: 23px;
+  border: 2px solid #b76e48;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.workspace {
+  border-color: #4d5148;
+  background:
+    linear-gradient(rgb(255 250 240 / 4%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 250 240 / 4%) 1px, transparent 1px),
+    #171c18;
+  box-shadow:
+    0 30px 72px rgb(48 35 24 / 34%),
+    0 0 0 6px rgb(244 81 54 / 7%);
+}
+
+.workspaceHeader {
+  border-bottom-color: #424940;
+  background: #1d231e;
+}
+
+.workspaceIcon {
+  border-color: #f45136;
+  background: #2a241f;
+  color: #ff7b5d;
+  box-shadow: 0 0 0 3px rgb(244 81 54 / 9%);
+}
+
+.workspaceHeader strong {
+  color: #fff9ee;
+}
+
+.workspaceHeader > i {
+  border-color: #62685f;
+  background: #272d27;
+  color: #fff9ee;
+}
+
+.lines path {
+  stroke-width: 2.2;
+}
+
+.writerLine {
+  stroke: #f45136;
+}
+
+.artLine {
+  stroke: #f2a900;
+}
+
+.cameraLine {
+  stroke: #00a6a6;
+}
+
+.dataLine {
+  stroke: #7657e8;
+}
+
+.crossLine {
+  stroke: #c5beb1;
+}
+
+.node {
+  border-color: #4f554d;
+  border-top-width: 4px;
+  background: #222823;
+  box-shadow:
+    0 9px 19px rgb(0 0 0 / 25%),
+    0 0 0 1px rgb(255 255 255 / 3%);
+}
+
+.writerNode {
+  --role: #f45136;
+}
+
+.artNode {
+  --role: #f2a900;
+}
+
+.cameraNode {
+  --role: #00a6a6;
+}
+
+.dataNode {
+  --role: #7657e8;
+}
+
+.nodeIcon {
+  border-color: color-mix(in srgb, var(--role) 62%, #4e554e);
+  background: color-mix(in srgb, var(--role) 13%, #222823);
+}
+
+.nodeCopy strong {
+  color: #fff9ee;
+}
+
+.focusLabel {
+  border-color: #20a864;
+  background: #1f2d24;
+  color: #f4fff7;
+  box-shadow: 0 0 0 4px rgb(32 168 100 / 10%);
+}
+
+.systemCursor > span {
+  border-color: #d73c25;
+  background: #f45136;
+  color: #fff;
+}
+
+.systemCursor > i {
+  border-color: #f45136;
+}
+
+/* Feature 5 v2 — the shared system arrives as a high-contrast poster canvas. */
+.workspace {
+  border: 4px solid #161613;
+  border-radius: 2px;
+  background:
+    linear-gradient(rgb(255 253 240 / 8%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 253 240 / 8%) 1px, transparent 1px),
+    #161613;
+  background-size: 32px 32px;
+  box-shadow:
+    16px 16px 0 #ff4fa3,
+    -10px -10px 0 #2864ff;
+}
+
+.workspaceHeader {
+  border-bottom: 4px solid #161613;
+  background: #ffd83d;
+}
+
+.workspaceIcon {
+  border: 3px solid #161613;
+  border-radius: 1px;
+  background: #ff5a36;
+  color: #161613;
+  box-shadow: 4px 4px 0 #161613;
+}
+
+.workspaceHeader small,
+.workspaceHeader strong {
+  color: #161613;
+}
+
+.workspaceHeader strong {
+  font-size: 21px;
+  font-weight: 850;
+}
+
+.workspaceHeader > i {
+  border: 2px solid #161613;
+  border-radius: 1px;
+  background: #cfff3d;
+  color: #161613;
+  font-weight: 760;
+}
+
+.writerLine {
+  stroke: #ff5a36;
+}
+
+.artLine {
+  stroke: #cfff3d;
+}
+
+.cameraLine {
+  stroke: #3c78ff;
+}
+
+.dataLine {
+  stroke: #ff4fa3;
+}
+
+.crossLine {
+  stroke: #fff3cb;
+}
+
+.lines path {
+  stroke-width: 2.8;
+}
+
+.node {
+  border: 3px solid #161613;
+  border-top: 9px solid var(--role);
+  border-radius: 1px;
+  background: #fffdf0;
+  box-shadow: 6px 6px 0 var(--role);
+}
+
+.writerNode {
+  --role: #ff5a36;
+}
+
+.artNode {
+  --role: #cfff3d;
+}
+
+.cameraNode {
+  --role: #2864ff;
+}
+
+.dataNode {
+  --role: #ff4fa3;
+}
+
+.nodeIcon {
+  border: 2px solid #161613;
+  border-radius: 1px;
+  background: var(--role);
+  color: #161613;
+}
+
+.nodeCopy small {
+  color: #5d594f;
+  font-weight: 650;
+}
+
+.nodeCopy strong {
+  color: #161613;
+  font-weight: 830;
+}
+
+.artifact {
+  border-top: 2px solid #161613;
+  color: #4e4a42;
+}
+
+.focusLabel {
+  border: 3px solid #161613;
+  border-radius: 1px;
+  background: #ff4fa3;
+  color: #161613;
+  font-weight: 850;
+  box-shadow: 6px 6px 0 #161613;
+}
+
+.systemCursor > svg {
+  fill: #fffdf0;
+  stroke: #161613;
+}
+
+.systemCursor > span {
+  border: 2px solid #161613;
+  border-radius: 1px;
+  background: #cfff3d;
+  color: #161613;
+  font-weight: 800;
+  box-shadow: 3px 3px 0 #161613;
+}
+
+.systemCursor > i {
+  border: 3px solid #ff5a36;
+  border-radius: 0;
+}

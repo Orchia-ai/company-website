@@ -1,4 +1,5 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 import styles from './home-film-page.module.css'
 
@@ -31,6 +32,8 @@ type VideoDatum = {
   likesSaves: number
   ca: number
   thumbnail: string
+  videoSrc?: string
+  videoNote?: string
 }
 
 type MetricConfig = {
@@ -103,6 +106,9 @@ const VIDEO_DATA: readonly VideoDatum[] = [
     likesSaves: 6863,
     ca: 67,
     thumbnail: '/data-slides/thumbnails/07-14-import.jpg',
+    videoSrc:
+      'https://tm9ilj7n5ftxczdh.public.blob.vercel-storage.com/company-site/videos/data/07-14-import-LK31t0kKpAmxFm23y6N0ZNQTTJ22Ah.mp4',
+    videoNote: 'Full-length production video with background music.',
   },
   {
     date: '07-14',
@@ -136,6 +142,7 @@ const VIDEO_DATA: readonly VideoDatum[] = [
     likesSaves: 2229,
     ca: 40,
     thumbnail: '/data-slides/thumbnails/07-23.jpg',
+    videoSrc: '/demo/feature-4/after.mp4',
   },
   {
     date: '07-25',
@@ -292,6 +299,11 @@ function FollowerTrendChart() {
         <circle className={styles.trendPoint} cx={point.x} cy={point.y} key={index} r="6" />
       ) : null)}
 
+      <g transform={`translate(${points[0].x} ${points[0].y})`}>
+        <rect className={styles.trendStartLabelBox} x="0" y="-46" width="76" height="30" />
+        <text className={styles.trendStartLabel} x="38" y="-26" textAnchor="middle">220</text>
+      </g>
+
       <g transform={`translate(${points.at(-1)?.x ?? 0} ${points.at(-1)?.y ?? 0})`}>
         <rect className={styles.trendEndLabelBox} x="-76" y="-46" width="76" height="30" />
         <text className={styles.trendEndLabel} x="-38" y="-26" textAnchor="middle">1,615</text>
@@ -300,7 +312,13 @@ function FollowerTrendChart() {
   )
 }
 
-function VideoChart({ metric }: { metric: VideoMetric }) {
+function VideoChart({
+  metric,
+  onSelectVideo,
+}: {
+  metric: VideoMetric
+  onSelectVideo: (video: VideoDatum, trigger: SVGGElement) => void
+}) {
   const config = METRIC_CONFIGS[metric]
   const plotHeight = PLOT_BOTTOM - PLOT_TOP
   const slot = (PLOT_RIGHT - PLOT_LEFT) / VIDEO_DATA.length
@@ -367,7 +385,12 @@ function VideoChart({ metric }: { metric: VideoMetric }) {
           const centerX = PLOT_LEFT + slot * index + slot / 2
           const y = yFor(value)
           const belowThreshold = config.threshold !== null && value < config.threshold
+          const playable = Boolean(item.videoSrc)
           const ariaLabel = `${item.date}, ${item.title}: ${item.viewsDisplay} views, ${numberFormatter.format(item.likes)} likes, ${numberFormatter.format(item.saves)} saves, ${item.ca}% completion rate.`
+
+          const selectVideo = (trigger: SVGGElement) => {
+            if (playable) onSelectVideo(item, trigger)
+          }
 
           return (
             <g key={`${item.date}-${item.title}`} role="group" aria-label={ariaLabel}>
@@ -388,22 +411,48 @@ function VideoChart({ metric }: { metric: VideoMetric }) {
               >
                 {displayFor(item, metric)}
               </text>
-              <image
-                href={item.thumbnail}
-                x={centerX - thumbnailWidth / 2}
-                y={thumbnailY}
-                width={thumbnailWidth}
-                height={thumbnailHeight}
-                preserveAspectRatio="xMidYMid slice"
-                aria-label={item.title}
-              />
-              <rect
-                className={styles.chartThumbnailFrame}
-                x={centerX - thumbnailWidth / 2}
-                y={thumbnailY}
-                width={thumbnailWidth}
-                height={thumbnailHeight}
-              />
+              <g
+                className={playable ? styles.chartThumbnailInteractive : undefined}
+                role={playable ? 'button' : undefined}
+                tabIndex={playable ? 0 : undefined}
+                aria-label={playable ? `Play ${item.title}, ${item.viewsDisplay} views` : undefined}
+                onClick={(event) => selectVideo(event.currentTarget)}
+                onKeyDown={(event) => {
+                  if (event.key !== 'Enter' && event.key !== ' ') return
+                  event.preventDefault()
+                  selectVideo(event.currentTarget)
+                }}
+              >
+                <image
+                  className={styles.chartThumbnailImage}
+                  href={item.thumbnail}
+                  x={centerX - thumbnailWidth / 2}
+                  y={thumbnailY}
+                  width={thumbnailWidth}
+                  height={thumbnailHeight}
+                  preserveAspectRatio="xMidYMid slice"
+                  aria-hidden={playable ? true : undefined}
+                  aria-label={playable ? undefined : item.title}
+                />
+                <rect
+                  className={styles.chartThumbnailFrame}
+                  x={centerX - thumbnailWidth / 2}
+                  y={thumbnailY}
+                  width={thumbnailWidth}
+                  height={thumbnailHeight}
+                  aria-hidden="true"
+                />
+                {playable ? (
+                  <g
+                    className={styles.chartThumbnailPlay}
+                    transform={`translate(${centerX} ${thumbnailY + thumbnailHeight / 2})`}
+                    aria-hidden="true"
+                  >
+                    <circle className={styles.chartThumbnailPlayCircle} r="18" />
+                    <path className={styles.chartThumbnailPlayTriangle} d="M -5 -9 L 10 0 L -5 9 Z" />
+                  </g>
+                ) : null}
+              </g>
               <text className={styles.chartDate} x={centerX} y={thumbnailY + thumbnailHeight + 24} textAnchor="middle">
                 {item.date}
               </text>
@@ -412,6 +461,119 @@ function VideoChart({ metric }: { metric: VideoMetric }) {
         })}
       </svg>
     </div>
+  )
+}
+
+function FloatingVideoPlayer({
+  video,
+  onClose,
+  returnFocusTo,
+}: {
+  video: VideoDatum
+  onClose: () => void
+  returnFocusTo: SVGGElement | null
+}) {
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    closeButtonRef.current?.focus()
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        onClose()
+        return
+      }
+
+      if (event.key !== 'Tab') return
+      const dialog = dialogRef.current
+      if (!dialog) return
+
+      const focusable = Array.from(
+        dialog.querySelectorAll<HTMLElement>('button, video, [href], [tabindex]:not([tabindex="-1"])'),
+      ).filter((element) => !element.hasAttribute('disabled'))
+      const first = focusable[0]
+      const last = focusable.at(-1)
+      if (!first || !last) return
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = previousOverflow
+      returnFocusTo?.focus()
+    }
+  }, [onClose, returnFocusTo])
+
+  return createPortal(
+    <div
+      className={styles.videoPlayerOverlay}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) onClose()
+      }}
+    >
+      <div
+        className={styles.videoPlayerDialog}
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="floating-video-title"
+        aria-describedby="floating-video-note"
+      >
+        <header className={styles.videoPlayerHeader}>
+          <div className={styles.videoPlayerMeta}>
+            <p className={styles.videoPlayerEyebrow}>
+              Top-performing video · {video.viewsDisplay} views · {video.date}
+            </p>
+            <h2 className={styles.videoPlayerTitle} id="floating-video-title">
+              {video.title}
+            </h2>
+            <p className={styles.videoPlayerNote} id="floating-video-note">
+              {video.videoNote ?? 'Placeholder preview — the final video will replace this file.'}
+            </p>
+          </div>
+          <button
+            className={styles.videoPlayerClose}
+            ref={closeButtonRef}
+            type="button"
+            aria-label="Close video player"
+            onClick={onClose}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 5 19 19M19 5 5 19" />
+            </svg>
+          </button>
+        </header>
+
+        <div className={styles.videoPlayerStage}>
+          <video
+            className={styles.videoPlayer}
+            src={video.videoSrc}
+            poster={video.thumbnail}
+            controls
+            controlsList="nodownload noremoteplayback nofullscreen"
+            disablePictureInPicture
+            autoPlay
+            playsInline
+            preload="metadata"
+            tabIndex={0}
+            aria-label={`Playing ${video.title}`}
+          />
+        </div>
+      </div>
+    </div>,
+    document.body,
   )
 }
 
@@ -452,7 +614,17 @@ function AccessibleDataTable() {
 export default function DataSection() {
   const canvasRef = useRef<HTMLDivElement>(null)
   const [metric, setMetric] = useState<Metric>('overview')
+  const [selectedVideo, setSelectedVideo] = useState<{
+    video: VideoDatum
+    trigger: SVGGElement
+  } | null>(null)
   const metricConfig = metric === 'overview' ? null : METRIC_CONFIGS[metric]
+
+  const openVideo = useCallback((video: VideoDatum, trigger: SVGGElement) => {
+    setSelectedVideo({ video, trigger })
+  }, [])
+
+  const closeVideo = useCallback(() => setSelectedVideo(null), [])
 
   useLayoutEffect(() => {
     const canvas = canvasRef.current
@@ -551,7 +723,7 @@ export default function DataSection() {
               </section>
             ) : (
               <section className={styles.videoMetricView} aria-label={`${METRICS.find((item) => item.key === metric)?.label} performance by video`}>
-                <VideoChart metric={metric} />
+                <VideoChart metric={metric} onSelectVideo={openVideo} />
                 <AccessibleDataTable />
               </section>
             )}
@@ -564,6 +736,13 @@ export default function DataSection() {
           </div>
         </div>
       </article>
+      {selectedVideo ? (
+        <FloatingVideoPlayer
+          video={selectedVideo.video}
+          onClose={closeVideo}
+          returnFocusTo={selectedVideo.trigger}
+        />
+      ) : null}
     </section>
   )
 }

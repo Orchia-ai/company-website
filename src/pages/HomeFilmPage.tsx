@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async'
 import SpecialistWorkflowsFilm from '../film/SpecialistWorkflowsFilm'
 import DataSection from './DataSection'
 import SiteFooter from './SiteFooter'
+import WorkflowIterationSection from './WorkflowIterationSection'
 import styles from './home-film-page.module.css'
 
 /**
@@ -63,6 +64,7 @@ export default function HomeFilmPage() {
         </section>
 
         <DataSection />
+        <WorkflowIterationSection />
         <SiteFooter />
       </div>
     </>

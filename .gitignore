@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 .vercel
 .env.local
+
+# Local backups for videos served from Vercel Blob
+public/data-slides/videos/*.mp4
+public/workflow-iteration-demo/*.mp4

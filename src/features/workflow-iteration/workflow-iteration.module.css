@@ -1,0 +1,1159 @@
+.workflowSection {
+  display: grid;
+  justify-items: center;
+  width: 100%;
+  padding: clamp(72px, 11vw, 148px) var(--stage-gutter) clamp(72px, 11vw, 132px);
+  border-top: 1px solid rgb(255 249 238 / 8%);
+}
+
+.demoMount {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 3px solid var(--outline);
+  border-radius: 2px;
+  background: #1d1b16;
+  box-shadow: min(14px, 1.5vw) min(14px, 1.5vw) 0 #2864ff;
+}
+
+.demoCanvas {
+  --workflow-scale: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1920px;
+  height: 1080px;
+  transform: translate(-50%, -50%) scale(var(--workflow-scale));
+  transform-origin: 50% 50%;
+}
+
+.demoStage {
+  --workflow-blue: #2864ff;
+  --workflow-violet: #8257e5;
+  --workflow-amber: #f4b83f;
+  --workflow-green: #cfff3d;
+  --workflow-gray: #d9d5cd;
+
+  display: grid;
+  grid-template-rows: 104px minmax(0, 1fr);
+  gap: 18px;
+  width: 1920px;
+  height: 1080px;
+  padding: 28px;
+  overflow: hidden;
+  background-color: #1d1b16;
+  background-image:
+    linear-gradient(rgb(255 249 238 / 3%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 249 238 / 3%) 1px, transparent 1px);
+  background-size: 64px 64px;
+  color: var(--paper);
+  font-family: var(--sans);
+}
+
+.demoTopbar {
+  display: grid;
+  grid-template-columns: minmax(420px, 1fr) 600px auto;
+  align-items: center;
+  gap: 24px;
+  min-width: 0;
+  padding: 12px 16px 12px 20px;
+  border: 2px solid var(--outline);
+  border-radius: 2px;
+  background: #f4f0e9;
+  color: var(--outline);
+  box-shadow: 6px 6px 0 var(--workflow-blue);
+}
+
+.demoHeading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.demoHeadingSignal {
+  width: 10px;
+  height: 54px;
+  flex: none;
+  background: var(--coral);
+  box-shadow: 3px 3px 0 var(--outline);
+}
+
+.demoHeading h2 {
+  margin: 0;
+  overflow: hidden;
+  font-size: 32px;
+  font-weight: 850;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.demoHeading p {
+  margin: 7px 0 0;
+  color: #6c665c;
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: 0.025em;
+}
+
+.versionSelector {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.versionSelector button {
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  min-height: 62px;
+  padding: 8px 14px;
+  border: 2px solid var(--outline);
+  border-radius: 1px;
+  background: var(--paper-warm);
+  color: var(--outline);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.versionSelector button:not(:disabled):hover,
+.versionSelector button:not(:disabled):focus-visible {
+  background: var(--workflow-green);
+  outline: none;
+}
+
+.versionSelector button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.versionSelector button span {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.versionSelector button small {
+  color: #6c665c;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.versionSelector .versionButtonActive {
+  background: #ff4fa3;
+  box-shadow: 4px 4px 0 var(--outline);
+  opacity: 1;
+  transform: translate(-2px, -2px);
+}
+
+.versionSelector button.versionButtonActive:disabled {
+  opacity: 1;
+}
+
+.versionSelector .versionButtonActive small {
+  color: #372632;
+}
+
+.demoActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.demoActions button,
+.feedbackAcceptButton,
+.feedbackComposer button,
+.outputUnmute {
+  min-height: 42px;
+  padding: 0 16px;
+  border: 2px solid var(--outline);
+  border-radius: 1px;
+  background: var(--paper-warm);
+  color: var(--outline);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 780;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+  white-space: nowrap;
+}
+
+.demoActions button:not(:disabled):hover,
+.demoActions button:not(:disabled):focus-visible,
+.feedbackAcceptButton:not(:disabled):hover,
+.feedbackAcceptButton:not(:disabled):focus-visible,
+.feedbackComposer button:not(:disabled):hover,
+.feedbackComposer button:not(:disabled):focus-visible {
+  background: var(--workflow-green);
+  outline: none;
+}
+
+.demoActions .rerunButton {
+  background: var(--coral);
+  box-shadow: 4px 4px 0 var(--workflow-green);
+  color: #fff9ee;
+}
+
+.demoActions .rerunButton:not(:disabled):hover,
+.demoActions .rerunButton:not(:disabled):focus-visible {
+  background: #ff5a36;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--workflow-green);
+}
+
+.demoActions button:disabled,
+.feedbackAcceptButton:disabled,
+.feedbackComposer button:disabled {
+  cursor: default;
+  filter: grayscale(0.7);
+  opacity: 0.42;
+}
+
+.demoActions .skipButton {
+  min-height: 34px;
+  padding-inline: 10px;
+  border-width: 1px;
+  background: transparent;
+  color: #6c665c;
+  font-size: 12px;
+}
+
+.resetButton {
+  background: transparent !important;
+}
+
+.demoMain {
+  display: grid;
+  grid-template-columns: 1300px minmax(0, 1fr);
+  gap: 18px;
+  min-height: 0;
+}
+
+.workflowCanvas,
+.feedbackPanel {
+  min-height: 0;
+  overflow: hidden;
+  border: 2px solid var(--outline);
+  border-radius: 2px;
+  color: var(--outline);
+}
+
+.workflowCanvas {
+  display: grid;
+  grid-template-rows: 62px minmax(0, 1fr);
+  background: #f4f0e9;
+  box-shadow: 7px 7px 0 #ff4fa3;
+}
+
+.workflowCanvasHeader {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  padding: 9px 16px;
+  border-bottom: 2px solid var(--outline);
+  background: var(--paper-warm);
+}
+
+.workflowCanvasHeader > div {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.workflowCanvasHeader span,
+.workflowCanvasHeader p {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 620;
+  letter-spacing: 0.025em;
+}
+
+.workflowCanvasHeader > div > span {
+  color: #6c665c;
+}
+
+.workflowCanvasHeader strong {
+  font-size: 18px;
+  font-weight: 850;
+}
+
+.workflowCanvasHeader p {
+  margin: 0;
+  color: #6c665c;
+  text-align: center;
+}
+
+.workflowCanvasState {
+  padding: 6px 9px;
+  border: 1px solid var(--outline);
+  background: #f4f0e9;
+  font-variant-numeric: tabular-nums;
+}
+
+.workflowGraphViewport {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  animation: graphEnter 320ms ease both;
+  background-image:
+    linear-gradient(rgb(22 22 19 / 4%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(22 22 19 / 4%) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.workflowGraph {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1260px;
+  height: 820px;
+  transform: translate(-50%, -50%);
+}
+
+.planningGroup {
+  position: absolute;
+  z-index: 0;
+  border: 1.5px dashed rgb(22 22 19 / 38%);
+  border-radius: 2px;
+  background: rgb(255 243 203 / 38%);
+}
+
+.planningGroup > span {
+  position: absolute;
+  top: -10px;
+  left: 12px;
+  padding: 2px 7px;
+  border: 1px solid rgb(22 22 19 / 34%);
+  background: #f4f0e9;
+  color: #6c665c;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.025em;
+}
+
+.workflowEdges {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.workflowEdge {
+  fill: none;
+  stroke: #a9a49c;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.workflowArrow {
+  fill: #8d887f;
+}
+
+.workflowEdgeDone {
+  stroke: #799622;
+}
+
+.workflowEdgePass {
+  stroke: #799622;
+}
+
+.workflowEdgeFail,
+.workflowEdgeLoop {
+  stroke: #c45b49;
+  stroke-dasharray: 7 6;
+}
+
+.workflowEdgeActive {
+  stroke: #2864ff;
+  stroke-width: 4;
+  stroke-dasharray: 12 8;
+  animation: edgeFlow 650ms linear infinite;
+}
+
+.workflowNode {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: 29px minmax(0, 1fr);
+  overflow: hidden;
+  border: 2px solid var(--outline);
+  border-radius: 2px;
+  background: #efebe4;
+  color: var(--outline);
+  box-shadow: 3px 3px 0 rgb(22 22 19 / 20%);
+  transition: border-color 240ms ease, background-color 240ms ease, box-shadow 240ms ease, opacity 240ms ease, transform 240ms ease;
+}
+
+.workflowNodeHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 4px 7px;
+  border-bottom: 1px solid rgb(22 22 19 / 24%);
+  background: rgb(22 22 19 / 5%);
+}
+
+.workflowNodeStatusIcon {
+  display: grid;
+  width: 17px;
+  height: 17px;
+  flex: none;
+  place-items: center;
+  border: 1px solid var(--outline);
+  border-radius: 50%;
+  background: #d9d5cd;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.workflowNodeStatus {
+  color: #6c665c;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.025em;
+}
+
+.workflowNodeBadge {
+  margin-left: auto;
+  padding: 2px 5px;
+  border: 1px solid currentColor;
+  background: #fff9ee;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+}
+
+.workflowNodeBody {
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  min-height: 0;
+  padding: 8px 10px 9px;
+}
+
+.workflowNodeBody h3,
+.workflowNodeBody p {
+  margin: 0;
+}
+
+.workflowNodeBody h3 {
+  font-size: 16px;
+  font-weight: 820;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.workflowNodeBody p {
+  color: #6c665c;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.workflowNodeWaiting {
+  border-color: #8d887f;
+  background: #e3dfd7;
+  opacity: 0.72;
+}
+
+.workflowNodeRunning {
+  border-color: #2864ff;
+  background: #fff3cb;
+  box-shadow: 5px 5px 0 #2864ff;
+  transform: translate(-2px, -2px);
+  animation: nodeRunning 900ms ease-in-out infinite alternate;
+}
+
+.workflowNodeRunning .workflowNodeStatusIcon {
+  background: #ff4fa3;
+}
+
+.workflowNodeDone {
+  border-color: var(--outline);
+  background: #f2f9da;
+  box-shadow: 3px 3px 0 #abc92d;
+}
+
+.workflowNodeDone .workflowNodeStatusIcon {
+  background: var(--workflow-green);
+}
+
+.workflowNodeSkipped {
+  border-style: dashed;
+  opacity: 0.46;
+}
+
+.nodeSpinner {
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid rgb(22 22 19 / 30%);
+  border-top-color: var(--outline);
+  border-radius: 50%;
+  animation: spin 650ms linear infinite;
+}
+
+.workflowNodeTreatmentUpdate {
+  border-color: var(--workflow-violet);
+  box-shadow: 4px 4px 0 var(--workflow-violet);
+}
+
+.workflowNodeTreatmentUpdate .workflowNodeBadge {
+  color: #5d39b4;
+}
+
+.workflowNodeTreatmentMerge {
+  border-color: #b36b00;
+  box-shadow: 4px 4px 0 var(--workflow-amber);
+}
+
+.workflowNodeTreatmentMerge .workflowNodeBadge {
+  color: #8a5200;
+}
+
+.workflowNodeTreatmentRemove {
+  border-color: #b74f3f;
+  border-style: dashed;
+  background: #f4ddd7;
+  box-shadow: none;
+  opacity: 0.72;
+}
+
+.workflowNodeTreatmentRemove .workflowNodeBadge {
+  color: #a43d2f;
+}
+
+.workflowNodeTreatmentMerged,
+.workflowNodeTreatmentAbsorbed {
+  border-color: #2864ff;
+  box-shadow: 4px 4px 0 #2864ff;
+}
+
+.workflowNodeTreatmentMerged .workflowNodeBadge,
+.workflowNodeTreatmentAbsorbed .workflowNodeBadge {
+  color: #1f50c7;
+}
+
+.mergeIndicator {
+  position: absolute;
+  z-index: 4;
+  top: 148px;
+  left: 278px;
+  padding: 5px 8px;
+  border: 1px solid #8a5200;
+  background: #ffe6ac;
+  color: #704300;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 750;
+  box-shadow: 2px 2px 0 #8a5200;
+}
+
+.workflowOutputNode {
+  grid-template-rows: 34px minmax(0, 1fr);
+  background: #fff3cb;
+}
+
+.workflowOutputNode .workflowNodeHeader {
+  padding-inline: 9px;
+  background: #ff4fa3;
+}
+
+.workflowOutputNode .workflowNodeStatus,
+.workflowOutputNode .workflowNodeBadge {
+  color: var(--outline);
+}
+
+.workflowOutputNode .workflowNodeBody {
+  grid-template-rows: auto auto minmax(0, 1fr);
+  align-content: stretch;
+  padding: 10px 12px 12px;
+}
+
+.workflowOutputNode .workflowNodeBody h3 {
+  font-size: 19px;
+}
+
+.outputEmpty,
+.outputPending,
+.outputReady {
+  min-height: 0;
+}
+
+.outputEmpty {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 10px;
+  height: 100%;
+  padding: 28px 22px;
+  border: 2px dashed rgb(22 22 19 / 34%);
+  background: rgb(244 240 233 / 70%);
+  color: #6c665c;
+  text-align: center;
+}
+
+.outputEmptyMark {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 2px solid var(--outline);
+  background: var(--paper-warm);
+  color: var(--outline);
+  font-size: 25px;
+  line-height: 1;
+  box-shadow: 4px 4px 0 #d9d5cd;
+}
+
+.outputEmpty strong {
+  color: var(--outline);
+  font-size: 16px;
+}
+
+.outputEmpty > span:last-child {
+  max-width: 20ch;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.outputPending {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  align-items: center;
+  justify-items: center;
+  gap: 7px;
+  padding-top: 7px;
+  text-align: center;
+}
+
+.outputPending strong {
+  font-size: 14px;
+}
+
+.outputPending > span {
+  color: #6c665c;
+  font-size: 10px;
+}
+
+.outputSkeleton {
+  position: relative;
+  width: 220px;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border: 2px solid var(--outline);
+  background: #d8d3ca;
+}
+
+.outputSkeleton::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 20%, rgb(255 249 238 / 58%) 48%, transparent 76%);
+  animation: skeletonSweep 1.3s ease-in-out infinite;
+  content: "";
+  transform: translateX(-100%);
+}
+
+.outputSkeleton span {
+  display: block;
+  height: 8px;
+  margin: 28px 18px 0;
+  background: rgb(22 22 19 / 15%);
+}
+
+.outputSkeleton span:nth-child(2) {
+  width: 62%;
+}
+
+.outputSkeleton span:nth-child(3) {
+  width: 42%;
+}
+
+.outputReady {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.outputVideoFrame {
+  position: relative;
+  align-self: center;
+  justify-self: center;
+  width: 220px;
+  min-height: 0;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border: 2px solid var(--outline);
+  background: #0c0c0a;
+}
+
+.outputVideoFrame video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.outputUnmute {
+  position: absolute;
+  right: 7px;
+  bottom: 34px;
+  min-height: 28px;
+  padding: 0 8px;
+  border-width: 1px;
+  background: var(--workflow-green);
+  font-size: 10px;
+  box-shadow: 2px 2px 0 var(--outline);
+}
+
+.outputReadyMeta {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+}
+
+.outputReadyMeta > span:last-child {
+  overflow: hidden;
+  color: #6c665c;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.outputReadyDot {
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--outline);
+  border-radius: 50%;
+  background: var(--workflow-green);
+}
+
+.streamlineLedger {
+  position: absolute;
+  z-index: 3;
+  top: 614px;
+  left: 72px;
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 18px;
+  width: 810px;
+  min-height: 150px;
+  padding: 15px 17px;
+  border: 2px solid var(--outline);
+  background: #fff3cb;
+  box-shadow: 5px 5px 0 #2864ff;
+}
+
+.streamlineLedger > div {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.streamlineLedger strong {
+  font-size: 18px;
+  line-height: 1.05;
+}
+
+.streamlineLedger span {
+  color: #6c665c;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.streamlineLedger ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.streamlineLedger li {
+  position: relative;
+  padding: 6px 7px 6px 18px;
+  border: 1px solid rgb(22 22 19 / 24%);
+  background: #f4f0e9;
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 1.2;
+}
+
+.streamlineLedger li::before {
+  position: absolute;
+  top: 9px;
+  left: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2864ff;
+  content: "";
+}
+
+.feedbackPanel {
+  display: grid;
+  grid-template-rows: 70px minmax(0, 1fr) 288px;
+  background: #f4f0e9;
+  box-shadow: 7px 7px 0 var(--coral);
+}
+
+.feedbackHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 14px 10px 16px;
+  border-bottom: 2px solid var(--outline);
+  background: var(--paper-warm);
+}
+
+.feedbackKicker {
+  display: block;
+  margin-bottom: 4px;
+  color: #8a4b3e;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.025em;
+}
+
+.feedbackHeader h2 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 850;
+  letter-spacing: -0.025em;
+}
+
+.feedbackCount {
+  padding: 5px 7px;
+  border: 1px solid var(--outline);
+  background: #f4f0e9;
+  color: #6c665c;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+}
+
+.feedbackTimeline {
+  min-height: 0;
+  padding: 14px 14px 18px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: #8d887f #ded9d0;
+  scrollbar-width: thin;
+}
+
+.feedbackEmpty {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  min-height: 100%;
+  padding: 30px;
+  color: #6c665c;
+  text-align: center;
+}
+
+.feedbackEmptyIcon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  margin-bottom: 12px;
+  place-items: center;
+  border: 2px solid var(--outline);
+  background: #ff4fa3;
+  box-shadow: 4px 4px 0 var(--outline);
+  color: var(--outline);
+  font-size: 18px;
+}
+
+.feedbackEmpty strong {
+  color: var(--outline);
+  font-size: 16px;
+}
+
+.feedbackEmpty p {
+  max-width: 34ch;
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.feedbackCard {
+  margin-bottom: 12px;
+  padding: 12px 13px 13px;
+  border: 2px solid var(--outline);
+  background: #fff9ee;
+}
+
+.feedbackCardHuman {
+  margin-right: 0;
+  margin-left: 28px;
+  box-shadow: 4px 4px 0 var(--coral);
+}
+
+.feedbackCardAgent {
+  margin-right: 28px;
+  margin-left: 0;
+  background: #f7e3ef;
+  box-shadow: 4px 4px 0 #ff4fa3;
+}
+
+.feedbackCard header {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 9px;
+}
+
+.feedbackCardHuman header {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.feedbackCardHuman header > div {
+  justify-items: end;
+}
+
+.feedbackAvatar {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  flex: none;
+  place-items: center;
+  border: 1.5px solid var(--outline);
+  background: var(--coral);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.feedbackCardAgent .feedbackAvatar {
+  background: #ff4fa3;
+  font-size: 15px;
+}
+
+.feedbackCard header > div {
+  display: grid;
+  gap: 2px;
+}
+
+.feedbackCard header strong {
+  font-size: 13px;
+}
+
+.feedbackCard header span:last-child {
+  color: #6c665c;
+  font-family: var(--mono);
+  font-size: 10px;
+}
+
+.feedbackCard p {
+  margin: 0;
+  color: #4f4a43;
+  font-size: 13px;
+  line-height: 1.43;
+}
+
+.feedbackAgentAction {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 12px;
+}
+
+.feedbackAcceptButton {
+  min-height: 36px;
+  padding-inline: 12px;
+  background: var(--workflow-green);
+  font-size: 12px;
+  box-shadow: 3px 3px 0 var(--outline);
+}
+
+.agentThinking {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 4px 28px 0 0;
+  padding: 9px 11px;
+  border: 1px dashed #8257e5;
+  background: #eee7fb;
+  color: #5d39b4;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.agentThinkingDots {
+  display: flex;
+  gap: 3px;
+}
+
+.agentThinkingDots i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #8257e5;
+  animation: thinkingDot 780ms ease-in-out infinite alternate;
+}
+
+.agentThinkingDots i:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.agentThinkingDots i:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+.feedbackComposer {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 13px 14px 14px;
+  border-top: 2px solid var(--outline);
+  background: var(--paper-warm);
+}
+
+.feedbackComposerLabelRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.feedbackComposer label {
+  font-size: 15px;
+  font-weight: 820;
+}
+
+.feedbackComposerLabelRow span {
+  color: #6c665c;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.feedbackComposer textarea {
+  width: 100%;
+  min-height: 0;
+  padding: 10px 11px;
+  resize: none;
+  border: 2px solid var(--outline);
+  border-radius: 1px;
+  background: #fff9ee;
+  color: var(--outline);
+  font: 13px/1.42 var(--sans);
+}
+
+.feedbackComposer textarea:focus {
+  outline: 3px solid #ff4fa3;
+  outline-offset: 2px;
+}
+
+.feedbackComposer textarea:disabled {
+  background: #e4e0d8;
+  color: #6c665c;
+}
+
+.feedbackComposerActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.feedbackComposerActions p {
+  max-width: 260px;
+  margin: 0;
+  color: #6c665c;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.feedbackComposer button {
+  min-height: 38px;
+  flex: none;
+  background: var(--coral);
+  box-shadow: 3px 3px 0 var(--outline);
+  color: #fff9ee;
+}
+
+@keyframes graphEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes edgeFlow {
+  to { stroke-dashoffset: -20; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes nodeRunning {
+  to { box-shadow: 7px 7px 0 #2864ff; }
+}
+
+@keyframes skeletonSweep {
+  to { transform: translateX(100%); }
+}
+
+@keyframes thinkingDot {
+  to { opacity: 0.28; transform: translateY(-2px); }
+}
+
+@media (max-width: 640px) {
+  .demoMount {
+    box-shadow: min(9px, 1.5vw) min(9px, 1.5vw) 0 #2864ff;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workflowGraphViewport,
+  .workflowEdgeActive,
+  .workflowNode,
+  .workflowNodeRunning,
+  .nodeSpinner,
+  .outputSkeleton::after,
+  .agentThinkingDots i,
+  .versionSelector button,
+  .demoActions button,
+  .feedbackComposer button {
+    animation: none;
+    transition: none;
+  }
+
+  .feedbackTimeline {
+    scroll-behavior: auto;
+  }
+}

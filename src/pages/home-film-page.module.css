@@ -78,13 +78,12 @@
   color: var(--paper-dim);
 }
 
-/* An exact 16:9 box, so the film fills it edge to edge with no letterbox and
-   the section is only as tall as it needs to be. Capped by viewport height so
-   the call to action and the scroll hint stay above the fold. */
+/* An exact full-width 16:9 box, so the film fills it edge to edge with no
+   letterbox and shares one consistent width with the data and workflow stages. */
 .stageArea {
   position: relative;
   align-self: center;
-  width: min(100%, calc(76dvh * 16 / 9));
+  width: 100%;
   aspect-ratio: 16 / 9;
   margin-inline: auto;
 }
@@ -193,6 +192,7 @@
   display: grid;
   justify-items: center;
   gap: 34px;
+  width: 100%;
   padding: clamp(72px, 11vw, 148px) var(--stage-gutter) clamp(72px, 11vw, 132px);
   border-top: 1px solid rgb(255 249 238 / 8%);
 }
@@ -203,9 +203,9 @@
   position: relative;
   display: block;
   aspect-ratio: 16 / 9;
-  /* Keep the rendered box strictly 16:9. The viewport-height cap is folded
-     into the width so narrow or short screens scale both dimensions together. */
-  width: min(100%, calc(76dvh * 16 / 9));
+  /* Keep the rendered box strictly 16:9 while allowing the slide to use the
+     same full available width as the film and workflow demo. */
+  width: 100%;
   overflow: hidden;
   padding: 0;
   border: 3px solid var(--outline);
@@ -497,11 +497,11 @@
 }
 
 .trendTick {
-  fill: #6c665c;
+  fill: #4f4a43;
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 16px;
   font-variant-numeric: tabular-nums;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .trendArea {
@@ -540,10 +540,18 @@
   vector-effect: non-scaling-stroke;
 }
 
+.trendStartLabelBox {
+  fill: var(--paper-warm);
+  stroke: var(--outline);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.trendStartLabel,
 .trendEndLabel {
   fill: var(--outline);
   font-family: var(--mono);
-  font-size: 14px;
+  font-size: 18px;
   font-variant-numeric: tabular-nums;
   font-weight: 800;
 }
@@ -610,16 +618,16 @@
 .chartTick,
 .chartThresholdLabel,
 .chartDate {
-  fill: #6c665c;
+  fill: #4f4a43;
   font-family: var(--mono);
-  font-size: 13px;
+  font-size: 16px;
   font-variant-numeric: tabular-nums;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .chartThresholdLabel {
   fill: var(--coral);
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .chartBar {
@@ -636,9 +644,9 @@
 .chartValue {
   fill: var(--outline);
   font-family: var(--mono);
-  font-size: 15px;
+  font-size: 20px;
   font-variant-numeric: tabular-nums;
-  font-weight: 700;
+  font-weight: 800;
   transition: y 340ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -647,6 +655,196 @@
   stroke: var(--outline);
   stroke-width: 2px;
   vector-effect: non-scaling-stroke;
+}
+
+.chartThumbnailImage,
+.chartThumbnailFrame,
+.chartThumbnailPlayCircle {
+  transition: filter 140ms ease, stroke 140ms ease, stroke-width 140ms ease, fill 140ms ease;
+}
+
+.chartThumbnailInteractive {
+  cursor: pointer;
+  outline: none;
+}
+
+.chartThumbnailInteractive:hover .chartThumbnailImage,
+.chartThumbnailInteractive:focus-visible .chartThumbnailImage {
+  filter: brightness(0.72) saturate(1.12);
+}
+
+.chartThumbnailInteractive:hover .chartThumbnailFrame,
+.chartThumbnailInteractive:focus-visible .chartThumbnailFrame {
+  stroke: var(--lime);
+  stroke-width: 4px;
+}
+
+.chartThumbnailInteractive:hover .chartThumbnailPlayCircle,
+.chartThumbnailInteractive:focus-visible .chartThumbnailPlayCircle {
+  fill: var(--lime);
+}
+
+.chartThumbnailPlay {
+  pointer-events: none;
+}
+
+.chartThumbnailPlayCircle {
+  fill: rgb(22 22 19 / 88%);
+  stroke: var(--paper-warm);
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+}
+
+.chartThumbnailPlayTriangle {
+  fill: var(--lime);
+}
+
+/* The player is portalled to document.body so it can occupy the viewport
+   independently of the fixed 1600×900 data canvas. */
+.videoPlayerOverlay {
+  --outline: #161613;
+  --paper: #fff9ee;
+  --paper-warm: #fff3cb;
+  --coral: #f45136;
+  --lime: #cfff3d;
+  --data: #ff4fa3;
+  --sans: "Helvetica Neue", "Inter", "Arial Nova", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+  display: grid;
+  padding: clamp(12px, 3vw, 44px);
+  place-items: center;
+  background: rgb(9 9 8 / 90%);
+  backdrop-filter: blur(10px) saturate(0.75);
+  -webkit-backdrop-filter: blur(10px) saturate(0.75);
+  color: var(--outline);
+  font-family: var(--sans);
+}
+
+.videoPlayerDialog {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: min(94vw, 1600px);
+  height: min(92dvh, 980px);
+  min-height: 0;
+  overflow: hidden;
+  border: 3px solid var(--outline);
+  border-radius: 2px;
+  background: #0c0c0a;
+  box-shadow: 12px 12px 0 var(--data);
+}
+
+.videoPlayerHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+  padding: 14px 16px 13px 20px;
+  border-bottom: 3px solid var(--outline);
+  background-color: #f4f0e9;
+  background-image:
+    linear-gradient(rgb(22 22 19 / 3.4%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(22 22 19 / 3.4%) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.videoPlayerMeta {
+  min-width: 0;
+}
+
+.videoPlayerEyebrow,
+.videoPlayerNote,
+.videoPlayerTitle {
+  margin: 0;
+}
+
+.videoPlayerEyebrow {
+  margin-bottom: 4px;
+  color: #6c665c;
+  font-family: var(--mono);
+  font-size: clamp(0.68rem, 1.1vw, 0.82rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+  letter-spacing: 0.035em;
+}
+
+.videoPlayerTitle {
+  overflow: hidden;
+  color: var(--outline);
+  font-size: clamp(1rem, 2vw, 1.55rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.videoPlayerNote {
+  margin-top: 5px;
+  color: #6c665c;
+  font-size: clamp(0.68rem, 1vw, 0.8rem);
+  font-weight: 600;
+}
+
+.videoPlayerClose {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  place-items: center;
+  border: 2px solid var(--outline);
+  border-radius: 1px;
+  background: var(--paper-warm);
+  box-shadow: 4px 4px 0 var(--data);
+  color: var(--outline);
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+
+.videoPlayerClose:hover,
+.videoPlayerClose:focus-visible {
+  background: var(--lime);
+  outline: none;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--data);
+}
+
+.videoPlayerClose:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--data);
+}
+
+.videoPlayerClose svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-width: 2.25;
+}
+
+.videoPlayerStage {
+  display: grid;
+  min-height: 0;
+  place-items: center;
+  overflow: hidden;
+  background-color: #0c0c0a;
+  background-image:
+    linear-gradient(rgb(255 249 238 / 3%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 249 238 / 3%) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.videoPlayer {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: contain;
+  background: #000;
 }
 
 .dataViewRail {
@@ -986,6 +1184,38 @@
     margin-top: 26px;
     padding-top: 14px;
   }
+
+  .videoPlayerOverlay {
+    padding: 8px;
+  }
+
+  .videoPlayerDialog {
+    width: calc(100vw - 16px);
+    height: calc(100dvh - 16px);
+    border-width: 2px;
+    box-shadow: 6px 6px 0 var(--data);
+  }
+
+  .videoPlayerHeader {
+    gap: 12px;
+    padding: 10px 10px 10px 12px;
+    border-bottom-width: 2px;
+  }
+
+  .videoPlayerTitle {
+    font-size: 0.94rem;
+  }
+
+  .videoPlayerEyebrow,
+  .videoPlayerNote {
+    font-size: 0.62rem;
+  }
+
+  .videoPlayerClose {
+    width: 40px;
+    height: 40px;
+    box-shadow: 3px 3px 0 var(--data);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -997,7 +1227,11 @@
   .metricButton,
   .dataInfoTooltip,
   .chartBar,
-  .chartValue {
+  .chartValue,
+  .chartThumbnailImage,
+  .chartThumbnailFrame,
+  .chartThumbnailPlayCircle,
+  .videoPlayerClose {
     transition: none;
   }
 

@@ -97,7 +97,7 @@ a {
 /* The film landing page brings its own dark ground and drops the paper grain,
    which belongs to the linen marketing pages. */
 body.film-mode {
-  background: #161512;
+  background: #1d1b16;
 }
 
 /* The marketing site offsets anchor jumps by its sticky header height. This

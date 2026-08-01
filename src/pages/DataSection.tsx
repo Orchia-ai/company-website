@@ -450,6 +450,33 @@ function VideoChart({
           )
         })}
 
+        {metric === 'ca' ? (
+          <g
+            className={styles.chartLegend}
+            transform={`translate(${PLOT_RIGHT - 330} 12)`}
+            aria-hidden="true"
+          >
+            <rect className={styles.chartLegendBox} width="330" height="88" />
+            <text className={styles.chartLegendTitle} x="14" y="20">Completion guide</text>
+            <line
+              className={`${styles.chartThreshold} ${styles.chartThresholdRegular}`}
+              x1="14"
+              x2="70"
+              y1="42"
+              y2="42"
+            />
+            <text className={styles.chartLegendLabel} x="82" y="47">Average on platform · 15%</text>
+            <line
+              className={`${styles.chartThreshold} ${styles.chartThresholdGreat}`}
+              x1="14"
+              x2="70"
+              y1="70"
+              y2="70"
+            />
+            <text className={styles.chartLegendLabel} x="82" y="75">Top on platform · 40%+</text>
+          </g>
+        ) : null}
+
         {VIDEO_DATA.map((item, index) => {
           const value = valueFor(item, metric)
           const centerX = PLOT_LEFT + slot * index + slot / 2

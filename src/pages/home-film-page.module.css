@@ -86,33 +86,65 @@
   margin-inline: auto;
 }
 
-/* Without this the film reads as the whole site. A real link rather than a
-   decorative mark, so it also works from the keyboard and actually goes
-   somewhere when clicked. */
-.scrollHint {
+/* The handoff into the data section. Deliberately quiet against the poster
+   button vocabulary used elsewhere — hairline and unfilled, so it reads as a
+   considered next step rather than a second shout after the film. */
+.dataLink {
   display: inline-flex;
-  flex-direction: column;
   align-items: center;
-  gap: 7px;
-  justify-self: center;
-  padding: 4px 12px 20px;
-  color: var(--paper-dim);
-  text-decoration: none;
-  transition: color 160ms ease;
-}
-
-.scrollHint:hover {
+  gap: 20px;
+  padding: 14px 18px 14px 22px;
+  border: 1px solid rgb(255 249 238 / 22%);
+  border-radius: 2px;
   color: var(--paper);
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease;
 }
 
-.scrollHint:focus-visible {
+.dataLink:hover {
+  border-color: rgb(255 249 238 / 46%);
+  background: rgb(255 249 238 / 5%);
+}
+
+.dataLink:focus-visible {
   outline: 2px solid var(--lime);
   outline-offset: 4px;
 }
 
-.scrollHint svg {
+.dataLinkText {
+  display: grid;
+  gap: 6px;
+  text-align: left;
+}
+
+.dataLinkTitle {
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+/* Hairline rule separating the label from the arrow, the way a split control
+   divides its two halves. */
+.dataLinkChevron {
+  display: flex;
+  align-items: center;
+  /* Stretches so the rule spans the control rather than just the icon. */
+  align-self: stretch;
+  padding-left: 20px;
+  border-left: 1px solid rgb(255 249 238 / 18%);
+  color: var(--paper-dim);
+  transition: color 180ms ease;
+}
+
+.dataLink:hover .dataLinkChevron {
+  color: var(--paper);
+}
+
+.dataLinkChevron svg {
   display: block;
-  animation: nudge 2.3s ease-in-out infinite;
+  animation: nudge 2.6s ease-in-out infinite;
 }
 
 @keyframes nudge {
@@ -474,12 +506,28 @@
   .slideMount {
     box-shadow: 9px 9px 0 var(--data);
   }
+
+  /* The eyebrow wraps mid-phrase at this width; the title alone says it. */
+  .dataLink .label {
+    display: none;
+  }
+
+  .dataLink {
+    gap: 14px;
+    padding: 12px 14px 12px 18px;
+  }
+
+  .dataLinkChevron {
+    padding-left: 14px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .cta,
   .input,
-  .footerLink {
+  .footerLink,
+  .dataLink,
+  .dataLinkChevron {
     transition: none;
   }
 
@@ -488,7 +536,7 @@
     transform: none;
   }
 
-  .scrollHint svg {
+  .dataLinkChevron svg {
     animation: none;
   }
 }

@@ -47,22 +47,25 @@ export default function HomeFilmPage() {
           </div>
 
           <div className={styles.bar}>
-            <a className={styles.cta} href="https://app.orchia.studio">
-              Use App
+            {/* Carries the scroll affordance too, so there is one control here
+                rather than a button with a second arrow stacked beneath it. */}
+            <a className={styles.dataLink} href="#data">
+              <span className={styles.dataLinkText}>
+                <span className={styles.label}>Measured across the workspace</span>
+                <span className={styles.dataLinkTitle}>See the production data</span>
+              </span>
+              <span className={styles.dataLinkChevron} aria-hidden="true">
+                <svg width="18" height="11" viewBox="0 0 16 10" fill="none">
+                  <path
+                    d="M1 1L8 8L15 1"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="square"
+                  />
+                </svg>
+              </span>
             </a>
           </div>
-
-          {/* Chevron only — the label carries no meaning the arrow doesn't. */}
-          <a className={styles.scrollHint} href="#data" aria-label="Scroll to our data">
-            <svg width="18" height="11" viewBox="0 0 16 10" fill="none" aria-hidden="true">
-              <path
-                d="M1 1L8 8L15 1"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="square"
-              />
-            </svg>
-          </a>
         </section>
 
         <DataSection />

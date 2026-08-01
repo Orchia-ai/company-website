@@ -11,6 +11,8 @@
   --paper: #fff9ee;
   --paper-dim: #9a938a;
   --slide-surface: #f4f0e9;
+  /* The cream the film uses for controls sitting on its own dark chrome. */
+  --paper-warm: #fff3cb;
   --outline: #161613;
   --coral: #f45136;
   --coral-hot: #ff5a36;
@@ -86,31 +88,36 @@
   margin-inline: auto;
 }
 
-/* A compact outlined pill, the secondary-action shape every frontier product
-   site converges on. No box, no divider, no idle animation — the arrow states
-   the direction and the movement is reserved for hover. */
+/* The film's own dark-ground control, borrowed exactly: 2px cream rule, near
+   black fill, 1px radius, flipping to lime on hover. Same object as the play
+   and restart buttons inside the stage, so it cannot read as foreign.
+   Compact and single-shape, which is the part worth taking from how other
+   product sites handle this moment. */
 .dataLink {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  height: 42px;
+  gap: 11px;
+  height: 44px;
   padding: 0 20px;
-  border: 1px solid rgb(255 249 238 / 22%);
-  border-radius: 999px;
-  color: var(--paper);
-  font-size: 0.94rem;
-  font-weight: 500;
-  letter-spacing: -0.005em;
+  border: 2px solid var(--paper-warm);
+  border-radius: 1px;
+  background: var(--outline);
+  color: var(--paper-warm);
+  font-size: 0.95rem;
+  font-weight: 620;
+  letter-spacing: -0.01em;
   text-decoration: none;
   white-space: nowrap;
   transition:
-    border-color 180ms ease,
-    background-color 180ms ease;
+    border-color 150ms ease,
+    background-color 150ms ease,
+    color 150ms ease;
 }
 
 .dataLink:hover {
-  border-color: rgb(255 249 238 / 44%);
-  background: rgb(255 249 238 / 7%);
+  border-color: var(--outline);
+  background: var(--lime);
+  color: var(--outline);
 }
 
 .dataLink:focus-visible {
@@ -120,14 +127,10 @@
 
 .dataLink svg {
   display: block;
-  color: var(--paper-dim);
-  transition:
-    transform 200ms ease,
-    color 200ms ease;
+  transition: transform 200ms ease;
 }
 
 .dataLink:hover svg {
-  color: var(--paper);
   transform: translateY(2px);
 }
 

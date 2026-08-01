@@ -20,7 +20,8 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
-  background: #11110f;
+  /* The host owns the backdrop; the stage brings its own opaque surface. */
+  background: transparent;
   color: var(--paper-strong);
   font-family: var(--font-geist-sans), Arial, sans-serif;
 }

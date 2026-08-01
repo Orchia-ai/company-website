@@ -52,7 +52,17 @@ export default function HomeFilmPage() {
             </a>
           </div>
 
-          <span className={styles.scrollCue} aria-hidden="true" />
+          <a className={styles.scrollHint} href="#data">
+            <span className={styles.label}>Scroll</span>
+            <svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true">
+              <path
+                d="M1 1L8 8L15 1"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="square"
+              />
+            </svg>
+          </a>
         </section>
 
         <DataSection />

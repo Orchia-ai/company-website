@@ -1,5 +1,6 @@
 import OutputVideoNode from './OutputVideoNode'
 import {
+  BATCH_TWO_CHANGES,
   BATCH_THREE_CHANGES,
   TREATMENT_LABELS,
   type NodeStatus,
@@ -87,11 +88,13 @@ export default function WorkflowGraph({
   statusForNode,
   treatments,
   activeEdgeTarget,
+  showBatchTwoChanges,
 }: {
   version: WorkflowVersion
   statusForNode: (id: WorkflowNodeId) => NodeStatus
   treatments: Partial<Record<WorkflowNodeId, RevisionTreatment>>
   activeEdgeTarget: WorkflowNodeId | null
+  showBatchTwoChanges: boolean
 }) {
   const nodesById = new Map(version.nodes.map((node) => [node.id, node]))
   const activeEdgeIndex = version.edges.findIndex((edge) => edge.target === (activeEdgeTarget ?? version.nodes.find((node) => statusForNode(node.id) === 'running')?.id))
@@ -170,7 +173,20 @@ export default function WorkflowGraph({
         )
       })}
 
-      {version.id === 3 ? (
+      {version.id === 2 && showBatchTwoChanges ? (
+        <aside
+          className={`${styles.streamlineLedger} ${styles.batchTwoLedger}`}
+          aria-label="What changed in Batch 2"
+        >
+          <div>
+            <strong>What changed in Batch 2</strong>
+            <span>The workflow shape stays the same; the shared context inside these stages changed.</span>
+          </div>
+          <ul>
+            {BATCH_TWO_CHANGES.map((change) => <li key={change}>{change}</li>)}
+          </ul>
+        </aside>
+      ) : version.id === 3 ? (
         <aside className={styles.streamlineLedger} aria-label="What changed in Batch 3">
           <div>
             <strong>What changed in Batch 3</strong>

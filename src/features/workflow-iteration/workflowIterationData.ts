@@ -58,10 +58,10 @@ const LONG_WORKFLOW_NODES: readonly WorkflowNodeSpec[] = [
   { id: 'negative', label: 'Negative Prompt', role: 'Shared constraints', x: 530, y: 230, width: 184 },
   { id: 'sectionGroups', label: 'Scene + Image Groups', role: 'Parallel section agents', x: 274, y: 410, width: 214 },
   { id: 'videoPrompt', label: 'Video Prompt Agent', role: 'Generation prompts', x: 532, y: 410, width: 194 },
-  { id: 'validation', label: 'Result Validation', role: 'Quality review', x: 772, y: 410, width: 188 },
-  { id: 'condition', label: 'Condition', role: 'Pass / revise', x: 786, y: 548, width: 160 },
+  { id: 'validation', label: 'Result Validation', role: 'Quality review', x: 750, y: 410, width: 188 },
+  { id: 'condition', label: 'Condition', role: 'Pass / revise', x: 778, y: 548, width: 160 },
   { id: 'rewrite', label: 'Rewrite Agent', role: 'Targeted revision', x: 532, y: 548, width: 194 },
-  { id: 'output', label: 'Output', role: 'Final result', x: 970, y: 90, width: 268, height: 640, output: true },
+  { id: 'output', label: 'Output', role: 'Final result', x: 958, y: 90, width: 280, height: 640, output: true },
 ]
 
 const LONG_WORKFLOW_EDGES: readonly WorkflowEdgeSpec[] = [
@@ -105,7 +105,7 @@ const STREAMLINED_NODES: readonly WorkflowNodeSpec[] = [
   { id: 'negative', label: 'Negative Prompt', role: 'Shared constraints', x: 560, y: 250, width: 190 },
   { id: 'sectionGroups', label: 'Section Image Groups', role: 'Four frame anchors', x: 304, y: 438, width: 232 },
   { id: 'videoPrompt', label: 'Video Prompt Agent', role: 'Frame-conditioned prompts', x: 588, y: 438, width: 214 },
-  { id: 'output', label: 'Output', role: 'Final result', x: 970, y: 90, width: 268, height: 640, output: true },
+  { id: 'output', label: 'Output', role: 'Final result', x: 958, y: 90, width: 280, height: 640, output: true },
 ]
 
 const STREAMLINED_EDGES: readonly WorkflowEdgeSpec[] = [
@@ -166,13 +166,15 @@ export const WORKFLOW_VERSIONS: Record<BatchId, WorkflowVersion> = {
   },
 }
 
-export const FEEDBACK_ONE = 'The characters look different from shot to shot, and the style feels too childlike, almost as if several unrelated videos were stitched together. In the next version, keep each character and key prop visually consistent, make the transitions between sections feel continuous, and move the overall look toward a more mature, cinematic style.'
+export const BATCH_ONE_READY_PROMPT = 'Batch 1 is ready. Watch it and tell me what feels off — even a quick reaction is enough.'
 
-export const FEEDBACK_TWO = 'This version is much more visually consistent, but the pacing still feels slow, and some sections seem stretched to fit a fixed duration. In the next version, tighten the story, let each beat determine its natural length, and use clearer keyframes and stronger section-to-section continuity so the revenge payoff and final hook land more clearly.'
+export const FEEDBACK_ONE = 'This feels like a bunch of random clips stuck together. The characters keep changing, and it looks kind of childish. Can you make it feel more consistent?'
 
-export const AGENT_RESPONSE_ONE = 'Thanks — I’ve prepared updates to the identity and continuity stages. Character and prop rules will now stay shared across sections, every section will use visual references, and shot transitions will be more explicit. The highlighted workflow stages will be updated on the next run.'
+export const FEEDBACK_TWO = 'This one is way better, but it still feels kind of slow. Can you tighten it up and make the ending hit harder?'
 
-export const AGENT_RESPONSE_TWO = 'Thanks — I’ve prepared a tighter planning and generation path. Outline and Story Writer will be combined, timing will follow the story instead of a fixed total length, and every section will use four chronological frames with a locked first frame and recorded seed. The video prompts will also carry more shot-level detail.'
+export const AGENT_RESPONSE_ONE = 'Got it. I’ll keep the characters and props consistent, connect the sections more smoothly, and make the overall look less childish for Batch 2.'
+
+export const AGENT_RESPONSE_TWO = 'Got it. I’ll shorten the story, let each part use its natural length, and use clearer frame anchors so the ending lands better.'
 
 export const REVISION_TREATMENTS: Record<BatchId, Partial<Record<WorkflowNodeId, RevisionTreatment>>> = {
   1: {
@@ -207,6 +209,13 @@ export const TREATMENT_LABELS: Record<RevisionTreatment, string> = {
   merged: 'Merged',
   absorbed: 'Absorbed',
 }
+
+export const BATCH_TWO_CHANGES = [
+  'Shared character and prop references',
+  'Same visual references used across sections',
+  'Transitions connect one section to the next',
+  'Style guidance shifted away from a childlike look',
+] as const
 
 export const BATCH_THREE_CHANGES = [
   'Ideation and Story Writer merged',

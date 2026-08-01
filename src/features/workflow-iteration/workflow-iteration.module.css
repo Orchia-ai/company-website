@@ -2,8 +2,7 @@
   display: grid;
   justify-items: center;
   width: 100%;
-  padding: clamp(72px, 11vw, 148px) var(--stage-gutter) clamp(72px, 11vw, 132px);
-  border-top: 1px solid rgb(255 249 238 / 8%);
+  padding-inline: var(--stage-gutter);
 }
 
 .demoMount {
@@ -658,7 +657,7 @@
 
 .outputSkeleton {
   position: relative;
-  width: 220px;
+  width: min(100%, 242px);
   aspect-ratio: 9 / 16;
   overflow: hidden;
   border: 2px solid var(--outline);
@@ -700,7 +699,7 @@
   position: relative;
   align-self: center;
   justify-self: center;
-  width: 220px;
+  width: min(100%, 242px);
   min-height: 0;
   aspect-ratio: 9 / 16;
   overflow: hidden;
@@ -767,6 +766,11 @@
   box-shadow: 5px 5px 0 #2864ff;
 }
 
+.batchTwoLedger {
+  top: 650px;
+  min-height: 128px;
+}
+
 .streamlineLedger > div {
   display: grid;
   align-content: start;
@@ -816,7 +820,7 @@
 
 .feedbackPanel {
   display: grid;
-  grid-template-rows: 70px minmax(0, 1fr) 288px;
+  grid-template-rows: 70px minmax(0, 1fr) 264px;
   background: #f4f0e9;
   box-shadow: 7px 7px 0 var(--coral);
 }
@@ -904,6 +908,7 @@
 }
 
 .feedbackCard {
+  width: min(92%, 440px);
   margin-bottom: 12px;
   padding: 12px 13px 13px;
   border: 2px solid var(--outline);
@@ -912,12 +917,13 @@
 
 .feedbackCardHuman {
   margin-right: 0;
-  margin-left: 28px;
+  margin-left: auto;
+  width: min(84%, 390px);
   box-shadow: 4px 4px 0 var(--coral);
 }
 
 .feedbackCardAgent {
-  margin-right: 28px;
+  margin-right: auto;
   margin-left: 0;
   background: #f7e3ef;
   box-shadow: 4px 4px 0 #ff4fa3;
@@ -963,20 +969,20 @@
 }
 
 .feedbackCard header strong {
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .feedbackCard header span:last-child {
   color: #6c665c;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .feedbackCard p {
   margin: 0;
   color: #4f4a43;
-  font-size: 13px;
-  line-height: 1.43;
+  font-size: 16px;
+  line-height: 1.48;
 }
 
 .feedbackAgentAction {
@@ -1003,7 +1009,7 @@
   background: #eee7fb;
   color: #5d39b4;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 650;
 }
 
@@ -1031,8 +1037,8 @@
 .feedbackComposer {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
-  gap: 8px;
-  padding: 13px 14px 14px;
+  gap: 7px;
+  padding: 12px 14px 13px;
   border-top: 2px solid var(--outline);
   background: var(--paper-warm);
 }
@@ -1045,7 +1051,7 @@
 }
 
 .feedbackComposer label {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 820;
 }
 
@@ -1065,7 +1071,7 @@
   border-radius: 1px;
   background: #fff9ee;
   color: var(--outline);
-  font: 13px/1.42 var(--sans);
+  font: 16px/1.48 var(--sans);
 }
 
 .feedbackComposer textarea:focus {
@@ -1086,10 +1092,10 @@
 }
 
 .feedbackComposerActions p {
-  max-width: 260px;
+  max-width: 240px;
   margin: 0;
   color: #6c665c;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.3;
 }
 

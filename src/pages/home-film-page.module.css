@@ -1,5 +1,5 @@
 /*
- * Landing page: the demo film, the data deck, then the footer.
+ * Landing page: workflow demo, data deck, product film, then the footer.
  *
  * Every colour and construction here is taken from the film itself — flat
  * signal colours, hard #161613 outlines, offset drop shadows, heavy tightly
@@ -21,12 +21,18 @@
      whose work it shows. */
   --data: #ff4fa3;
   --stage-gutter: clamp(0px, 1.6vw, 26px);
+  /* One compact shared rhythm between the header, all three 16:9 sections,
+     and the footer. */
+  --section-space: clamp(44px, 6.5vw, 88px);
 
   --sans: "Helvetica Neue", "Inter", "Arial Nova", Arial, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
 
   /* Warm charcoal rather than black, carrying a whisper of the grid ruled
      across the film's own stage so the frame and the film share a surface. */
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-space);
   background-color: var(--ink);
   background-image:
     linear-gradient(rgb(255 249 238 / 3%) 1px, transparent 1px),
@@ -36,14 +42,12 @@
   font-family: var(--sans);
 }
 
-/* ── Section one: the film ──────────────────────────────── */
+/* ── Section three: the film ────────────────────────────── */
 
 .filmSection {
   position: relative;
   display: grid;
-  /* The stage row absorbs the slack so the brand stays pinned to the top and
-     the call to action to the bottom, with the film centred between them. */
-  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  grid-template-rows: auto auto auto;
   width: 100%;
   padding-inline: var(--stage-gutter);
   /* Lifts the ground behind the stage so the film reads as lit rather than
@@ -55,6 +59,16 @@
   );
 }
 
+.sectionTitle {
+  margin: 0 0 clamp(16px, 2vw, 28px);
+  color: var(--paper);
+  font-size: clamp(1.7rem, 3vw, 2.8rem);
+  font-weight: 780;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  text-align: center;
+}
+
 .bar {
   display: flex;
   align-items: center;
@@ -62,11 +76,16 @@
   padding: 18px 28px;
 }
 
+.siteHeader {
+  min-height: 0;
+  padding: 22px 28px 0;
+}
+
 .brand {
   display: inline-flex;
   align-items: baseline;
   gap: 0.28em;
-  font-size: clamp(1.05rem, 1.6vw, 1.4rem);
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1;
@@ -193,7 +212,7 @@
   justify-items: center;
   gap: 34px;
   width: 100%;
-  padding: clamp(72px, 11vw, 148px) var(--stage-gutter) clamp(72px, 11vw, 132px);
+  padding-inline: var(--stage-gutter);
   border-top: 1px solid rgb(255 249 238 / 8%);
 }
 
@@ -223,8 +242,8 @@
   top: 50%;
   left: 50%;
   display: grid;
-  grid-template-rows: 40px 54px minmax(0, 1fr) 8px;
-  gap: 14px;
+  grid-template-rows: 40px 42px minmax(0, 1fr) 58px;
+  gap: 10px;
   width: 1600px;
   height: 900px;
   padding: 34px 48px 28px;
@@ -338,28 +357,31 @@
 }
 
 .dataTopbar {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
 }
 
 .metricControls {
-  display: flex;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
   align-items: center;
-  flex: none;
+  width: 100%;
 }
 
 .metricButton {
-  min-height: 40px;
-  padding: 0 18px;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 24px;
   border: 2px solid var(--outline);
   border-radius: 1px;
   background: var(--paper-warm);
   color: var(--outline);
   font: inherit;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
@@ -416,16 +438,38 @@
   font-weight: 800;
 }
 
+.completionGuide {
+  max-width: 760px;
+  margin: 0;
+  color: #5d574e;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.completionGuide strong {
+  color: var(--outline);
+  font-weight: 800;
+}
+
 .dataContent {
   min-height: 0;
 }
 
 .overviewGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: 94px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 7fr) minmax(320px, 3fr);
+  grid-template-rows: minmax(0, 1fr);
   gap: 14px;
   height: 100%;
+}
+
+.overviewStats {
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  min-width: 0;
+  min-height: 0;
 }
 
 .overviewStat {
@@ -434,7 +478,7 @@
   align-content: center;
   gap: 7px;
   min-width: 0;
-  padding: 13px 20px 11px;
+  padding: 20px 28px 18px;
   overflow: hidden;
   border: 2px solid var(--outline);
   border-radius: 1px;
@@ -452,16 +496,16 @@
 .overviewLabel {
   color: #6c665c;
   font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.025em;
   line-height: 1;
   text-transform: none;
 }
 
 .overviewValue {
   color: var(--outline);
-  font-size: 38px;
+  font-size: 56px;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.04em;
@@ -470,7 +514,10 @@
 
 .overviewTrend {
   position: relative;
-  grid-column: 1 / -1;
+  display: grid;
+  grid-template-rows: 56px minmax(0, 1fr);
+  grid-column: 1;
+  grid-row: 1;
   min-height: 0;
   margin: 0;
   overflow: hidden;
@@ -487,6 +534,7 @@
   display: block;
   width: 100%;
   height: 100%;
+  min-height: 0;
   font-family: var(--sans);
 }
 
@@ -506,6 +554,7 @@
 
 .trendArea {
   fill: url("#follower-area");
+  opacity: 0;
 }
 
 .trendLineOutline,
@@ -513,6 +562,8 @@
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
   vector-effect: non-scaling-stroke;
 }
 
@@ -526,11 +577,74 @@
   stroke-width: 5;
 }
 
-.trendPoint {
+.trendPublicationMarker,
+.trendCallout {
+  opacity: 0;
+}
+
+.followerTrendChartAnimate .trendArea {
+  animation: trendFadeIn 560ms 360ms ease-out both;
+}
+
+.followerTrendChartAnimate .trendLineOutline,
+.followerTrendChartAnimate .trendLine {
+  animation: trendLineDraw 1050ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.followerTrendChartAnimate .trendLine {
+  animation-delay: 70ms;
+}
+
+.followerTrendChartAnimate .trendPublicationMarker,
+.followerTrendChartAnimate .trendCallout {
+  animation: trendFadeIn 320ms ease-out both;
+}
+
+.followerTrendChartAnimate .trendCalloutStart {
+  animation-delay: 180ms;
+}
+
+.followerTrendChartAnimate .trendCalloutEnd {
+  animation-delay: 1050ms;
+}
+
+.trendPublicationTick {
+  stroke: #8a4b3e;
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.trendPublicationAnchor {
   fill: var(--lime);
   stroke: var(--outline);
-  stroke-width: 3;
+  stroke-width: 2;
   vector-effect: non-scaling-stroke;
+}
+
+.trendPublicationThumbnail {
+  pointer-events: none;
+}
+
+.trendPublicationFrame {
+  fill: none;
+  stroke: var(--outline);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.trendPublicationBadge circle {
+  fill: var(--lime);
+  stroke: var(--outline);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.trendPublicationBadge text {
+  fill: var(--outline);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 850;
 }
 
 .trendEndLabelBox {
@@ -556,18 +670,43 @@
   font-weight: 800;
 }
 
+@keyframes trendLineDraw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes trendFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 .overviewTrend figcaption {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-  padding: 6px 9px;
-  border: 1px solid var(--outline);
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 11px 18px 10px;
+  border-bottom: 2px solid var(--outline);
   background: var(--paper-warm);
+}
+
+.overviewTrend figcaption h3,
+.overviewTrend figcaption p {
+  margin: 0;
+}
+
+.overviewTrend figcaption h3 {
+  color: var(--outline);
+  font-size: 21px;
+  font-weight: 820;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.overviewTrend figcaption p {
   color: #5d574e;
   font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.025em;
   line-height: 1;
 }
 
@@ -615,6 +754,15 @@
   stroke-dasharray: 7 6;
 }
 
+.chartThresholdRegular {
+  stroke: #8257e5;
+}
+
+.chartThresholdGreat {
+  stroke: var(--coral);
+  stroke-width: 2;
+}
+
 .chartTick,
 .chartThresholdLabel,
 .chartDate {
@@ -628,6 +776,15 @@
 .chartThresholdLabel {
   fill: var(--coral);
   font-size: 15px;
+}
+
+.chartThresholdLabelRegular {
+  fill: #6841bd;
+}
+
+.chartThresholdLabelGreat {
+  fill: #a43d2f;
+  font-weight: 800;
 }
 
 .chartBar {
@@ -847,21 +1004,6 @@
   background: #000;
 }
 
-.dataViewRail {
-  display: flex;
-  gap: 8px;
-}
-
-.dataViewRail span {
-  flex: 1;
-  border: 1px solid var(--outline);
-  background: rgb(22 22 19 / 12%);
-}
-
-.dataViewRail .dataViewRailActive {
-  background: var(--data);
-}
-
 .srOnly {
   position: absolute;
   width: 1px;
@@ -877,6 +1019,10 @@
 /* ── Footer ─────────────────────────────────────────────── */
 
 .footer {
+  /* The page-level gap is already represented by the footer's own top
+     breathing room; cancel the extra flex gap so the final transition matches
+     the other section breaks visually. */
+  margin-top: calc(0px - var(--section-space));
   border-top: 1px solid rgb(255 249 238 / 10%);
   padding: clamp(52px, 7vw, 84px) clamp(24px, 6vw, 72px) 32px;
 }
@@ -1064,15 +1210,6 @@
 
 /* ── Responsive ─────────────────────────────────────────── */
 
-/* A floor for the hero, but only where the stage is wide enough to earn it.
-   On a phone a 16:9 film is short, and forcing the section taller would just
-   strand it in empty space. */
-@media (min-width: 781px) {
-  .filmSection {
-    min-height: 80dvh;
-  }
-}
-
 @media (max-width: 780px) {
   .footer {
     padding: 40px 24px 22px;
@@ -1124,6 +1261,10 @@
     padding: 12px 16px;
   }
 
+  .siteHeader {
+    padding-bottom: 0;
+  }
+
   .cta {
     min-height: 44px;
     padding: 0 24px;
@@ -1131,6 +1272,11 @@
 
   .slideMount {
     box-shadow: min(9px, 1.5vw) min(9px, 1.5vw) 0 var(--data);
+  }
+
+  .overviewLabel {
+    font-size: 22px;
+    font-weight: 850;
   }
 
   .dataLink {
@@ -1219,6 +1365,21 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .followerTrendChart .trendArea,
+  .followerTrendChart .trendLineOutline,
+  .followerTrendChart .trendLine,
+  .followerTrendChart .trendPublicationMarker,
+  .followerTrendChart .trendCallout {
+    animation: none;
+    opacity: 1;
+  }
+
+  .followerTrendChart .trendLineOutline,
+  .followerTrendChart .trendLine {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
+
   .cta,
   .input,
   .footerLink,

@@ -14,10 +14,12 @@ const PLOT_TOP = 54
 const PLOT_BOTTOM = 470
 
 const FOLLOWER_TREND = [
-  220, 220, 225, 225, 225, 225, 290, 310, 345, 345,
-  380, 455, 500, 550, 560, 615, 870, 1025, 1090, 1130,
-  1165, 1180, 1210, 1335, 1425, 1480, 1500, 1535, 1580, 1615,
+  220, 290, 310, 345, 345, 380, 455, 500, 550, 560,
+  615, 870, 1025, 1090, 1130, 1165, 1180, 1210, 1335, 1425,
+  1480, 1500, 1535, 1580, 1615,
 ] as const
+
+const FOLLOWER_START_DAY = 6
 
 type Metric = 'overview' | 'views' | 'likesSaves' | 'ca'
 type VideoMetric = Exclude<Metric, 'overview'>
@@ -38,8 +40,12 @@ type VideoDatum = {
 
 type MetricConfig = {
   max: number
-  threshold: number | null
-  thresholdLabel: string
+  thresholds: readonly {
+    value: number
+    label: string
+    tone?: 'regular' | 'great'
+  }[]
+  dimBelow?: number
   ticks: readonly { value: number; label: string }[]
   summary: readonly { value: string; label: string }[]
 }
@@ -173,8 +179,8 @@ const VIDEO_DATA: readonly VideoDatum[] = [
 const METRIC_CONFIGS: Record<VideoMetric, MetricConfig> = {
   views: {
     max: 1500000,
-    threshold: 100000,
-    thresholdLabel: '100K benchmark',
+    thresholds: [{ value: 100000, label: '100K views' }],
+    dimBelow: 100000,
     ticks: [
       { value: 0, label: '0' },
       { value: 500000, label: '500K' },
@@ -189,8 +195,8 @@ const METRIC_CONFIGS: Record<VideoMetric, MetricConfig> = {
   },
   likesSaves: {
     max: 7000,
-    threshold: 1000,
-    thresholdLabel: '1,000 benchmark',
+    thresholds: [{ value: 1000, label: '1,000 likes + saves' }],
+    dimBelow: 1000,
     ticks: [
       { value: 0, label: '0' },
       { value: 2000, label: '2,000' },
@@ -205,8 +211,10 @@ const METRIC_CONFIGS: Record<VideoMetric, MetricConfig> = {
   },
   ca: {
     max: 100,
-    threshold: null,
-    thresholdLabel: '',
+    thresholds: [
+      { value: 30, label: 'Regular · 30%', tone: 'regular' },
+      { value: 40, label: 'Great · 40%+', tone: 'great' },
+    ],
     ticks: [
       { value: 0, label: '0%' },
       { value: 25, label: '25%' },
@@ -222,6 +230,15 @@ const METRIC_CONFIGS: Record<VideoMetric, MetricConfig> = {
   },
 }
 
+const PUBLICATION_EVENTS = Array.from(VIDEO_DATA.reduce((events, item) => {
+  const day = Number(item.date.slice(-2))
+  const existing = events.get(day)
+  events.set(day, existing
+    ? { ...existing, count: existing.count + 1 }
+    : { day, count: 1, thumbnail: item.thumbnail })
+  return events
+}, new Map<number, { day: number; count: number; thumbnail: string }>()).values())
+
 const numberFormatter = new Intl.NumberFormat('en-US')
 
 function valueFor(item: VideoDatum, metric: VideoMetric) {
@@ -236,11 +253,11 @@ function displayFor(item: VideoDatum, metric: VideoMetric) {
   return `${item.ca}%`
 }
 
-function FollowerTrendChart() {
-  const width = 1504
+function FollowerTrendChart({ animate }: { animate: boolean }) {
+  const width = 1040
   const height = 560
-  const left = 88
-  const right = 1470
+  const left = 76
+  const right = 1015
   const top = 30
   const bottom = 504
   const max = 2000
@@ -254,19 +271,18 @@ function FollowerTrendChart() {
   }, `M ${points[0].x} ${points[0].y}`)
   const areaPath = `${linePath} L ${points.at(-1)?.x} ${bottom} L ${points[0].x} ${bottom} Z`
   const yTicks = [0, 500, 1000, 1500, 2000] as const
-  const xTicks = [0, 5, 10, 15, 20, 25, 29] as const
-  const keyPoints = new Set([0, 15, 17, 23, 29])
+  const xTicks = [0, 4, 8, 12, 16, 20, 24] as const
 
   return (
     <svg
-      className={styles.followerTrendChart}
+      className={`${styles.followerTrendChart} ${animate ? styles.followerTrendChartAnimate : ''}`}
       viewBox={`0 0 ${width} ${height}`}
       role="img"
       aria-labelledby="follower-trend-title follower-trend-description"
     >
-      <title id="follower-trend-title">Follower growth from July 1 through July 30</title>
+      <title id="follower-trend-title">Follower growth from July 6 through July 30</title>
       <desc id="follower-trend-description">
-        Approximate account growth from 220 followers on July 1 to 1,615 on July 30, with the largest increase around July 17.
+        Approximate account growth across 25 days, from 220 followers on July 6 to 1,615 on July 30, with the largest increase around July 17. Small video thumbnails anchored to the curve identify publication dates on July 7, 9, 12, 14, 16, 23, 25, and 28; badges show that two videos were published on both July 12 and July 14.
       </desc>
       <defs>
         <linearGradient id="follower-area" x1="0" x2="0" y1="0" y2="1">
@@ -288,25 +304,63 @@ function FollowerTrendChart() {
       })}
 
       {xTicks.map((index) => (
-        <text className={styles.trendTick} key={index} x={xFor(index)} y={bottom + 35} textAnchor="middle">
-          07-{String(index + 1).padStart(2, '0')}
+        <text
+          className={styles.trendTick}
+          key={index}
+          x={xFor(index)}
+          y={bottom + 35}
+          textAnchor={index === 0 ? 'start' : index === FOLLOWER_TREND.length - 1 ? 'end' : 'middle'}
+        >
+          07-{String(index + FOLLOWER_START_DAY).padStart(2, '0')}
         </text>
       ))}
 
       <path className={styles.trendArea} d={areaPath} />
-      <path className={styles.trendLineOutline} d={linePath} />
-      <path className={styles.trendLine} d={linePath} />
+      <path className={styles.trendLineOutline} d={linePath} pathLength="1" />
+      <path className={styles.trendLine} d={linePath} pathLength="1" />
 
-      {points.map((point, index) => keyPoints.has(index) ? (
-        <circle className={styles.trendPoint} cx={point.x} cy={point.y} key={index} r="6" />
-      ) : null)}
+      {PUBLICATION_EVENTS.map((event, index) => {
+        const point = points[event.day - FOLLOWER_START_DAY]
+        if (!point) return null
+        const labelBelow = index === 0 || index === PUBLICATION_EVENTS.length - 1 || index % 2 === 0
+        const direction = labelBelow ? 1 : -1
+        const thumbnailY = labelBelow ? 16 : -62
+        return (
+          <g
+            className={styles.trendPublicationMarker}
+            key={event.day}
+            style={{ animationDelay: `${1000 + index * 70}ms` }}
+            transform={`translate(${point.x} ${point.y})`}
+            aria-hidden="true"
+          >
+            <line className={styles.trendPublicationTick} x1="0" x2="0" y1="0" y2={direction * 14} />
+            <path className={styles.trendPublicationAnchor} d="M 0 -5 L 5 0 L 0 5 L -5 0 Z" />
+            <image
+              className={styles.trendPublicationThumbnail}
+              href={event.thumbnail}
+              x="-17"
+              y={thumbnailY}
+              width="34"
+              height="46"
+              preserveAspectRatio="xMidYMid slice"
+            />
+            <rect className={styles.trendPublicationFrame} x="-17" y={thumbnailY} width="34" height="46" />
+            {event.count > 1 ? (
+              <g className={styles.trendPublicationBadge} transform={`translate(14 ${thumbnailY + 7})`}>
+                <circle r="9" />
+                <text y="3.5" textAnchor="middle">{event.count}</text>
+              </g>
+            ) : null}
+          </g>
+        )
+      })}
 
-      <g transform={`translate(${points[0].x} ${points[0].y})`}>
+      <g className={`${styles.trendCallout} ${styles.trendCalloutStart}`} transform={`translate(${points[0].x} ${points[0].y})`}>
         <rect className={styles.trendStartLabelBox} x="0" y="-46" width="76" height="30" />
         <text className={styles.trendStartLabel} x="38" y="-26" textAnchor="middle">220</text>
       </g>
 
-      <g transform={`translate(${points.at(-1)?.x ?? 0} ${points.at(-1)?.y ?? 0})`}>
+      <g className={`${styles.trendCallout} ${styles.trendCalloutEnd}`} transform={`translate(${points.at(-1)?.x ?? 0} ${points.at(-1)?.y ?? 0})`}>
         <rect className={styles.trendEndLabelBox} x="-76" y="-46" width="76" height="30" />
         <text className={styles.trendEndLabel} x="-38" y="-26" textAnchor="middle">1,615</text>
       </g>
@@ -342,6 +396,7 @@ function VideoChart({
         <title id="data-chart-title">Performance comparison across 10 videos</title>
         <desc id="data-chart-description">
           Videos run chronologically from left to right. Each bar represents one video. Switch among views, likes and saves, and completion rate; thumbnails and dates identify each post.
+          {metric === 'ca' ? ' For this report, the completion-rate guide treats 30 to 39 percent as regular and 40 percent or more as great.' : null}
         </desc>
 
         {config.ticks.map((tick) => {
@@ -362,31 +417,44 @@ function VideoChart({
           )
         })}
 
-        {config.threshold !== null ? (
-          <g>
-            <line
-              className={styles.chartThreshold}
-              x1={PLOT_LEFT}
-              x2={PLOT_RIGHT}
-              y1={yFor(config.threshold)}
-              y2={yFor(config.threshold)}
-            />
-            <text
-              className={styles.chartThresholdLabel}
-              x={PLOT_LEFT + 8}
-              y={yFor(config.threshold) - 10}
-              textAnchor="start"
-            >
-              {config.thresholdLabel}
-            </text>
-          </g>
-        ) : null}
+        {config.thresholds.map((threshold) => {
+          const thresholdLineClass = [
+            styles.chartThreshold,
+            threshold.tone === 'regular' ? styles.chartThresholdRegular : '',
+            threshold.tone === 'great' ? styles.chartThresholdGreat : '',
+          ].filter(Boolean).join(' ')
+          const thresholdLabelClass = [
+            styles.chartThresholdLabel,
+            threshold.tone === 'regular' ? styles.chartThresholdLabelRegular : '',
+            threshold.tone === 'great' ? styles.chartThresholdLabelGreat : '',
+          ].filter(Boolean).join(' ')
+
+          return (
+            <g key={`${metric}-${threshold.value}`}>
+              <line
+                className={thresholdLineClass}
+                x1={PLOT_LEFT}
+                x2={PLOT_RIGHT}
+                y1={yFor(threshold.value)}
+                y2={yFor(threshold.value)}
+              />
+              <text
+                className={thresholdLabelClass}
+                x={PLOT_LEFT + 8}
+                y={yFor(threshold.value) - 10}
+                textAnchor="start"
+              >
+                {threshold.label}
+              </text>
+            </g>
+          )
+        })}
 
         {VIDEO_DATA.map((item, index) => {
           const value = valueFor(item, metric)
           const centerX = PLOT_LEFT + slot * index + slot / 2
           const y = yFor(value)
-          const belowThreshold = config.threshold !== null && value < config.threshold
+          const belowThreshold = config.dimBelow !== undefined && value < config.dimBelow
           const playable = Boolean(item.videoSrc)
           const ariaLabel = `${item.date}, ${item.title}: ${item.viewsDisplay} views, ${numberFormatter.format(item.likes)} likes, ${numberFormatter.format(item.saves)} saves, ${item.ca}% completion rate.`
 
@@ -615,8 +683,10 @@ function AccessibleDataTable() {
 }
 
 export default function DataSection() {
+  const sectionRef = useRef<HTMLElement>(null)
   const canvasRef = useRef<HTMLDivElement>(null)
   const [metric, setMetric] = useState<Metric>('overview')
+  const [hasEnteredViewport, setHasEnteredViewport] = useState(false)
   const [selectedVideo, setSelectedVideo] = useState<{
     video: VideoDatum
     trigger: SVGGElement
@@ -628,6 +698,20 @@ export default function DataSection() {
   }, [])
 
   const closeVideo = useCallback(() => setSelectedVideo(null), [])
+
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!section) return
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting || entry.intersectionRatio < 0.15) return
+      setHasEnteredViewport(true)
+      observer.disconnect()
+    }, { threshold: [0.15] })
+
+    observer.observe(section)
+    return () => observer.disconnect()
+  }, [])
 
   useLayoutEffect(() => {
     const canvas = canvasRef.current
@@ -649,7 +733,7 @@ export default function DataSection() {
   }, [])
 
   return (
-    <section className={styles.dataSection} id="data" aria-label="Production data">
+    <section className={styles.dataSection} id="data" ref={sectionRef} aria-label="Production data">
       <article className={styles.slideMount}>
         <div className={styles.dataCanvas} ref={canvasRef}>
           <header className={styles.dataSlideHeader}>
@@ -675,25 +759,15 @@ export default function DataSection() {
             </div>
           </header>
 
-          <div className={styles.dataTopbar}>
-            <div className={styles.metricControls} role="group" aria-label="Choose a performance metric">
-              {METRICS.map((item) => {
-                const active = metric === item.key
-                return (
-                  <button
-                    key={item.key}
-                    type="button"
-                    className={`${styles.metricButton} ${active ? styles.metricButtonActive : ''}`}
-                    aria-pressed={active}
-                    onClick={() => setMetric(item.key)}
-                  >
-                    {item.label}
-                  </button>
-                )
-              })}
-            </div>
+          <div className={styles.dataTopbar} aria-live="polite">
+            {metric === 'ca' ? (
+              <p className={styles.completionGuide}>
+                Completion rate is the share of viewers who watch to the end.
+                <strong> Internal guide: Regular 30–39% · Great 40%+</strong>
+              </p>
+            ) : <span aria-hidden="true" />}
 
-            <div className={styles.dataSummary} aria-live="polite">
+            <div className={styles.dataSummary}>
               {metricConfig?.summary.map((item, index) => (
                 <span className={styles.dataSummaryItem} key={item.label}>
                   {index > 0 ? <span className={styles.dataSummaryDot}>·</span> : null}
@@ -706,23 +780,28 @@ export default function DataSection() {
           <div className={styles.dataContent}>
             {metric === 'overview' ? (
               <section className={styles.overviewGrid} aria-label="Account performance overview">
-                <div className={styles.overviewStat}>
-                  <span className={styles.overviewLabel}>Total views</span>
-                  <strong className={styles.overviewValue}>3.3M</strong>
-                </div>
-                <div className={styles.overviewStat}>
-                  <span className={styles.overviewLabel}>New followers</span>
-                  <strong className={styles.overviewValue}>1,423</strong>
-                </div>
-                <div className={styles.overviewStat}>
-                  <span className={styles.overviewLabel}>Active followers</span>
-                  <strong className={styles.overviewValue}>73.5%</strong>
-                </div>
-
                 <figure className={styles.overviewTrend}>
-                  <FollowerTrendChart />
-                  <figcaption>Follower growth · Jul 1–30</figcaption>
+                  <figcaption>
+                    <h3>Follower growth</h3>
+                    <p>Over 25 days · Jul 6–30</p>
+                  </figcaption>
+                  <FollowerTrendChart animate={hasEnteredViewport} />
                 </figure>
+
+                <div className={styles.overviewStats} aria-label="Account totals">
+                  <div className={styles.overviewStat}>
+                    <span className={styles.overviewLabel}>Total views</span>
+                    <strong className={styles.overviewValue}>3.3M</strong>
+                  </div>
+                  <div className={styles.overviewStat}>
+                    <span className={styles.overviewLabel}>New followers</span>
+                    <strong className={styles.overviewValue}>1,423</strong>
+                  </div>
+                  <div className={styles.overviewStat}>
+                    <span className={styles.overviewLabel}>Active followers</span>
+                    <strong className={styles.overviewValue}>73.5%</strong>
+                  </div>
+                </div>
               </section>
             ) : (
               <section className={styles.videoMetricView} aria-label={`${METRICS.find((item) => item.key === metric)?.label} performance by video`}>
@@ -732,10 +811,21 @@ export default function DataSection() {
             )}
           </div>
 
-          <div className={styles.dataViewRail} aria-hidden="true">
-            {METRICS.map((item) => (
-              <span key={item.key} className={metric === item.key ? styles.dataViewRailActive : ''} />
-            ))}
+          <div className={styles.metricControls} role="group" aria-label="Choose a performance metric">
+            {METRICS.map((item) => {
+              const active = metric === item.key
+              return (
+                <button
+                  key={item.key}
+                  type="button"
+                  className={`${styles.metricButton} ${active ? styles.metricButtonActive : ''}`}
+                  aria-pressed={active}
+                  onClick={() => setMetric(item.key)}
+                >
+                  {item.label}
+                </button>
+              )
+            })}
           </div>
         </div>
       </article>

@@ -160,7 +160,7 @@ export default function WorkflowIterationDemo() {
         <div className={styles.demoHeading}>
           <span className={styles.demoHeadingSignal} aria-hidden="true" />
           <div>
-            <h2>From feedback to a better video</h2>
+            <h2>Demo</h2>
             <p>{stageCopy(state)}</p>
           </div>
         </div>
@@ -221,6 +221,7 @@ export default function WorkflowIterationDemo() {
               statusForNode={statusForNode}
               treatments={treatments}
               activeEdgeTarget={state.runProgress?.batch === version.id ? state.runProgress.activeEdgeTarget : null}
+              showBatchTwoChanges={version.id === 2 && state.completedBatches.includes(2)}
             />
           </div>
         </section>

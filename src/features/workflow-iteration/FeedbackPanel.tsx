@@ -74,7 +74,7 @@ export default function FeedbackPanel({
           const nextBatch = (event.batch + 1) as 2 | 3
           const nextBatchRunning = state.runProgress?.batch === nextBatch
           const nextBatchComplete = state.completedBatches.includes(nextBatch)
-          const canAccept = event.author === 'agent' && readyRunBatch === nextBatch && !state.runProgress
+          const canAccept = event.kind === 'agent_plan' && readyRunBatch === nextBatch && !state.runProgress
 
           return (
             <article
@@ -87,11 +87,15 @@ export default function FeedbackPanel({
                 </span>
                 <div>
                   <strong>{event.author === 'human' ? 'Human feedback' : 'Workflow agent'}</strong>
-                  <span>Batch {event.batch} → Batch {nextBatch}</span>
+                  <span>
+                    {event.kind === 'prompt'
+                      ? 'Batch 1 complete'
+                      : `Batch ${event.batch} → Batch ${nextBatch}`}
+                  </span>
                 </div>
               </header>
               <p>{event.text}</p>
-              {event.author === 'agent' ? (
+              {event.kind === 'agent_plan' ? (
                 <div className={styles.feedbackAgentAction}>
                   <button
                     className={styles.feedbackAcceptButton}
@@ -132,7 +136,7 @@ export default function FeedbackPanel({
           value={draft}
           disabled={!feedbackBatch || !batchReadyForReview || alreadySent || Boolean(state.runProgress)}
           onChange={(event) => onDraftChange(selectedBatch, event.target.value)}
-          rows={5}
+          rows={4}
           aria-describedby="workflow-feedback-help"
         />
         <div className={styles.feedbackComposerActions}>

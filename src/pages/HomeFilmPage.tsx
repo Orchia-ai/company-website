@@ -8,8 +8,9 @@ import WorkflowIterationSection from './WorkflowIterationSection'
 import styles from './home-film-page.module.css'
 
 /**
- * The landing page: the demo film, the data deck, then the footer. The only
- * links off the page go to the app itself.
+ * The landing page: a workflow iteration demo, the production data, the
+ * product film, then the footer. The only links off the page go to the app
+ * itself.
  */
 export default function HomeFilmPage() {
   useEffect(() => {
@@ -35,24 +36,29 @@ export default function HomeFilmPage() {
       </Helmet>
 
       <div className={styles.page}>
+        <header className={`${styles.bar} ${styles.siteHeader}`}>
+          <span className={styles.brand}>
+            Orchia
+            <span className={styles.brandSuffix}>Studio</span>
+          </span>
+        </header>
+
+        <WorkflowIterationSection />
+        <DataSection />
+
         <section className={styles.filmSection} aria-label="Product film">
-          <header className={styles.bar}>
-            <span className={styles.brand}>
-              Orchia
-              <span className={styles.brandSuffix}>Studio</span>
-            </span>
-          </header>
+          <h2 className={styles.sectionTitle}>Our Vision</h2>
 
           <div className={styles.stageArea}>
             <SpecialistWorkflowsFilm />
           </div>
 
           <div className={styles.bar}>
-            <a className={styles.dataLink} href="#data">
-              See the production data
+            <a className={styles.dataLink} href="https://app.orchia.studio">
+              Use app
               <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <path
-                  d="M7 1.5V12M7 12L2.5 7.5M7 12L11.5 7.5"
+                  d="M3 11L11 3M5 3H11V9"
                   stroke="currentColor"
                   strokeWidth="1.5"
                   strokeLinecap="round"
@@ -63,8 +69,6 @@ export default function HomeFilmPage() {
           </div>
         </section>
 
-        <DataSection />
-        <WorkflowIterationSection />
         <SiteFooter />
       </div>
     </>

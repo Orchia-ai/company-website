@@ -1109,6 +1109,7 @@ export default function SpecialistWorkflowsFilm() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     let active = true;
+    let visibilityObserver: IntersectionObserver | null = null;
     queueMicrotask(() => {
       if (!active) {
         return;
@@ -1117,21 +1118,72 @@ export default function SpecialistWorkflowsFilm() {
       const cleanRecording = params.get("controls") === "0" || renderMode;
       setShowControls(!cleanRecording);
       setShowRecordingStart(false);
-      // The film is the landing page, so it plays on arrival. In render mode
-      // the headless capturer seeks each frame itself, so the timeline must
-      // stay paused rather than autoplaying.
-      if (!renderMode && params.get("autoplay") !== "0") {
-        play();
+
+      // The film now follows the workflow and data sections. Keep it at its
+      // opening frame until readers can meaningfully see it, then pause while
+      // it is offscreen and resume only playback that visibility paused. A
+      // manual pause therefore stays paused after scrolling away and back.
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      const stage = stageRef.current;
+      if (
+        renderMode ||
+        params.get("autoplay") === "0" ||
+        reducedMotion ||
+        !stage ||
+        typeof IntersectionObserver === "undefined"
+      ) {
+        return;
       }
+
+      let hasEntered = false;
+      let pausedForVisibility = false;
+      visibilityObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry || !active) {
+            return;
+          }
+
+          const meaningfullyVisible =
+            entry.isIntersecting && entry.intersectionRatio >= 0.15;
+          const timeline = timelineRef.current;
+          if (!timeline) {
+            return;
+          }
+
+          if (meaningfullyVisible) {
+            if (!hasEntered) {
+              hasEntered = true;
+              timeline.restart();
+              setPlaying(true);
+            } else if (pausedForVisibility) {
+              pausedForVisibility = false;
+              timeline.play();
+              setPlaying(true);
+            }
+            return;
+          }
+
+          if (hasEntered && !timeline.paused()) {
+            pausedForVisibility = true;
+            timeline.pause();
+            setPlaying(false);
+          }
+        },
+        { threshold: [0, 0.15] },
+      );
+      visibilityObserver.observe(stage);
     });
     return () => {
       active = false;
+      visibilityObserver?.disconnect();
       if (recordingStartTimeoutRef.current !== null) {
         window.clearTimeout(recordingStartTimeoutRef.current);
         recordingStartTimeoutRef.current = null;
       }
     };
-  }, [play]);
+  }, []);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {

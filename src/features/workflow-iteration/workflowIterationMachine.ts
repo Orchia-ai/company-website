@@ -1,4 +1,5 @@
 import {
+  BATCH_ONE_READY_PROMPT,
   FEEDBACK_ONE,
   FEEDBACK_TWO,
   type BatchId,
@@ -22,6 +23,7 @@ export type FeedbackEvent = {
   id: string
   batch: 1 | 2
   author: 'human' | 'agent'
+  kind: 'prompt' | 'human_feedback' | 'agent_plan'
   text: string
 }
 
@@ -115,7 +117,13 @@ export function demoReducer(state: DemoMachineState, action: DemoAction): DemoMa
         analyzingBatch: action.batch,
         events: [
           ...state.events,
-          { id: `human-${action.batch}`, batch: action.batch, author: 'human', text: action.text },
+          {
+            id: `human-${action.batch}`,
+            batch: action.batch,
+            author: 'human',
+            kind: 'human_feedback',
+            text: action.text,
+          },
         ],
       }
 
@@ -127,7 +135,13 @@ export function demoReducer(state: DemoMachineState, action: DemoAction): DemoMa
         analyzingBatch: null,
         events: [
           ...state.events,
-          { id: `agent-${action.batch}`, batch: action.batch, author: 'agent', text: action.text },
+          {
+            id: `agent-${action.batch}`,
+            batch: action.batch,
+            author: 'agent',
+            kind: 'agent_plan',
+            text: action.text,
+          },
         ],
       }
 
@@ -192,6 +206,18 @@ export function demoReducer(state: DemoMachineState, action: DemoAction): DemoMa
         completedBatches: state.completedBatches.includes(action.batch)
           ? state.completedBatches
           : [...state.completedBatches, action.batch],
+        events: action.batch === 1 && !state.events.some((event) => event.id === 'agent-batch-1-ready')
+          ? [
+              ...state.events,
+              {
+                id: 'agent-batch-1-ready',
+                batch: 1,
+                author: 'agent',
+                kind: 'prompt',
+                text: BATCH_ONE_READY_PROMPT,
+              },
+            ]
+          : state.events,
         runProgress: null,
       }
 

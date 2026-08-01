@@ -142,7 +142,9 @@ const VIDEO_DATA: readonly VideoDatum[] = [
     likesSaves: 2229,
     ca: 40,
     thumbnail: '/data-slides/thumbnails/07-23.jpg',
-    videoSrc: '/demo/feature-4/after.mp4',
+    videoSrc:
+      'https://tm9ilj7n5ftxczdh.public.blob.vercel-storage.com/company-site/videos/data/07-23-returned-with-99-doubles-f3lRz8PW8Y3mU8DhXzYDHDnlcvwNqH.mp4',
+    videoNote: 'Full-length production video with background music.',
   },
   {
     date: '07-25',

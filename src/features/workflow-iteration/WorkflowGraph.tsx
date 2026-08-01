@@ -173,7 +173,7 @@ export default function WorkflowGraph({
         )
       })}
 
-      {version.id === 2 && showBatchTwoChanges ? (
+      {showBatchTwoChanges ? (
         <aside
           className={`${styles.streamlineLedger} ${styles.batchTwoLedger}`}
           aria-label="What changed in Batch 2"

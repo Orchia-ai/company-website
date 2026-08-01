@@ -86,7 +86,7 @@ export function createInitialDemoState(): DemoMachineState {
     phase: 'batch_1_ready_to_run',
     selectedBatch: 1,
     completedBatches: [],
-    drafts: { 1: FEEDBACK_ONE, 2: FEEDBACK_TWO, 3: '' },
+    drafts: { 1: '', 2: '', 3: '' },
     feedbackSent: { 1: false, 2: false },
     agentResponseReady: { 1: false, 2: false },
     analyzingBatch: null,
@@ -203,6 +203,11 @@ export function demoReducer(state: DemoMachineState, action: DemoAction): DemoMa
             ? 'review_batch_2'
             : 'complete',
         selectedBatch: action.batch,
+        drafts: action.batch === 1 && !state.drafts[1]
+          ? { ...state.drafts, 1: FEEDBACK_ONE }
+          : action.batch === 2 && !state.drafts[2]
+            ? { ...state.drafts, 2: FEEDBACK_TWO }
+            : state.drafts,
         completedBatches: state.completedBatches.includes(action.batch)
           ? state.completedBatches
           : [...state.completedBatches, action.batch],

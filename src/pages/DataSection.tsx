@@ -212,8 +212,8 @@ const METRIC_CONFIGS: Record<VideoMetric, MetricConfig> = {
   ca: {
     max: 100,
     thresholds: [
-      { value: 30, label: 'Regular · 30%', tone: 'regular' },
-      { value: 40, label: 'Great · 40%+', tone: 'great' },
+      { value: 15, label: 'Average · 15%', tone: 'regular' },
+      { value: 40, label: 'Top · 40%+', tone: 'great' },
     ],
     ticks: [
       { value: 0, label: '0%' },
@@ -224,7 +224,7 @@ const METRIC_CONFIGS: Record<VideoMetric, MetricConfig> = {
     ],
     summary: [
       { value: '10', label: 'videos' },
-      { value: '48.9%', label: 'average completion' },
+      { value: '48.9%', label: 'mean completion' },
       { value: '67%', label: 'highest' },
     ],
   },
@@ -396,7 +396,7 @@ function VideoChart({
         <title id="data-chart-title">Performance comparison across 10 videos</title>
         <desc id="data-chart-description">
           Videos run chronologically from left to right. Each bar represents one video. Switch among views, likes and saves, and completion rate; thumbnails and dates identify each post.
-          {metric === 'ca' ? ' For this report, the completion-rate guide treats 30 to 39 percent as regular and 40 percent or more as great.' : null}
+          {metric === 'ca' ? ' For this report, the completion-rate guide marks 15 percent as average and 40 percent or more as top performance.' : null}
         </desc>
 
         {config.ticks.map((tick) => {
@@ -763,7 +763,7 @@ export default function DataSection() {
             {metric === 'ca' ? (
               <p className={styles.completionGuide}>
                 Completion rate is the share of viewers who watch to the end.
-                <strong> Internal guide: Regular 30–39% · Great 40%+</strong>
+                <strong> Internal guide: Average 15% · Top 40%+</strong>
               </p>
             ) : <span aria-hidden="true" />}
 

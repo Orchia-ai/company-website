@@ -221,7 +221,7 @@ export default function WorkflowIterationDemo() {
               statusForNode={statusForNode}
               treatments={treatments}
               activeEdgeTarget={state.runProgress?.batch === version.id ? state.runProgress.activeEdgeTarget : null}
-              showBatchTwoChanges={version.id === 2 && state.completedBatches.includes(2)}
+              showBatchTwoChanges={state.agentResponseReady[1] && version.id !== 3}
             />
           </div>
         </section>

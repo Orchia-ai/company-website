@@ -52,9 +52,9 @@ export default function HomeFilmPage() {
             </a>
           </div>
 
-          <a className={styles.scrollHint} href="#data">
-            <span className={styles.label}>Scroll</span>
-            <svg width="16" height="10" viewBox="0 0 16 10" fill="none" aria-hidden="true">
+          {/* Chevron only — the label carries no meaning the arrow doesn't. */}
+          <a className={styles.scrollHint} href="#data" aria-label="Scroll to our data">
+            <svg width="18" height="11" viewBox="0 0 16 10" fill="none" aria-hidden="true">
               <path
                 d="M1 1L8 8L15 1"
                 stroke="currentColor"

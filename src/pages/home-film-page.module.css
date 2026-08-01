@@ -204,8 +204,12 @@
   box-shadow: 14px 14px 0 var(--data);
 }
 
+/* Sentence case on the slide face. Tracking comes back in too — caps spacing
+   reads as gappy once the letters are lowercase. */
 .slideMount .label {
   color: #6c665c;
+  letter-spacing: 0.06em;
+  text-transform: none;
 }
 
 /* Sits in the middle row and centres itself rather than stretching, so the

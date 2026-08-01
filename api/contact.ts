@@ -1,10 +1,33 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import nodemailer from 'nodemailer'
 
+/** Subjects are chosen here, never sent by the client — a caller-supplied
+ *  subject is a header-injection hole. `source` only selects from this map. */
+const SUBJECTS: Record<string, string> = {
+  'workspace-request': 'Orchia Studio workspace request',
+}
+
+/** `hasOwn` so a `source` of "constructor" or "toString" cannot reach through
+ *  to Object.prototype and hand us a non-string subject. */
+const subjectFor = (source: unknown, name: string) =>
+  typeof source === 'string' && Object.hasOwn(SUBJECTS, source)
+    ? SUBJECTS[source]
+    : `New message from ${name}`
+
+/** Coerces first: request bodies are untyped, and a non-string here would
+ *  throw on `.replace` and 500 the whole submission. */
+const escapeHtml = (value: unknown) =>
+  String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') return res.status(405).end()
 
-  const { name, email, message } = req.body
+  const { name, email, message, source } = req.body
   const smtpUser = process.env.SMTP_USER
   const emailPass = process.env.EMAIL_PASS
   const contactEmail = process.env.CONTACT_EMAIL
@@ -37,12 +60,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       from: `"Orchia Website" <${smtpUser}>`,
       replyTo: email,
       to: contactEmail,
-      subject: `New message from ${name}`,
+      subject: subjectFor(source, String(name)),
       html: `
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
         <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, '<br>')}</p>
+        <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
       `,
     })
     res.status(200).json({ success: true })

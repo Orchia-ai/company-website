@@ -1,15 +1,40 @@
 /*
- * Shell for the landing page: brand bar, the film, then the call to action.
- * The film's stage scales to whatever height is left between the two bars.
+ * Landing page: the demo film, the data deck, then the footer.
+ *
+ * Every colour and construction here is taken from the film itself — flat
+ * signal colours, hard #161613 outlines, offset drop shadows, heavy tightly
+ * tracked Helvetica — so the page below the stage reads as the same object
+ * rather than a different site bolted underneath.
  */
-.shell {
+.page {
+  --ink: #11110f;
+  --paper: #fff9ee;
+  --paper-dim: #9a938a;
+  --slide-surface: #f4f0e9;
+  --outline: #161613;
+  --coral: #f45136;
+  --coral-hot: #ff5a36;
+  --lime: #cfff3d;
+  /* The film's data-analyst role colour. Keys the data section to the person
+     whose work it shows. */
+  --data: #ff4fa3;
+
+  --sans: "Helvetica Neue", "Inter", "Arial Nova", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--sans);
+}
+
+/* ── Section one: the film ──────────────────────────────── */
+
+.filmSection {
+  position: relative;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   width: 100%;
   height: 100dvh;
-  background: #11110f;
-  color: #fff9ee;
-  font-family: "Helvetica Neue", "Inter", "Arial Nova", Arial, sans-serif;
 }
 
 .bar {
@@ -32,7 +57,7 @@
 .brandSuffix {
   font-weight: 400;
   letter-spacing: 0.04em;
-  color: #9a938a;
+  color: var(--paper-dim);
 }
 
 .stageArea {
@@ -40,23 +65,62 @@
   min-height: 0;
 }
 
+/* Signals that the page continues past the fold. The one piece of decoration
+   on this page, and it earns its place: without it the film reads as the
+   whole site. */
+.scrollCue {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  height: 26px;
+  background: linear-gradient(to bottom, transparent, var(--paper-dim));
+  transform: translateX(-50%);
+  animation: cue 2.4s ease-in-out infinite;
+}
+
+@keyframes cue {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: translateX(-50%) scaleY(0.7);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translateX(-50%) scaleY(1);
+  }
+}
+
+/* ── Shared pieces ──────────────────────────────────────── */
+
+.label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+
+/* The poster button: flat fill, hard offset shadow, no radius to speak of. */
 .cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 48px;
   padding: 0 34px;
-  border: 3px solid #161613;
+  border: 3px solid var(--outline);
   border-radius: 2px;
-  background: #f45136;
-  color: #fff9ee;
+  background: var(--coral);
+  color: var(--paper);
   font: inherit;
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.01em;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 6px 6px 0 #cfff3d;
+  box-shadow: 6px 6px 0 var(--lime);
   transition:
     transform 140ms ease,
     box-shadow 140ms ease,
@@ -64,19 +128,288 @@
 }
 
 .cta:hover {
-  background: #ff5a36;
+  background: var(--coral-hot);
   transform: translate(-2px, -2px);
-  box-shadow: 8px 8px 0 #cfff3d;
+  box-shadow: 8px 8px 0 var(--lime);
 }
 
 .cta:active {
   transform: translate(3px, 3px);
-  box-shadow: 3px 3px 0 #cfff3d;
+  box-shadow: 3px 3px 0 var(--lime);
 }
 
 .cta:focus-visible {
-  outline: 3px solid #cfff3d;
+  outline: 3px solid var(--lime);
   outline-offset: 4px;
+}
+
+/* ── Section two: the data deck ─────────────────────────── */
+
+.dataSection {
+  display: grid;
+  justify-items: center;
+  gap: 34px;
+  padding: clamp(72px, 11vw, 148px) 24px clamp(72px, 11vw, 132px);
+  border-top: 1px solid rgb(255 249 238 / 8%);
+}
+
+/* Mounted like a slide on a light table: cream face, hard outline, offset
+   shadow in the film's data colour. */
+.slideMount {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 20px;
+  aspect-ratio: 9 / 16;
+  width: min(84vw, 400px);
+  max-height: 76vh;
+  padding: clamp(24px, 4vw, 34px);
+  border: 3px solid var(--outline);
+  border-radius: 2px;
+  background: var(--slide-surface);
+  color: var(--outline);
+  box-shadow: 14px 14px 0 var(--data);
+}
+
+.slideMount .label {
+  color: #6c665c;
+}
+
+/* Sits in the middle row and centres itself rather than stretching, so the
+   copy holds the optical centre of a tall portrait frame. */
+.slideBody {
+  align-self: center;
+}
+
+.slideTitle {
+  margin: 0;
+  font-size: clamp(2.1rem, 8.5vw, 2.9rem);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.slideNote {
+  max-width: 30ch;
+  margin: 14px 0 0;
+  color: #5d574e;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+/* Foreshadows the deck that lands here: a deck paginates, so the rail is
+   describing the real content rather than filling space. */
+.slideRail {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.slideRail span {
+  height: 3px;
+  flex: 1;
+  background: rgb(22 22 19 / 14%);
+}
+
+.slideRail span:first-child {
+  background: var(--data);
+}
+
+/* ── Footer ─────────────────────────────────────────────── */
+
+.footer {
+  border-top: 1px solid rgb(255 249 238 / 10%);
+  padding: clamp(52px, 7vw, 84px) clamp(24px, 6vw, 72px) 32px;
+}
+
+.footerGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: clamp(40px, 6vw, 96px);
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.footerBrand {
+  display: flex;
+  align-items: baseline;
+  gap: 0.28em;
+  margin: 0 0 14px;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.footerTagline {
+  max-width: 34ch;
+  margin: 0 0 32px;
+  color: var(--paper-dim);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.footerNav {
+  display: grid;
+  gap: 11px;
+  justify-items: start;
+}
+
+.footerLink {
+  color: var(--paper);
+  font-size: 0.95rem;
+  text-decoration: none;
+  border-bottom: 1px solid rgb(255 249 238 / 28%);
+  padding-bottom: 2px;
+  transition: color 140ms ease, border-color 140ms ease;
+}
+
+.footerLink:hover {
+  color: var(--lime);
+  border-color: var(--lime);
+}
+
+.footerLink:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+}
+
+/* Pages that do not exist yet. Deliberately not links: a pending destination
+   should not look identical to one that works. */
+.footerLinkPending {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 9px;
+  color: rgb(255 249 238 / 45%);
+  font-size: 0.95rem;
+}
+
+.footerLinkPending::after {
+  content: "Soon";
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(255 249 238 / 32%);
+  border: 1px solid rgb(255 249 238 / 18%);
+  border-radius: 2px;
+  padding: 2px 5px;
+}
+
+/* ── Contact form ───────────────────────────────────────── */
+
+.contactHeading {
+  margin-bottom: 20px;
+}
+
+.contact {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.field {
+  display: grid;
+  gap: 7px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgb(255 249 238 / 22%);
+  border-radius: 2px;
+  background: rgb(255 249 238 / 4%);
+  color: var(--paper);
+  font: inherit;
+  font-size: 0.95rem;
+  transition: border-color 140ms ease, background-color 140ms ease;
+}
+
+.input::placeholder {
+  color: rgb(255 249 238 / 32%);
+}
+
+.input:hover {
+  border-color: rgb(255 249 238 / 36%);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--lime);
+  background: rgb(255 249 238 / 7%);
+}
+
+.textarea {
+  min-height: 118px;
+  resize: vertical;
+}
+
+.send {
+  justify-self: start;
+  min-height: 44px;
+  padding: 0 26px;
+  font-size: 0.95rem;
+  box-shadow: 5px 5px 0 var(--lime);
+}
+
+.send:disabled {
+  cursor: progress;
+  opacity: 0.72;
+}
+
+.formNote {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.formError {
+  color: #ffb3a3;
+}
+
+.sent {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: 22px 24px;
+  border: 1px solid rgb(207 255 61 / 34%);
+  border-radius: 2px;
+  background: rgb(207 255 61 / 7%);
+}
+
+.sentTitle {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.sentNote {
+  margin: 0;
+  color: var(--paper-dim);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.footerBase {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  justify-content: space-between;
+  max-width: 1120px;
+  margin: clamp(44px, 6vw, 72px) auto 0;
+  padding-top: 22px;
+  border-top: 1px solid rgb(255 249 238 / 10%);
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+
+@media (max-width: 780px) {
+  .footerGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 @media (max-width: 640px) {
@@ -88,15 +421,26 @@
     min-height: 44px;
     padding: 0 24px;
   }
+
+  .slideMount {
+    box-shadow: 9px 9px 0 var(--data);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cta {
+  .cta,
+  .input,
+  .footerLink {
     transition: none;
   }
 
   .cta:hover,
   .cta:active {
     transform: none;
+  }
+
+  .scrollCue {
+    animation: none;
+    opacity: 0.5;
   }
 }

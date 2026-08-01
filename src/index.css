@@ -94,9 +94,9 @@ a {
   min-height: 100vh;
 }
 
-/* The demo film owns the whole viewport — no page scroll, no paper grain. */
+/* The film landing page brings its own dark ground and drops the paper grain,
+   which belongs to the linen marketing pages. */
 body.film-mode {
-  overflow: hidden;
   background: #11110f;
 }
 

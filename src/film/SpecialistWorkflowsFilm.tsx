@@ -1135,12 +1135,29 @@ export default function SpecialistWorkflowsFilm() {
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target;
+      // Space is "type a space" in any field and "scroll" everywhere else on
+      // the page. Only claim it while the reader is actually looking at the
+      // film, and never while they are typing.
       if (
-        event.target instanceof HTMLInputElement ||
-        event.target instanceof HTMLButtonElement ||
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement ||
+        target instanceof HTMLSelectElement ||
+        target instanceof HTMLButtonElement ||
+        (target instanceof HTMLElement && target.isContentEditable) ||
         showRecordingStart
       ) {
         return;
+      }
+      const stage = stageRef.current;
+      if (stage) {
+        const bounds = stage.getBoundingClientRect();
+        const onScreen =
+          bounds.bottom > window.innerHeight * 0.35 &&
+          bounds.top < window.innerHeight * 0.65;
+        if (!onScreen) {
+          return;
+        }
       }
       if (event.code === "Space") {
         event.preventDefault();

@@ -567,6 +567,7 @@ function FloatingVideoPlayer({
             controlsList="nodownload noremoteplayback nofullscreen"
             disablePictureInPicture
             autoPlay
+            muted
             playsInline
             preload="metadata"
             tabIndex={0}

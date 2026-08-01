@@ -20,6 +20,7 @@
   /* The film's data-analyst role colour. Keys the data section to the person
      whose work it shows. */
   --data: #ff4fa3;
+  --stage-gutter: clamp(0px, 1.6vw, 26px);
 
   --sans: "Helvetica Neue", "Inter", "Arial Nova", Arial, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -44,7 +45,7 @@
      the call to action to the bottom, with the film centred between them. */
   grid-template-rows: auto minmax(0, 1fr) auto auto;
   width: 100%;
-  padding-inline: clamp(0px, 1.6vw, 26px);
+  padding-inline: var(--stage-gutter);
   /* Lifts the ground behind the stage so the film reads as lit rather than
      cut out of a flat field. */
   background: radial-gradient(
@@ -141,8 +142,8 @@
   font-family: var(--mono);
   font-size: 0.68rem;
   font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-transform: none;
   color: var(--paper-dim);
 }
 
@@ -192,7 +193,7 @@
   display: grid;
   justify-items: center;
   gap: 34px;
-  padding: clamp(72px, 11vw, 148px) 24px clamp(72px, 11vw, 132px);
+  padding: clamp(72px, 11vw, 148px) var(--stage-gutter) clamp(72px, 11vw, 132px);
   border-top: 1px solid rgb(255 249 238 / 8%);
 }
 
@@ -200,67 +201,479 @@
    shadow in the film's data colour. */
 .slideMount {
   position: relative;
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  gap: 20px;
-  aspect-ratio: 9 / 16;
-  width: min(84vw, 400px);
-  max-height: 76vh;
-  padding: clamp(24px, 4vw, 34px);
+  display: block;
+  aspect-ratio: 16 / 9;
+  /* Keep the rendered box strictly 16:9. The viewport-height cap is folded
+     into the width so narrow or short screens scale both dimensions together. */
+  width: min(100%, calc(76dvh * 16 / 9));
+  overflow: hidden;
+  padding: 0;
   border: 3px solid var(--outline);
   border-radius: 2px;
   background: var(--slide-surface);
   color: var(--outline);
-  box-shadow: 14px 14px 0 var(--data);
+  box-shadow: min(14px, 1.5vw) min(14px, 1.5vw) 0 var(--data);
 }
 
-/* Sentence case on the slide face. Tracking comes back in too — caps spacing
-   reads as gappy once the letters are lowercase. */
-.slideMount .label {
-  color: #6c665c;
-  letter-spacing: 0.06em;
+/* The dashboard is authored once at 1600×900 and scaled into the responsive
+   16:9 mount, matching the fixed-canvas strategy used by the demo film. */
+.dataCanvas {
+  --data-scale: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  grid-template-rows: 40px 54px minmax(0, 1fr) 8px;
+  gap: 14px;
+  width: 1600px;
+  height: 900px;
+  padding: 34px 48px 28px;
+  overflow: hidden;
+  transform: translate(-50%, -50%) scale(var(--data-scale));
+  transform-origin: 50% 50%;
+  background-color: var(--slide-surface);
+  background-image:
+    linear-gradient(rgb(22 22 19 / 3.4%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(22 22 19 / 3.4%) 1px, transparent 1px);
+  background-size: 48px 48px;
+  color: var(--outline);
+}
+
+.dataSlideHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-bottom: 2px solid var(--outline);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  line-height: 1;
   text-transform: none;
 }
 
-/* Sits in the middle row and centres itself rather than stretching, so the
-   copy holds the optical centre of a tall portrait frame. */
-.slideBody {
-  align-self: center;
+.dataSlideTitle {
+  color: var(--outline);
 }
 
-.slideTitle {
-  margin: 0;
-  font-size: clamp(2.1rem, 8.5vw, 2.9rem);
-  font-weight: 700;
-  line-height: 0.98;
-  letter-spacing: -0.04em;
-  text-wrap: balance;
-}
-
-.slideNote {
-  max-width: 30ch;
-  margin: 14px 0 0;
-  color: #5d574e;
-  font-size: 0.9rem;
-  line-height: 1.45;
-}
-
-/* Foreshadows the deck that lands here: a deck paginates, so the rail is
-   describing the real content rather than filling space. */
-.slideRail {
+.dataFreshness {
   display: flex;
-  gap: 5px;
   align-items: center;
+  gap: 8px;
+  color: #6c665c;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.015em;
+  white-space: nowrap;
 }
 
-.slideRail span {
-  height: 3px;
-  flex: 1;
-  background: rgb(22 22 19 / 14%);
+.dataFreshnessDot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border: 1px solid var(--outline);
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 1px 1px 0 var(--outline);
 }
 
-.slideRail span:first-child {
+.dataFreshnessText time {
+  color: var(--outline);
+  font-weight: 700;
+}
+
+.dataInfo {
+  position: relative;
+  display: inline-flex;
+}
+
+.dataInfoButton {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  place-items: center;
+  border: 1.5px solid var(--outline);
+  border-radius: 50%;
+  background: var(--paper-warm);
+  color: var(--outline);
+  font: 700 12px/1 var(--mono);
+  cursor: help;
+}
+
+.dataInfoButton:hover,
+.dataInfoButton:focus-visible {
+  background: var(--lime);
+  outline: none;
+}
+
+.dataInfoTooltip {
+  position: absolute;
+  z-index: 10;
+  top: 27px;
+  right: 0;
+  width: 390px;
+  padding: 12px 14px;
+  border: 2px solid var(--outline);
+  border-radius: 1px;
+  background: var(--paper-warm);
+  box-shadow: 4px 4px 0 var(--outline);
+  color: var(--outline);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.35;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 120ms ease, transform 120ms ease;
+  white-space: normal;
+}
+
+.dataInfo:hover .dataInfoTooltip,
+.dataInfo:focus-within .dataInfoTooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dataTopbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.metricControls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex: none;
+}
+
+.metricButton {
+  min-height: 40px;
+  padding: 0 18px;
+  border: 2px solid var(--outline);
+  border-radius: 1px;
+  background: var(--paper-warm);
+  color: var(--outline);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    background-color 140ms ease;
+}
+
+.metricButton:hover {
+  background: var(--lime);
+}
+
+.metricButton:focus-visible {
+  outline: 3px solid var(--lime);
+  outline-offset: 4px;
+}
+
+.metricButtonActive {
   background: var(--data);
+  box-shadow: 4px 4px 0 var(--outline);
+  transform: translate(-2px, -2px);
+}
+
+.metricButtonActive:hover {
+  background: var(--data);
+}
+
+.dataSummary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  justify-content: flex-end;
+  min-height: 20px;
+  color: #5d574e;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.25;
+  text-align: right;
+}
+
+.dataSummaryItem {
+  white-space: nowrap;
+}
+
+.dataSummaryItem strong {
+  color: var(--outline);
+  font-weight: 800;
+}
+
+.dataSummaryDot {
+  margin-right: 8px;
+  color: var(--data);
+  font-weight: 800;
+}
+
+.dataContent {
+  min-height: 0;
+}
+
+.overviewGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: 94px minmax(0, 1fr);
+  gap: 14px;
+  height: 100%;
+}
+
+.overviewStat {
+  position: relative;
+  display: grid;
+  align-content: center;
+  gap: 7px;
+  min-width: 0;
+  padding: 13px 20px 11px;
+  overflow: hidden;
+  border: 2px solid var(--outline);
+  border-radius: 1px;
+  background: var(--paper-warm);
+}
+
+.overviewStat::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 9px;
+  background: var(--data);
+  content: "";
+}
+
+.overviewLabel {
+  color: #6c665c;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: none;
+}
+
+.overviewValue {
+  color: var(--outline);
+  font-size: 38px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+.overviewTrend {
+  position: relative;
+  grid-column: 1 / -1;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 2px solid var(--outline);
+  border-radius: 1px;
+  background:
+    linear-gradient(rgb(22 22 19 / 4.5%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(22 22 19 / 4.5%) 1px, transparent 1px),
+    #f7f3eb;
+  background-size: 44px 44px;
+}
+
+.followerTrendChart {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-family: var(--sans);
+}
+
+.trendGrid {
+  stroke: rgb(22 22 19 / 14%);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.trendTick {
+  fill: #6c665c;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.trendArea {
+  fill: url("#follower-area");
+}
+
+.trendLineOutline,
+.trendLine {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.trendLineOutline {
+  stroke: var(--outline);
+  stroke-width: 8;
+}
+
+.trendLine {
+  stroke: var(--data);
+  stroke-width: 5;
+}
+
+.trendPoint {
+  fill: var(--lime);
+  stroke: var(--outline);
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.trendEndLabelBox {
+  fill: var(--data);
+  stroke: var(--outline);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.trendEndLabel {
+  fill: var(--outline);
+  font-family: var(--mono);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+}
+
+.overviewTrend figcaption {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  padding: 6px 9px;
+  border: 1px solid var(--outline);
+  background: var(--paper-warm);
+  color: #5d574e;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.videoMetricView,
+.chartPanel {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.chartPanel {
+  overflow: hidden;
+  border: 2px solid var(--outline);
+  border-radius: 1px;
+  background: rgb(255 243 203 / 72%);
+}
+
+.dataChart {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  font-family: var(--sans);
+}
+
+.chartGrid,
+.chartBaseline,
+.chartThreshold {
+  vector-effect: non-scaling-stroke;
+}
+
+.chartGrid {
+  stroke: rgb(22 22 19 / 14%);
+  stroke-width: 1;
+}
+
+.chartBaseline {
+  stroke: var(--outline);
+  stroke-width: 1.5;
+}
+
+.chartThreshold {
+  stroke: var(--coral);
+  stroke-width: 1.5;
+  stroke-dasharray: 7 6;
+}
+
+.chartTick,
+.chartThresholdLabel,
+.chartDate {
+  fill: #6c665c;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.chartThresholdLabel {
+  fill: var(--coral);
+  font-size: 12px;
+}
+
+.chartBar {
+  fill: var(--data);
+  stroke: var(--outline);
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+  transition:
+    y 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 340ms ease;
+}
+
+.chartValue {
+  fill: var(--outline);
+  font-family: var(--mono);
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  transition: y 340ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.chartThumbnailFrame {
+  fill: none;
+  stroke: var(--outline);
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+}
+
+.dataViewRail {
+  display: flex;
+  gap: 8px;
+}
+
+.dataViewRail span {
+  flex: 1;
+  border: 1px solid var(--outline);
+  background: rgb(22 22 19 / 12%);
+}
+
+.dataViewRail .dataViewRailActive {
+  background: var(--data);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ── Footer ─────────────────────────────────────────────── */
@@ -337,8 +750,8 @@
   font-family: var(--mono);
   font-size: 0.58rem;
   font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-transform: none;
   color: rgb(255 249 238 / 32%);
   border: 1px solid rgb(255 249 238 / 18%);
   border-radius: 2px;
@@ -463,8 +876,48 @@
 }
 
 @media (max-width: 780px) {
+  .footer {
+    padding: 40px 24px 22px;
+  }
+
   .footerGrid {
     grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .footerTagline {
+    margin-bottom: 18px;
+  }
+
+  .footerNav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+  }
+
+  .contactHeading {
+    margin-bottom: 14px;
+  }
+
+  .contact {
+    gap: 12px;
+  }
+
+  .field {
+    gap: 5px;
+  }
+
+  .input {
+    padding: 10px 12px;
+  }
+
+  .textarea {
+    min-height: 88px;
+  }
+
+  .footerBase {
+    margin-top: 32px;
+    padding-top: 16px;
   }
 }
 
@@ -479,13 +932,59 @@
   }
 
   .slideMount {
-    box-shadow: 9px 9px 0 var(--data);
+    box-shadow: min(9px, 1.5vw) min(9px, 1.5vw) 0 var(--data);
   }
 
   .dataLink {
     height: 40px;
     padding: 0 16px;
     font-size: 0.9rem;
+  }
+
+  .footer {
+    padding: 34px 20px 20px;
+  }
+
+  .footerGrid {
+    gap: 26px;
+  }
+
+  .footerBrand {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+  }
+
+  .footerTagline {
+    max-width: none;
+    margin-bottom: 15px;
+    font-size: 0.86rem;
+    line-height: 1.4;
+  }
+
+  .footerNav {
+    gap: 7px 14px;
+  }
+
+  .footerLink,
+  .footerLinkPending {
+    font-size: 0.9rem;
+  }
+
+  .contactHeading {
+    margin-bottom: 12px;
+  }
+
+  .contact {
+    gap: 10px;
+  }
+
+  .send {
+    padding-inline: 22px;
+  }
+
+  .footerBase {
+    margin-top: 26px;
+    padding-top: 14px;
   }
 }
 
@@ -494,7 +993,11 @@
   .input,
   .footerLink,
   .dataLink,
-  .dataLink svg {
+  .dataLink svg,
+  .metricButton,
+  .dataInfoTooltip,
+  .chartBar,
+  .chartValue {
     transition: none;
   }
 

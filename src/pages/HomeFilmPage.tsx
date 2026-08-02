@@ -1,18 +1,22 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 
 import SpecialistWorkflowsFilm from '../film/SpecialistWorkflowsFilm'
 import DataSection from './DataSection'
+import PrivateAccessModal from './PrivateAccessModal'
 import SiteFooter from './SiteFooter'
 import WorkflowIterationSection from './WorkflowIterationSection'
 import styles from './home-film-page.module.css'
 
 /**
  * The landing page: a workflow iteration demo, the production data, the
- * product film, then the footer. The only links off the page go to the app
- * itself.
+ * product film, then the footer.
  */
 export default function HomeFilmPage() {
+  const [privateAccessOpen, setPrivateAccessOpen] = useState(false)
+  const openPrivateAccess = useCallback(() => setPrivateAccessOpen(true), [])
+  const closePrivateAccess = useCallback(() => setPrivateAccessOpen(false), [])
+
   useEffect(() => {
     // Suppress the paper-grain overlay index.css applies site-wide; it belongs
     // to the linen marketing pages, not this dark one.
@@ -43,6 +47,13 @@ export default function HomeFilmPage() {
           </span>
         </header>
 
+        <section className={styles.hero} aria-labelledby="home-hero-title">
+          <h1 className={styles.heroTitle} id="home-hero-title">
+            Other tools automate generation. Orchia automates how your content{' '}
+            <span>gets better over time.</span>
+          </h1>
+        </section>
+
         <WorkflowIterationSection />
         <DataSection />
 
@@ -54,23 +65,25 @@ export default function HomeFilmPage() {
           </div>
 
           <div className={styles.bar}>
-            <a className={styles.dataLink} href="https://app.orchia.studio">
-              Use app
+            <button className={styles.dataLink} type="button" onClick={openPrivateAccess}>
+              Contact Us for Private Access
               <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <path
-                  d="M3 11L11 3M5 3H11V9"
+                  d="M1.5 7H12.5M8 2.5L12.5 7L8 11.5"
                   stroke="currentColor"
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
               </svg>
-            </a>
+            </button>
           </div>
         </section>
 
-        <SiteFooter />
+        <SiteFooter onRequestAccess={openPrivateAccess} />
       </div>
+
+      <PrivateAccessModal open={privateAccessOpen} onClose={closePrivateAccess} />
     </>
   )
 }

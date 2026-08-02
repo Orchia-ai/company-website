@@ -8,7 +8,7 @@ type Status = 'idle' | 'sending' | 'sent' | 'error'
  *  dead destination never looks like a working one. */
 const PENDING_PAGES = ['About us', 'Work', 'Careers'] as const
 
-export default function SiteFooter() {
+export default function SiteFooter({ onRequestAccess }: { onRequestAccess: () => void }) {
   const fieldId = useId()
   const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [status, setStatus] = useState<Status>('idle')
@@ -56,9 +56,9 @@ export default function SiteFooter() {
                 {page}
               </span>
             ))}
-            <a className={styles.footerLink} href="https://app.orchia.studio">
-              Use app
-            </a>
+            <button className={styles.footerLink} type="button" onClick={onRequestAccess}>
+              Contact Us for Private Access
+            </button>
           </nav>
         </div>
 

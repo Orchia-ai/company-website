@@ -85,7 +85,7 @@
   display: inline-flex;
   align-items: baseline;
   gap: 0.28em;
-  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  font-size: clamp(2.8rem, 4.4vw, 4rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1;
@@ -95,6 +95,39 @@
   font-weight: 400;
   letter-spacing: 0.04em;
   color: var(--paper-dim);
+}
+
+/* Placeholder hero copy. Its 32:9-inspired height is approximately half of
+   the 16:9 demo directly below it, with a taller floor on narrow screens so
+   the sentence keeps useful breathing room. */
+.hero {
+  position: relative;
+  display: grid;
+  width: 100%;
+  min-height: clamp(180px, 28.125vw, 520px);
+  padding-inline: clamp(24px, 9vw, 164px);
+  place-items: center;
+  background: radial-gradient(
+    54% 78% at 50% 50%,
+    rgb(255 249 238 / 4.5%),
+    transparent 74%
+  );
+}
+
+.heroTitle {
+  width: min(100%, 24ch);
+  margin: 0;
+  color: var(--paper);
+  font-size: clamp(2.25rem, 4.6vw, 5.3rem);
+  font-weight: 760;
+  letter-spacing: -0.055em;
+  line-height: 0.96;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.heroTitle span {
+  color: var(--lime);
 }
 
 /* An exact full-width 16:9 box, so the film fills it edge to edge with no
@@ -122,11 +155,13 @@
   border-radius: 1px;
   background: var(--outline);
   color: var(--paper-warm);
+  font-family: var(--sans);
   font-size: 0.95rem;
   font-weight: 620;
   letter-spacing: -0.01em;
   text-decoration: none;
   white-space: nowrap;
+  cursor: pointer;
   transition:
     border-color 150ms ease,
     background-color 150ms ease,
@@ -1028,6 +1063,205 @@
   background: #000;
 }
 
+/* Portalled private-alpha request dialog. It repeats the page variables
+   locally because it is mounted under document.body rather than .page. */
+.privateAccessOverlay {
+  --outline: #161613;
+  --paper: #fff9ee;
+  --paper-warm: #fff3cb;
+  --slide-surface: #f4f0e9;
+  --coral: #f45136;
+  --lime: #cfff3d;
+  --data: #ff4fa3;
+  --sans: "Helvetica Neue", "Inter", "Arial Nova", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  position: fixed;
+  z-index: 2200;
+  inset: 0;
+  display: grid;
+  padding: clamp(14px, 4vw, 48px);
+  place-items: center;
+  background: rgb(9 9 8 / 88%);
+  backdrop-filter: blur(10px) saturate(0.75);
+  -webkit-backdrop-filter: blur(10px) saturate(0.75);
+  color: var(--outline);
+  font-family: var(--sans);
+}
+
+.privateAccessDialog {
+  position: relative;
+  width: min(92vw, 610px);
+  max-height: min(90dvh, 760px);
+  overflow: auto;
+  border: 3px solid var(--outline);
+  border-radius: 2px;
+  background-color: var(--slide-surface);
+  background-image:
+    linear-gradient(rgb(22 22 19 / 3.4%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(22 22 19 / 3.4%) 1px, transparent 1px);
+  background-size: 42px 42px;
+  box-shadow: 12px 12px 0 var(--data);
+}
+
+.privateAccessClose {
+  position: absolute;
+  z-index: 2;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  place-items: center;
+  border: 2px solid var(--outline);
+  border-radius: 1px;
+  background: var(--paper-warm);
+  box-shadow: 4px 4px 0 var(--data);
+  color: var(--outline);
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+
+.privateAccessClose:hover,
+.privateAccessClose:focus-visible {
+  background: var(--lime);
+  outline: none;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--data);
+}
+
+.privateAccessClose svg {
+  width: 23px;
+  height: 23px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-width: 2.25;
+}
+
+.privateAccessForm,
+.privateAccessConfirmation {
+  display: grid;
+  gap: 14px;
+  padding: clamp(30px, 6vw, 52px);
+  padding-top: clamp(68px, 9vw, 82px);
+}
+
+.privateAccessForm h2,
+.privateAccessConfirmation h2,
+.privateAccessEyebrow,
+.privateAccessIntro,
+.privateAccessConfirmation p,
+.privateAccessFinePrint,
+.privateAccessError {
+  margin: 0;
+}
+
+.privateAccessForm h2,
+.privateAccessConfirmation h2 {
+  max-width: 12ch;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  font-weight: 850;
+  letter-spacing: -0.045em;
+  line-height: 0.96;
+}
+
+.privateAccessEyebrow {
+  color: #8a4b3e;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.045em;
+}
+
+.privateAccessIntro,
+.privateAccessConfirmation > p:not(.privateAccessEyebrow) {
+  max-width: 46ch;
+  color: #5d574e;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.privateAccessLabel {
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.035em;
+}
+
+.privateAccessInput {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 15px;
+  border: 2px solid var(--outline);
+  border-radius: 1px;
+  background: #fff9ee;
+  color: var(--outline);
+  font: 600 1rem/1 var(--sans);
+  box-shadow: 4px 4px 0 #d9d5cd;
+}
+
+.privateAccessInput:focus {
+  outline: 3px solid var(--lime);
+  outline-offset: 2px;
+}
+
+.privateAccessPrimary {
+  justify-self: start;
+  min-height: 48px;
+  padding: 0 22px;
+  border: 2px solid var(--outline);
+  border-radius: 1px;
+  background: var(--coral);
+  box-shadow: 5px 5px 0 var(--lime);
+  color: var(--paper);
+  font: 800 0.98rem/1 var(--sans);
+  cursor: pointer;
+  transition: transform 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+}
+
+.privateAccessPrimary:not(:disabled):hover,
+.privateAccessPrimary:not(:disabled):focus-visible {
+  background: #ff5a36;
+  outline: none;
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--lime);
+}
+
+.privateAccessPrimary:disabled {
+  cursor: progress;
+  opacity: 0.68;
+}
+
+.privateAccessFinePrint {
+  max-width: 52ch;
+  color: #6c665c;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
+.privateAccessError {
+  color: #a43d2f;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.privateAccessSignal {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border: 2px solid var(--outline);
+  background: var(--lime);
+  box-shadow: 5px 5px 0 var(--data);
+  font-size: 1.6rem;
+  font-weight: 900;
+}
+
 .srOnly {
   position: absolute;
   width: 1px;
@@ -1085,11 +1319,15 @@
 }
 
 .footerLink {
+  padding: 0 0 2px;
+  border: 0;
+  background: transparent;
   color: var(--paper);
+  font: inherit;
   font-size: 0.95rem;
   text-decoration: none;
   border-bottom: 1px solid rgb(255 249 238 / 28%);
-  padding-bottom: 2px;
+  cursor: pointer;
   transition: color 140ms ease, border-color 140ms ease;
 }
 
@@ -1289,6 +1527,16 @@
     padding-bottom: 0;
   }
 
+  .hero {
+    min-height: 180px;
+    padding-inline: 20px;
+  }
+
+  .heroTitle {
+    font-size: clamp(2rem, 8.8vw, 2.5rem);
+    line-height: 0.98;
+  }
+
   .cta {
     min-height: 44px;
     padding: 0 24px;
@@ -1386,6 +1634,28 @@
     height: 40px;
     box-shadow: 3px 3px 0 var(--data);
   }
+
+  .privateAccessOverlay {
+    padding: 10px;
+  }
+
+  .privateAccessDialog {
+    width: calc(100vw - 20px);
+    max-height: calc(100dvh - 20px);
+    box-shadow: 7px 7px 0 var(--data);
+  }
+
+  .privateAccessClose {
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .privateAccessForm,
+  .privateAccessConfirmation {
+    padding: 62px 22px 28px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1416,7 +1686,9 @@
   .chartThumbnailImage,
   .chartThumbnailFrame,
   .chartThumbnailPlayCircle,
-  .videoPlayerClose {
+  .videoPlayerClose,
+  .privateAccessClose,
+  .privateAccessPrimary {
     transition: none;
   }
 

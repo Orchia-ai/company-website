@@ -5,6 +5,7 @@ import nodemailer from 'nodemailer'
  *  subject is a header-injection hole. `source` only selects from this map. */
 const SUBJECTS: Record<string, string> = {
   'workspace-request': 'Orchia Studio workspace request',
+  'alpha-access': 'Orchia Studio private alpha access request',
 }
 
 /** `hasOwn` so a `source` of "constructor" or "toString" cannot reach through

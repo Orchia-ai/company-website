@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async'
 
 import SpecialistWorkflowsFilm from '../film/SpecialistWorkflowsFilm'
 import DataSection from './DataSection'
+import HeroFeedbackLoop from './HeroFeedbackLoop'
 import PrivateAccessModal from './PrivateAccessModal'
 import SiteFooter from './SiteFooter'
 import WorkflowIterationSection from './WorkflowIterationSection'
@@ -40,19 +41,26 @@ export default function HomeFilmPage() {
       </Helmet>
 
       <div className={styles.page}>
-        <header className={`${styles.bar} ${styles.siteHeader}`}>
-          <span className={styles.brand}>
-            Orchia
-            <span className={styles.brandSuffix}>Studio</span>
-          </span>
-        </header>
+        <div className={styles.intro}>
+          <header className={`${styles.bar} ${styles.siteHeader}`}>
+            <span className={styles.brand}>
+              Orchia
+              <span className={styles.brandSuffix}>Studio</span>
+            </span>
+          </header>
 
-        <section className={styles.hero} aria-labelledby="home-hero-title">
-          <h1 className={styles.heroTitle} id="home-hero-title">
-            Other tools automate generation. Orchia automates how your content{' '}
-            <span>gets better over time.</span>
-          </h1>
-        </section>
+          <section className={styles.hero} aria-labelledby="home-hero-title">
+            <div className={styles.heroCopy}>
+              <p className={styles.heroKicker}>Other tools automate generation.</p>
+              <h1 className={styles.heroTitle} id="home-hero-title">
+                Orchia automates how your content
+                <span>gets better over time.</span>
+              </h1>
+            </div>
+
+            <HeroFeedbackLoop />
+          </section>
+        </div>
 
         <WorkflowIterationSection />
         <DataSection />

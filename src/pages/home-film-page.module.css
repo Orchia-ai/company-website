@@ -82,7 +82,7 @@
 }
 
 .siteHeader {
-  justify-content: flex-start;
+  justify-content: space-between;
   min-height: 0;
   padding: 20px clamp(20px, 6vw, 104px) 0;
 }
@@ -102,6 +102,30 @@
   font-weight: 400;
   letter-spacing: 0.08em;
   color: var(--paper-dim);
+}
+
+.headerNav {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.headerTab {
+  padding: 7px 0;
+  border-bottom: 1px solid rgb(255 249 238 / 18%);
+  color: var(--paper-dim);
+  font-size: clamp(0.68rem, 0.9vw, 0.8rem);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: border-color 140ms ease, color 140ms ease;
+}
+
+.headerTab:hover,
+.headerTab:focus-visible {
+  border-color: var(--lime);
+  color: var(--paper);
+  outline: none;
 }
 
 /* An editorial claim paired with a climbing feedback loop. Alternating near
@@ -1675,6 +1699,10 @@
 
   .brand {
     font-size: clamp(1rem, 4.8vw, 1.25rem);
+  }
+
+  .headerTab {
+    font-size: 0.68rem;
   }
 
   .hero {

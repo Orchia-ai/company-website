@@ -17,7 +17,7 @@ export default function FeedbackPanel({
   onSendFeedback: (batch: 1 | 2, text: string) => void
   onAcceptAndRerun: (batch: 2 | 3) => void
 }) {
-  const timelineEndRef = useRef<HTMLDivElement>(null)
+  const timelineRef = useRef<HTMLDivElement>(null)
   const selectedBatch = state.selectedBatch
   const feedbackBatch = selectedBatch === 1 || selectedBatch === 2 ? selectedBatch : null
   const alreadySent = feedbackBatch ? state.feedbackSent[feedbackBatch] : true
@@ -32,10 +32,13 @@ export default function FeedbackPanel({
   )
 
   useEffect(() => {
+    const timeline = timelineRef.current
+    if (!timeline) return
+
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    timelineEndRef.current?.scrollIntoView({
+    timeline.scrollTo({
+      top: timeline.scrollHeight,
       behavior: reduceMotion ? 'auto' : 'smooth',
-      block: 'nearest',
     })
   }, [state.events.length, state.analyzingBatch])
 
@@ -49,7 +52,7 @@ export default function FeedbackPanel({
         <span className={styles.feedbackCount}>{state.events.length} events</span>
       </header>
 
-      <div className={styles.feedbackTimeline} aria-live="polite">
+      <div className={styles.feedbackTimeline} ref={timelineRef} aria-live="polite">
         {state.events.length === 0 ? (
           <div className={styles.feedbackEmpty}>
             <span className={styles.feedbackEmptyIcon} aria-hidden="true">✦</span>
@@ -117,7 +120,6 @@ export default function FeedbackPanel({
             Preparing the next workflow update
           </div>
         ) : null}
-        <div ref={timelineEndRef} />
       </div>
 
       <form

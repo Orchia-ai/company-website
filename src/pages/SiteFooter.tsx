@@ -52,8 +52,8 @@ export default function SiteFooter({ onRequestAccess }: { onRequestAccess: () =>
           </p>
 
           <nav className={styles.footerNav} aria-label="Footer">
-            <Link className={styles.footerLink} to="/docs/discord-video-workflow">
-              Discord video workflow documentation
+            <Link className={styles.footerLink} to="/docs">
+              Documentation
             </Link>
             {PENDING_PAGES.map((page) => (
               <span key={page} className={styles.footerLinkPending}>

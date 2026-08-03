@@ -1,0 +1,275 @@
+:global(body.docs-index-mode) {
+  background: #1d1b16;
+  color: #fff9ee;
+  overflow-x: visible;
+  overflow-y: visible;
+}
+
+:global(body.docs-index-mode::after) {
+  display: none;
+}
+
+:global(html:has(body.docs-index-mode)) {
+  overflow-x: visible;
+  overflow-y: auto;
+}
+
+:global(body.docs-index-mode #root) {
+  max-width: none;
+  overflow-x: visible;
+  overflow-y: visible;
+}
+
+.page {
+  --paper: #fff9ee;
+  --paper-dim: #a7a198;
+  --outline: #161613;
+  --lime: #cfff3d;
+  --pink: #ff4fa3;
+  --sans: "DM Sans", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  min-height: 100vh;
+  overflow-x: clip;
+  background:
+    radial-gradient(circle at 16% 25%, rgb(255 79 163 / 8%), transparent 27%),
+    radial-gradient(circle at 78% 38%, rgb(207 255 61 / 5%), transparent 24%),
+    repeating-linear-gradient(0deg, transparent 0 79px, rgb(255 249 238 / 4%) 79px 80px),
+    repeating-linear-gradient(90deg, transparent 0 79px, rgb(255 249 238 / 4%) 79px 80px),
+    #1d1b16;
+  color: var(--paper);
+  font-family: var(--sans);
+}
+
+.siteHeader {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 72px;
+  padding: 0 clamp(20px, 5vw, 72px);
+  border-bottom: 1px solid rgb(255 249 238 / 12%);
+  background: rgb(29 27 22 / 88%);
+  backdrop-filter: blur(18px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.32em;
+  color: var(--paper);
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
+  font-weight: 740;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.brandSuffix {
+  color: var(--paper-dim);
+  font-size: 0.76em;
+  font-weight: 430;
+  letter-spacing: 0.075em;
+}
+
+.headerNav {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 3vw, 34px);
+  color: var(--paper-dim);
+  font-size: 0.82rem;
+}
+
+.headerNav a,
+.headerNav span {
+  padding-block: 8px;
+  text-decoration: none;
+}
+
+.headerNav span {
+  border-bottom: 1px solid var(--lime);
+  color: var(--paper);
+}
+
+.headerNav a:hover {
+  color: var(--lime);
+}
+
+.hero {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  padding: clamp(42px, 5vw, 72px) clamp(24px, 5vw, 64px) clamp(28px, 3.5vw, 48px);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--paper-dim);
+  font-family: var(--mono);
+  font-size: clamp(0.68rem, 0.9vw, 0.8rem);
+  letter-spacing: 0.02em;
+}
+
+.hero h1 {
+  margin: clamp(16px, 2vw, 24px) 0 0;
+  color: var(--paper);
+  font-family: var(--sans);
+  font-size: clamp(3rem, 6vw, 5.6rem);
+  font-weight: 720;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.intro {
+  max-width: 680px;
+  margin: clamp(18px, 2.4vw, 28px) 0 0;
+  color: #dfd9cf;
+  font-size: clamp(1rem, 1.45vw, 1.22rem);
+  letter-spacing: -0.02em;
+  line-height: 1.48;
+  text-wrap: balance;
+}
+
+.guideSection {
+  width: min(100%, 1180px);
+  margin: 0 auto;
+  padding: 0 clamp(24px, 5vw, 64px) clamp(68px, 8vw, 108px);
+}
+
+.guideCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: clamp(24px, 3vw, 38px);
+  border: 1px solid rgb(255 249 238 / 16%);
+  background: rgb(33 31 26 / 92%);
+  box-shadow: 9px 9px 0 rgb(255 79 163 / 35%);
+  color: var(--paper);
+  text-decoration: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.guideCard:hover,
+.guideCard:focus-visible {
+  border-color: rgb(207 255 61 / 68%);
+  box-shadow: 11px 11px 0 rgb(255 79 163 / 46%);
+  outline: none;
+  transform: translate(-2px, -2px);
+}
+
+.cardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--paper-dim);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+}
+
+.cardMeta span:last-child {
+  color: var(--lime);
+}
+
+.guideCard h3 {
+  max-width: 13ch;
+  margin: clamp(22px, 3vw, 34px) 0 0;
+  color: var(--paper);
+  font-size: clamp(2.15rem, 4.4vw, 4.2rem);
+  font-weight: 720;
+  letter-spacing: -0.06em;
+  line-height: 0.92;
+}
+
+.guideCard > p {
+  max-width: 690px;
+  margin: 18px 0 0;
+  color: #c8c2b8;
+  font-size: clamp(1rem, 1.5vw, 1.22rem);
+  line-height: 1.58;
+}
+
+.commandList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.commandList code {
+  padding: 6px 9px;
+  border: 1px solid rgb(255 249 238 / 14%);
+  background: rgb(255 255 255 / 3%);
+  color: #d5cfc5;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+}
+
+.cardLink {
+  align-self: flex-start;
+  margin-top: clamp(24px, 3vw, 38px);
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--lime);
+  color: var(--paper);
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 32px;
+  align-items: center;
+  padding: 34px clamp(20px, 5vw, 72px);
+  border-top: 1px solid rgb(255 249 238 / 12%);
+  background: rgb(22 21 17 / 86%);
+  color: var(--paper-dim);
+  font-size: 0.75rem;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer > a:last-child {
+  color: var(--paper);
+  text-decoration-color: rgb(207 255 61 / 50%);
+  text-underline-offset: 5px;
+}
+
+@media (max-width: 760px) {
+  .guideCard {
+    box-shadow: 6px 6px 0 rgb(255 79 163 / 35%);
+  }
+
+  .footer {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .siteHeader {
+    min-height: 64px;
+  }
+
+  .headerNav {
+    font-size: 0.72rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.5rem, 20vw, 5.2rem);
+  }
+
+  .guideCard h3 {
+    font-size: clamp(2.35rem, 14vw, 3.6rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guideCard {
+    transition: none;
+  }
+}

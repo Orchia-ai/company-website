@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
+import { Link } from 'react-router-dom'
 
 import SpecialistWorkflowsFilm from '../film/SpecialistWorkflowsFilm'
 import DataSection from './DataSection'
@@ -47,6 +48,11 @@ export default function HomeFilmPage() {
               Orchia
               <span className={styles.brandSuffix}>Studio</span>
             </span>
+            <nav className={styles.headerNav} aria-label="Primary navigation">
+              <Link className={styles.headerTab} to="/docs">
+                Documentation
+              </Link>
+            </nav>
           </header>
 
           <section className={styles.hero} aria-labelledby="home-hero-title">

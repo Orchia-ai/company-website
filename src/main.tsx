@@ -12,6 +12,7 @@ const App = lazy(() => import('./App.tsx'))
 const LogoPage = lazy(() => import('./pages/LogoPage.tsx'))
 const BlogIndexPage = lazy(() => import('./components/blog/BlogIndexPage.tsx'))
 const BlogPostPage = lazy(() => import('./components/blog/BlogPostPage.tsx'))
+const DiscordVideoWorkflowPage = lazy(() => import('./pages/DiscordVideoWorkflowPage.tsx'))
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -26,6 +27,7 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/logo" element={<LogoPage />} />
             <Route path="/blog" element={<BlogIndexPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
+            <Route path="/docs/discord-video-workflow" element={<DiscordVideoWorkflowPage />} />
             <Route path="*" element={<HomeFilmPage />} />
           </Routes>
         </Suspense>

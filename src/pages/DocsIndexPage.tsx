@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 
 import styles from './docs-index-page.module.css'
+import StudioSiteHeader from './StudioSiteHeader'
 
 export default function DocsIndexPage() {
   useEffect(() => {
@@ -26,20 +27,24 @@ export default function DocsIndexPage() {
           property="og:description"
           content="Guides for creating, refining, and delivering video projects with Orchia Studio."
         />
+        <meta property="og:url" content="https://orchia.studio/docs" />
+        <meta property="og:image" content="https://orchia.studio/og-docs-2026-08-v2.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Orchia Studio documentation" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Documentation — Orchia Studio" />
+        <meta
+          name="twitter:description"
+          content="Guides for creating, refining, and delivering video projects with Orchia Studio."
+        />
+        <meta name="twitter:image" content="https://orchia.studio/og-docs-2026-08-v2.png" />
+        <meta name="twitter:image:alt" content="Orchia Studio documentation" />
       </Helmet>
 
       <div className={styles.page}>
-        <header className={styles.siteHeader}>
-          <Link className={styles.brand} to="/" aria-label="Orchia Studio home">
-            <span>Orchia</span>
-            <span className={styles.brandSuffix}>Studio</span>
-          </Link>
-
-          <nav className={styles.headerNav} aria-label="Documentation navigation">
-            <span aria-current="page">Documentation</span>
-            <Link to="/">Home</Link>
-          </nav>
-        </header>
+        <StudioSiteHeader sticky />
 
         <main>
           <section className={styles.hero} aria-labelledby="docs-index-title">

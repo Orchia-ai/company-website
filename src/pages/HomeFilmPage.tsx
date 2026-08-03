@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Link } from 'react-router-dom'
 
 import SpecialistWorkflowsFilm from '../film/SpecialistWorkflowsFilm'
 import DataSection from './DataSection'
 import HeroFeedbackLoop from './HeroFeedbackLoop'
 import PrivateAccessModal from './PrivateAccessModal'
 import SiteFooter from './SiteFooter'
+import StudioSiteHeader from './StudioSiteHeader'
 import WorkflowIterationSection from './WorkflowIterationSection'
 import styles from './home-film-page.module.css'
 
@@ -34,26 +34,33 @@ export default function HomeFilmPage() {
           name="description"
           content="Orchia connects writing, art, camera, and audience decisions so every specialist keeps control of their craft while the production stays in sync."
         />
+        <link rel="canonical" href="https://orchia.studio/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Orchia Studio" />
         <meta property="og:title" content="Orchia Studio — Every specialist. One shared production." />
         <meta
           property="og:description"
           content="Orchia connects writing, art, camera, and audience decisions so every specialist keeps control of their craft while the production stays in sync."
         />
+        <meta property="og:url" content="https://orchia.studio/" />
+        <meta property="og:image" content="https://orchia.studio/og-home-2026-08-v2.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Orchia Studio — content that gets better over time" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Orchia Studio — Every specialist. One shared production." />
+        <meta
+          name="twitter:description"
+          content="Orchia connects writing, art, camera, and audience decisions so every specialist keeps control of their craft while the production stays in sync."
+        />
+        <meta name="twitter:image" content="https://orchia.studio/og-home-2026-08-v2.png" />
+        <meta name="twitter:image:alt" content="Orchia Studio — content that gets better over time" />
       </Helmet>
 
       <div className={styles.page}>
         <div className={styles.intro}>
-          <header className={`${styles.bar} ${styles.siteHeader}`}>
-            <span className={styles.brand}>
-              Orchia
-              <span className={styles.brandSuffix}>Studio</span>
-            </span>
-            <nav className={styles.headerNav} aria-label="Primary navigation">
-              <Link className={styles.headerTab} to="/docs">
-                Documentation
-              </Link>
-            </nav>
-          </header>
+          <StudioSiteHeader />
 
           <section className={styles.hero} aria-labelledby="home-hero-title">
             <div className={styles.heroCopy}>

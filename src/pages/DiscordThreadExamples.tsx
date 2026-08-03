@@ -10,6 +10,7 @@ type CommandAnimationProps = {
   reply: ReactNode
   attachments?: string[]
   inThread?: boolean
+  workspaceThreadOnly?: boolean
   priorFeedbacks?: Array<{
     feedback: string
     version: string
@@ -27,6 +28,7 @@ export function DiscordCommandAnimation({
   reply,
   attachments = [],
   inThread = false,
+  workspaceThreadOnly = false,
   priorFeedbacks = [],
   priorVideo,
 }: CommandAnimationProps) {
@@ -73,7 +75,7 @@ export function DiscordCommandAnimation({
         <span className={styles.discordDemoChannel}>
           <b aria-hidden="true">{inThread ? '↳' : '#'}</b>
           {channel}
-          {inThread ? <em>Project thread</em> : null}
+          {inThread ? <em>{workspaceThreadOnly ? 'Workspace thread only' : 'Project thread'}</em> : null}
         </span>
         <span>{caption} · Discord preview</span>
       </figcaption>
@@ -105,7 +107,7 @@ export function DiscordCommandAnimation({
                         <i>App</i>
                         <span>Today at 10:{23 + (index * 4)} AM</span>
                       </p>
-                      <p>Feedback saved as workflow version <strong>{version}</strong>.</p>
+                      <p>Feedback saved.</p>
                     </div>
                   </div>
                 </div>
@@ -122,7 +124,7 @@ export function DiscordCommandAnimation({
                   <i>App</i>
                   <span>Today at 10:18 AM</span>
                 </p>
-                <p className={styles.discordPriorVideoText}>Batch 1 is complete. Your video is ready.</p>
+                <p className={styles.discordPriorVideoText}>Your video is ready.</p>
                 <div className={styles.discordVideoPlaceholder}>
                   <div className={styles.discordVideoFrame}>
                     <span>▶</span>
@@ -190,9 +192,10 @@ export function DiscordCommandAnimation({
       </div>
 
       <p className={styles.srOnly}>
-        {caption}. {priorVideo ? 'A generated video is already available in the project thread. ' : ''}
-        {priorFeedbacks.length ? `${priorFeedbacks.length} rounds of feedback are already saved in the project thread. ` : ''}
-        In Discord, type {command} in {inThread ? `the ${channel} project thread` : channel},
+        {caption}. {workspaceThreadOnly ? 'This command is only available in a workspace thread. ' : ''}
+        {priorVideo ? `A generated video is already available in the ${workspaceThreadOnly ? 'workspace thread' : 'project thread'}. ` : ''}
+        {priorFeedbacks.length ? `${priorFeedbacks.length} rounds of feedback are already saved in the ${workspaceThreadOnly ? 'workspace thread' : 'project thread'}. ` : ''}
+        In Discord, type {command} in {inThread ? `the ${channel} ${workspaceThreadOnly ? 'workspace thread' : 'project thread'}` : channel},
         send it, and Orchia replies in the chat.
       </p>
     </figure>
@@ -205,7 +208,7 @@ export function DiscordDeliveryExample() {
       <figcaption className={styles.discordDemoHeader}>
         <span className={styles.discordDemoChannel}>
           <b aria-hidden="true">↳</b>
-          product-launch-film
+          aurora-smart-lamp-launch
           <em>Project thread</em>
         </span>
         <span>Final delivery · Discord preview</span>
@@ -222,7 +225,7 @@ export function DiscordDeliveryExample() {
           <p>Your final video is ready.</p>
           <div className={styles.discordFileMessage}>
             <span className={styles.discordFileIcon} aria-hidden="true">▶</span>
-            <span><strong>product-launch-film.mp4</strong><small>Delivered in this project thread</small></span>
+            <span><strong>aurora-smart-lamp-launch.mp4</strong><small>Delivered in this project thread</small></span>
             <span aria-hidden="true">↓</span>
           </div>
         </div>

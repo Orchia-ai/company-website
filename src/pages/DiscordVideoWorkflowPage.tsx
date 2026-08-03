@@ -7,6 +7,18 @@ import {
   DiscordDeliveryExample,
 } from './DiscordThreadExamples'
 import styles from './discord-video-workflow-page.module.css'
+import StudioSiteHeader from './StudioSiteHeader'
+
+const newProjectCommand =
+  '/newproject title: "Aurora smart lamp launch" idea_details: "Create a 60-second launch film for design-conscious renters. Show the lamp transforming a dark apartment through work, dinner, and wind-down moments. Keep the visual style cinematic and minimal, then end on the product and launch date."'
+
+const newProjectReply = (
+  <>
+    <p>Project created. I opened the <strong>aurora-smart-lamp-launch</strong> workspace thread.</p>
+    <p>Your video is now being created.</p>
+    <p>↻ Creating your video · 62%</p>
+  </>
+)
 
 const sections = [
   ['create-a-project', '/newproject'],
@@ -26,7 +38,7 @@ const newProjectParameters = [
     defaultValue: '—',
   },
   {
-    parameter: 'brief',
+    parameter: 'idea_details',
     requirement: 'Required',
     description: 'The video idea, audience, context, and desired outcome.',
     defaultValue: '—',
@@ -34,19 +46,19 @@ const newProjectParameters = [
   {
     parameter: 'language',
     requirement: 'Optional',
-    description: 'The language to use throughout the workflow.',
+    description: 'The language for the video and project updates.',
     defaultValue: '—',
   },
   {
     parameter: 'workflow_requirement',
     requirement: 'Optional',
-    description: 'Instructions for adapting the workflow before the first run.',
+    description: 'Any additional production instructions to follow.',
     defaultValue: '—',
   },
   {
     parameter: 'start_version',
     requirement: 'Optional',
-    description: 'An existing workflow version to use as the starting point.',
+    description: 'A saved project setup to start from.',
     defaultValue: 'Legacy V1.1',
   },
 ] as const
@@ -62,37 +74,37 @@ const questions = [
   {
     question: 'Can I provide several rounds of feedback?',
     answer:
-      'The planned workflow supports multiple feedback rounds before a rerun. Each successfully applied round creates a new workflow revision.',
+      'Yes. Send /feedback as many times as needed, then use /rerun when you are ready to create an updated video.',
   },
   {
     question: 'Can I provide images?',
     answer:
-      'Yes. /feedback is designed to accept up to three reference images. Add them in order beginning with image_1; do not skip directly to image_2 or image_3. Image analysis uses submission order rather than filenames.',
+      'Yes. Attach up to three reference images with /feedback. Add them in order beginning with image_1, followed by image_2 and image_3.',
   },
   {
     question: 'Does a rerun always restart from the beginning?',
     answer:
-      'No. The reuse planner is designed to find the earliest affected workflow step, reuse successful unchanged upstream outputs, and regenerate affected and downstream work.',
+      'No. /rerun applies the feedback saved in the workspace thread and creates an updated video.',
   },
   {
     question: 'Can I stop a bad generation early?',
     answer:
-      '/terminate is intended to stop the active run while keeping completed text, images, and video clips. You can then provide more feedback and start another rerun.',
+      'Yes. Use /terminate to stop the current creation. Anything already posted in the thread remains available, and you can add feedback before using /rerun again.',
   },
   {
     question: 'Where is the final video delivered?',
     answer:
-      'The intended delivery location is the project’s Discord thread after generation finishes.',
+      'The final video appears in the project’s Discord thread when it is ready.',
   },
   {
     question: 'Can I still see the project in the web workspace?',
     answer:
-      'The planned integration keeps the same project and its batches visible in the existing web workspace.',
+      'Yes. You can open the same project and its latest video in the web workspace.',
   },
   {
     question: 'What happens if the final video exceeds Discord’s upload limit?',
     answer:
-      'The planned behavior is to post an expiring backend-hosted download link instead of attaching the file. The current intended expiration is seven days and may change before release.',
+      'Orchia posts a download link instead of attaching the file. The link remains available for seven days.',
   },
 ] as const
 
@@ -105,10 +117,10 @@ export default function DiscordVideoWorkflowPage() {
   return (
     <>
       <Helmet>
-        <title>Discord video workflow documentation — Orchia Studio</title>
+        <title>Discord video workflow — Orchia Studio</title>
         <meta
           name="description"
-          content="Documentation for Orchia Studio’s in-development Discord workflow for creating, refining, rerunning, and receiving AI-generated video projects."
+          content="See how Orchia Studio creates, refines, reruns, and delivers complete AI-generated video projects directly inside Discord."
         />
         <link
           rel="canonical"
@@ -119,8 +131,22 @@ export default function DiscordVideoWorkflowPage() {
         <meta property="og:title" content="Discord video workflow — Orchia Studio" />
         <meta
           property="og:description"
-          content="An in-development workflow for creating and refining complete AI-generated video projects inside Discord."
+          content="See how Orchia Studio creates, refines, reruns, and delivers complete AI-generated video projects directly inside Discord."
         />
+        <meta property="og:url" content="https://orchia.studio/docs/discord-video-workflow" />
+        <meta property="og:image" content="https://orchia.studio/og-discord-video-workflow-2026-08-v2.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Orchia Studio Discord video workflow documentation" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Discord video workflow — Orchia Studio" />
+        <meta
+          name="twitter:description"
+          content="See how Orchia Studio creates, refines, reruns, and delivers complete AI-generated video projects directly inside Discord."
+        />
+        <meta name="twitter:image" content="https://orchia.studio/og-discord-video-workflow-2026-08-v2.png" />
+        <meta name="twitter:image:alt" content="Orchia Studio Discord video workflow documentation" />
       </Helmet>
 
       <a className={styles.skipLink} href="#documentation-content">
@@ -128,17 +154,7 @@ export default function DiscordVideoWorkflowPage() {
       </a>
 
       <div className={styles.page}>
-        <header className={styles.siteHeader}>
-          <Link className={styles.brand} to="/" aria-label="Orchia Studio home">
-            <span>Orchia</span>
-            <span className={styles.brandSuffix}>Studio</span>
-          </Link>
-
-          <nav className={styles.headerNav} aria-label="Documentation navigation">
-            <Link to="/docs" aria-current="location">Documentation</Link>
-            <Link to="/">Home</Link>
-          </nav>
-        </header>
+        <StudioSiteHeader sticky />
 
         <main id="documentation-content">
           <section className={styles.hero} aria-labelledby="docs-title">
@@ -150,13 +166,26 @@ export default function DiscordVideoWorkflowPage() {
               </div>
 
               <span className={styles.statusBadge}>In development · Coming soon</span>
-              <h1 id="docs-title">Discord video workflow</h1>
+              <h1 id="docs-title">Start creating with one command.</h1>
               <p className={styles.subtitle}>
-                Create, refine, rerun, and receive complete AI-generated video
-                projects directly inside Discord.
+                Add a title, then use <InlineCode>idea_details</InlineCode> to share
+                the audience, story, visual direction, references, and delivery goal.
               </p>
             </div>
 
+            <div className={styles.heroCommand}>
+              <DiscordCommandAnimation
+                caption="Create a project"
+                channel="video-projects"
+                command={newProjectCommand}
+                reply={newProjectReply}
+              />
+            </div>
+
+            <a className={styles.heroScrollCue} href="#create-a-project">
+              <span>Scroll down to do more</span>
+              <span className={styles.heroScrollArrow} aria-hidden="true">↓</span>
+            </a>
           </section>
 
           <div className={styles.docsGrid}>
@@ -180,28 +209,20 @@ export default function DiscordVideoWorkflowPage() {
                 <DiscordCommandAnimation
                   caption="Create a project"
                   channel="video-projects"
-                  command={'/newproject title: "Product launch film" brief: "A concise launch video"'}
-                  reply={(
-                    <>
-                      <p>Project created. I opened the <strong>product-launch-film</strong> project thread.</p>
-                      <p>Batch 1 started automatically.</p>
-                      <p>↻ Image generation · 62%</p>
-                    </>
-                  )}
+                  command={newProjectCommand}
+                  reply={newProjectReply}
                 />
 
                 <p>
                   Type <InlineCode>/newproject</InlineCode> in the Discord channel
-                  where you start projects. Add a title and brief, then send it.
-                  Orchia is designed to create a dedicated thread, prepare the
-                  workflow, and start the first batch without another approval
-                  step.
+                  where you start projects. Add a title and{' '}
+                  <InlineCode>idea_details</InlineCode>, then send it. Orchia creates
+                  a dedicated workspace thread and starts creating your video.
                 </p>
 
                 <p>
-                  Inside the new thread, Orchia is intended to edit one text
-                  progress message as the run advances. Generated images appear
-                  in that same thread when they are ready.
+                  Follow progress in that thread. Previews and the finished video
+                  appear there as soon as they are ready.
                 </p>
 
                 <h3>Project parameters</h3>
@@ -230,32 +251,37 @@ export default function DiscordVideoWorkflowPage() {
               </section>
 
               <section className={styles.docSection} id="give-feedback">
-                <SectionHeading title="/feedback" />
+                <SectionHeading title="/feedback" availability="Workspace thread only" />
 
                 <DiscordCommandAnimation
-                  caption="Send feedback in the project thread"
-                  channel="product-launch-film"
-                  command={'/feedback feedback: "Use image_3 as the art-style reference"'}
-                  attachments={['image_1', 'image_2', 'image_3']}
+                  caption="Send feedback in the workspace thread"
+                  channel="aurora-smart-lamp-launch"
+                  command={'/feedback feedback: "Keep the opening apartment shot, make the middle section feel faster, use image_3 as the visual reference, and hold the final product shot for two more seconds."'}
+                  attachments={[
+                    'image_1 · opening-frame.png',
+                    'image_2 · lifestyle-lighting.jpg',
+                    'image_3 · visual-reference.jpg',
+                  ]}
                   inThread
+                  workspaceThreadOnly
                   priorVideo={{
                     duration: '0:45',
-                    title: 'product-launch-film-batch-1.mp4',
+                    title: 'aurora-smart-lamp-launch.mp4',
                   }}
                   reply={(
                     <>
-                      <p>Feedback saved as workflow version <strong>42.1</strong>.</p>
-                      <p>Send <strong>/rerun</strong> when you are ready.</p>
+                      <p>Feedback saved.</p>
+                      <p>Add more feedback, or send <strong>/rerun</strong> when you are ready.</p>
                     </>
                   )}
                 />
 
                 <p>
                   Review the generated video, then type <InlineCode>/feedback</InlineCode>{' '}
-                  inside the project thread created by <InlineCode>/newproject</InlineCode>.
-                  This command is only available in that thread. Describe the
-                  change and send it; each successfully applied message is
-                  designed to save a new workflow revision.
+                  inside the project’s workspace thread created by <InlineCode>/newproject</InlineCode>.
+                  Describe the changes you want and attach up to three reference images
+                  if needed. You can send more than one feedback message before{' '}
+                  <InlineCode>/rerun</InlineCode>.
                 </p>
 
                 <h3>Feedback parameters</h3>
@@ -270,66 +296,51 @@ export default function DiscordVideoWorkflowPage() {
                 </div>
 
                 <div className={styles.callout}>
-                  <strong>Keep image order explicit.</strong>
+                  <strong>Attach images in order.</strong>
                   <p>
-                    Add images without gaps, beginning with
-                    <InlineCode>image_1</InlineCode>. The image-aware agent is
-                    designed to examine them in their submitted order, not by
-                    uploaded filename.
+                    Start with <InlineCode>image_1</InlineCode>. If you add more,
+                    continue with <InlineCode>image_2</InlineCode> and then{' '}
+                    <InlineCode>image_3</InlineCode> without skipping a number.
                   </p>
                 </div>
               </section>
 
               <section className={styles.docSection} id="rerun-efficiently">
-                <SectionHeading title="/rerun" />
+                <SectionHeading title="/rerun" availability="Workspace thread only" />
 
                 <DiscordCommandAnimation
-                  caption="Start the next batch"
-                  channel="product-launch-film"
+                  caption="Create an updated video"
+                  channel="aurora-smart-lamp-launch"
                   command="/rerun"
                   inThread
+                  workspaceThreadOnly
                   priorFeedbacks={[
                     {
-                      feedback: 'Make the opening hook more direct',
+                      feedback: 'Show the lamp turning on in the first three seconds so the opening hook is immediate',
                       version: '42.1',
                     },
                     {
-                      feedback: 'Use the brighter product shot for the ending',
+                      feedback: 'Use the brighter lifestyle image for the ending and hold the launch date for two more seconds',
                       version: '42.2',
                     },
                   ]}
                   reply={(
                     <>
-                      <p>Rerun started.</p>
-                      <p>Reusing: Story, Visual references</p>
-                      <p>Regenerating from: Image generation</p>
+                      <p>Rerun started with your latest feedback.</p>
+                      <p>The updated video will appear in this thread.</p>
                     </>
                   )}
                 />
 
                 <p>
                   Type <InlineCode>/rerun</InlineCode> after saving feedback in
-                  the project thread created by <InlineCode>/newproject</InlineCode>.
-                  This command is only available in that thread. A reuse-planning
-                  agent is designed to compare your revised workflow with the
-                  previous run and find the first step that actually changed.
+                  the project’s workspace thread created by <InlineCode>/newproject</InlineCode>.
+                  It creates an updated video using the feedback saved in that thread.
                 </p>
 
-                <div className={styles.reuseSummary} aria-label="What a rerun reuses and regenerates">
-                  <div>
-                    <strong>Reuse</strong>
-                    <p>Successful work before the first changed step.</p>
-                  </div>
-                  <div>
-                    <strong>Regenerate</strong>
-                    <p>The changed step and everything that depends on it.</p>
-                  </div>
-                </div>
-
                 <p>
-                  This avoids repeating unchanged work. Feedback sent during a
-                  running batch is intended to remain in a separate draft for
-                  the following rerun.
+                  Feedback sent while a rerun is active will be used the next time
+                  you run <InlineCode>/rerun</InlineCode>.
                 </p>
               </section>
 
@@ -338,22 +349,21 @@ export default function DiscordVideoWorkflowPage() {
 
                 <DiscordCommandAnimation
                   caption="Stop an active run"
-                  channel="product-launch-film"
+                  channel="aurora-smart-lamp-launch"
                   command="/terminate"
                   inThread
                   reply={(
                     <>
-                      <p>Run stopped.</p>
-                      <p>Completed text, images, and video clips were kept.</p>
+                      <p>Current creation stopped.</p>
+                      <p>Anything already posted in this thread is still available.</p>
                     </>
                   )}
                 />
 
                 <p>
-                  Type <InlineCode>/terminate</InlineCode> when an early preview
-                  shows that the direction is wrong. Completed outputs are
-                  intended to stay available, so you can send more feedback and
-                  then use <InlineCode>/rerun</InlineCode>.
+                  Use <InlineCode>/terminate</InlineCode> to stop the current creation.
+                  You can then add feedback and use <InlineCode>/rerun</InlineCode>{' '}
+                  when you are ready.
                 </p>
               </section>
 
@@ -362,41 +372,26 @@ export default function DiscordVideoWorkflowPage() {
 
                 <DiscordCommandAnimation
                   caption="Check the version in the project thread"
-                  channel="product-launch-film"
+                  channel="aurora-smart-lamp-launch"
                   command="/version"
                   inThread
                   reply={(
                     <>
                       <p>Project number: <strong>42</strong></p>
-                      <p>Starting workflow: <strong>V1.1</strong></p>
-                      <p>Current workflow: <strong>42.10</strong></p>
+                      <p>Starting version: <strong>V1.1</strong></p>
+                      <p>Current version: <strong>42.10</strong></p>
                     </>
                   )}
                 />
 
                 <p>
                   Type <InlineCode>/version</InlineCode> in the project thread to
-                  see where this project started and which saved revision you
-                  are using now.
+                  check the current saved version before rerunning.
                 </p>
 
-                <div className={styles.versionBreakdown} aria-label="How workflow version 42.10 is structured">
-                  <div>
-                    <code>42</code>
-                    <span>Project number</span>
-                  </div>
-                  <strong aria-hidden="true">.</strong>
-                  <div>
-                    <code>10</code>
-                    <span>Saved revision</span>
-                  </div>
-                </div>
-
                 <p>
-                  <InlineCode>42.0</InlineCode> is the initial workflow for
-                  project 42. Feedback then creates <InlineCode>42.1</InlineCode>,
-                  <InlineCode>42.2</InlineCode>, and so on. The revision can keep
-                  growing past one digit, such as <InlineCode>42.10</InlineCode>.
+                  The version number changes when feedback is saved, so you can
+                  confirm which changes the next rerun will use.
                 </p>
               </section>
 
@@ -406,29 +401,27 @@ export default function DiscordVideoWorkflowPage() {
                 <DiscordDeliveryExample />
 
                 <p>
-                  When generation finishes, the planned workflow delivers the
-                  final video in the project thread.
+                  When your video is ready, Orchia posts it in the project thread.
                 </p>
 
                 <div className={styles.deliveryGrid}>
                   <div>
                     <span className={styles.deliveryNumber}>01</span>
                     <h3>Direct attachment</h3>
-                    <p>Smaller videos are intended to be attached in the project thread.</p>
+                    <p>Smaller videos appear as attachments in the thread.</p>
                   </div>
                   <div>
                     <span className={styles.deliveryNumber}>02</span>
                     <h3>Expiring link</h3>
                     <p>
-                      Videos above Discord’s upload limit are intended to use a
-                      backend-hosted download link. The current planned
-                      expiration is seven days.
+                      Larger videos arrive as download links that remain available
+                      for seven days.
                     </p>
                   </div>
                   <div>
                     <span className={styles.deliveryNumber}>03</span>
                     <h3>Web workspace</h3>
-                    <p>The same project and batches are intended to remain visible in the existing web workspace.</p>
+                    <p>You can also open the project and its latest video in the web workspace.</p>
                   </div>
                 </div>
               </section>
@@ -442,8 +435,7 @@ export default function DiscordVideoWorkflowPage() {
                     <p>
                       <Link className={styles.faqAccessLink} to="/#contact">
                         Contact us for private access
-                      </Link>{' '}
-                      and updates about the upcoming Discord workflow.
+                      </Link>.
                     </p>
                   </details>
                   {questions.map(({ question, answer }) => (
@@ -472,10 +464,19 @@ export default function DiscordVideoWorkflowPage() {
   )
 }
 
-function SectionHeading({ title }: { title: string }) {
+function SectionHeading({
+  title,
+  availability,
+}: {
+  title: string
+  availability?: string
+}) {
   return (
     <header className={styles.sectionHeading}>
       <h2>{title}</h2>
+      {availability ? (
+        <span className={styles.commandAvailability}>{availability}</span>
+      ) : null}
     </header>
   )
 }

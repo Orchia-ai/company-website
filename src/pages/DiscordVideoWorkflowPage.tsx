@@ -134,19 +134,19 @@ export default function DiscordVideoWorkflowPage() {
           content="See how Orchia Studio creates, refines, reruns, and delivers complete AI-generated video projects directly inside Discord."
         />
         <meta property="og:url" content="https://orchia.studio/docs/discord-video-workflow" />
-        <meta property="og:image" content="https://orchia.studio/og-discord-video-workflow-2026-08-v2.png" />
+        <meta property="og:image" content="https://orchia.studio/og-discord-video-workflow-2026-08-v3.png" />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Orchia Studio Discord video workflow documentation" />
+        <meta property="og:image:alt" content="How to Use in Discord — Orchia Studio" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Discord video workflow — Orchia Studio" />
         <meta
           name="twitter:description"
           content="See how Orchia Studio creates, refines, reruns, and delivers complete AI-generated video projects directly inside Discord."
         />
-        <meta name="twitter:image" content="https://orchia.studio/og-discord-video-workflow-2026-08-v2.png" />
-        <meta name="twitter:image:alt" content="Orchia Studio Discord video workflow documentation" />
+        <meta name="twitter:image" content="https://orchia.studio/og-discord-video-workflow-2026-08-v3.png" />
+        <meta name="twitter:image:alt" content="How to Use in Discord — Orchia Studio" />
       </Helmet>
 
       <a className={styles.skipLink} href="#documentation-content">

@@ -21,8 +21,8 @@ const PAGES: Record<string, SharePage> = {
   '/': {
     title: 'Orchia Studio — Every specialist. One shared production.',
     description: 'Orchia connects writing, art, camera, and audience decisions so every specialist keeps control of their craft while the production stays in sync.',
-    ogImage: `${SITE_URL}/og-home-2026-08-v2.png`,
-    imageAlt: 'Orchia Studio — content that gets better over time',
+    ogImage: `${SITE_URL}/og-home-2026-08-v3.png`,
+    imageAlt: 'Content that gets better over time — Orchia Studio',
     type: 'website',
     imageType: 'image/png',
     imageWidth: 1200,
@@ -41,8 +41,8 @@ const PAGES: Record<string, SharePage> = {
   '/docs/discord-video-workflow': {
     title: 'Discord video workflow — Orchia Studio',
     description: 'See how Orchia Studio creates, refines, reruns, and delivers complete AI-generated video projects directly inside Discord.',
-    ogImage: `${SITE_URL}/og-discord-video-workflow-2026-08-v2.png`,
-    imageAlt: 'Orchia Studio Discord video workflow documentation',
+    ogImage: `${SITE_URL}/og-discord-video-workflow-2026-08-v3.png`,
+    imageAlt: 'How to Use in Discord — Orchia Studio',
     type: 'website',
     imageType: 'image/png',
     imageWidth: 1200,

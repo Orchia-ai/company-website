@@ -158,62 +158,62 @@ export default function WorkflowIterationDemo() {
     <div className={styles.demoStage} data-demo-state={state.phase}>
       <header className={styles.demoTopbar}>
         <div className={styles.demoHeading}>
-          <span className={styles.demoHeadingSignal} aria-hidden="true" />
-          <div>
-            <h2>Demo</h2>
-            <p>{stageCopy(state)}</p>
-          </div>
-        </div>
-
-        <nav className={styles.versionSelector} aria-label="Workflow versions">
-          {([1, 2, 3] as const).map((batch) => {
-            const active = state.selectedBatch === batch
-            const available = state.completedBatches.includes(batch)
-            return (
-              <button
-                className={active ? styles.versionButtonActive : undefined}
-                key={batch}
-                type="button"
-                disabled={Boolean(state.runProgress) || !available}
-                aria-current={active ? 'step' : undefined}
-                onClick={() => dispatch({ type: 'select_batch', batch })}
-              >
-                <span>Batch {batch}</span>
-                <small>{versionState(state, batch)}</small>
-              </button>
-            )
-          })}
-        </nav>
-
-        <div className={styles.demoActions}>
-          {state.runProgress ? (
-            <button className={styles.skipButton} type="button" onClick={skipAnimation}>
-              Skip animation
-            </button>
-          ) : null}
-          <button
-            className={styles.rerunButton}
-            type="button"
-            disabled={!readyRunBatch}
-            onClick={() => startReadyRun()}
-          >
-            {runActionLabel}
-          </button>
-          <button className={styles.resetButton} type="button" onClick={resetDemo}>
-            Reset demo
-          </button>
+          <h2>Demo</h2>
         </div>
       </header>
 
       <div className={styles.demoMain}>
         <section className={styles.workflowCanvas} aria-label={`${version.label} workflow`}>
           <header className={styles.workflowCanvasHeader}>
-            <div>
+            <div className={styles.workflowCanvasIdentity}>
               <span>Workflow canvas</span>
               <strong>{version.label}</strong>
+              <p>{version.description}</p>
             </div>
-            <p>{version.description}</p>
-            <span className={styles.workflowCanvasState}>{versionState(state, version.id)}</span>
+
+            <nav className={styles.versionSelector} aria-label="Workflow versions">
+              {([1, 2, 3] as const).map((batch) => {
+                const active = state.selectedBatch === batch
+                const available = state.completedBatches.includes(batch)
+                return (
+                  <button
+                    className={active ? styles.versionButtonActive : undefined}
+                    key={batch}
+                    type="button"
+                    disabled={Boolean(state.runProgress) || !available}
+                    aria-current={active ? 'step' : undefined}
+                    onClick={() => dispatch({ type: 'select_batch', batch })}
+                  >
+                    <span>Batch {batch}</span>
+                    <small>{versionState(state, batch)}</small>
+                  </button>
+                )
+              })}
+            </nav>
+
+            <div className={styles.workflowCanvasTools}>
+              <span className={styles.workflowCanvasState} aria-live="polite">
+                {stageCopy(state)}
+              </span>
+              <div className={styles.demoActions}>
+                {state.runProgress ? (
+                  <button className={styles.skipButton} type="button" onClick={skipAnimation}>
+                    Skip animation
+                  </button>
+                ) : null}
+                <button
+                  className={styles.rerunButton}
+                  type="button"
+                  disabled={!readyRunBatch}
+                  onClick={() => startReadyRun()}
+                >
+                  {runActionLabel}
+                </button>
+                <button className={styles.resetButton} type="button" onClick={resetDemo}>
+                  Reset
+                </button>
+              </div>
+            </div>
           </header>
           <div className={styles.workflowGraphViewport} key={version.id}>
             <WorkflowGraph

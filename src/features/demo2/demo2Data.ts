@@ -76,8 +76,8 @@ export const DEMO_BEATS: readonly DemoBeat[] = [
     start: 14_000,
     end: 16_800,
     eyebrow: 'Workflow v2',
-    headline: 'A new Character Lock step joins the graph.',
-    detail: 'The same canvas evolves without becoming a different system.',
+    headline: 'The new workflow appears beside its history.',
+    detail: 'Version 1 becomes a smaller inactive reference while Character Lock joins Version 2 on the right.',
   },
   {
     id: 'run_v2',
@@ -85,8 +85,8 @@ export const DEMO_BEATS: readonly DemoBeat[] = [
     start: 16_800,
     end: 20_500,
     eyebrow: 'Version 2 · Rerunning',
-    headline: 'The revised workflow generates the next version.',
-    detail: 'The new identity constraint now participates in every downstream shot.',
+    headline: 'The active workflow runs beside its previous version.',
+    detail: 'A single signal moves down Version 2 while Version 1 stays frozen and visible on the left.',
   },
   {
     id: 'play_v2',
@@ -94,8 +94,8 @@ export const DEMO_BEATS: readonly DemoBeat[] = [
     start: 20_500,
     end: 25_000,
     eyebrow: 'Version 2 · Ready',
-    headline: 'Feedback becomes a visible result.',
-    detail: 'The regenerated video plays with a more consistent cinematic treatment.',
+    headline: 'Feedback becomes a visible new result.',
+    detail: 'Version 2 plays from its Output node without erasing the workflow that came before it.',
   },
   {
     id: 'growth',

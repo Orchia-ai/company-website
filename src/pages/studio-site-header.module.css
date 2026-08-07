@@ -1,10 +1,12 @@
 .siteHeader {
+  --site-header-height: 72px;
+
   z-index: 40;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  min-height: 72px;
+  min-height: var(--site-header-height);
   padding: 0 clamp(20px, 5vw, 72px);
   border-bottom: 1px solid rgb(255 249 238 / 12%);
   background: rgb(29 27 22 / 88%);
@@ -13,9 +15,15 @@
   backdrop-filter: blur(18px);
 }
 
+.stickySlot {
+  min-height: 72px;
+}
+
 .sticky {
-  position: sticky;
+  position: fixed;
   top: 0;
+  right: 0;
+  left: 0;
 }
 
 .brand {
@@ -68,8 +76,13 @@
 
 @media (max-width: 760px) {
   .siteHeader {
-    min-height: 64px;
+    --site-header-height: 64px;
+
     padding-inline: 20px;
+  }
+
+  .stickySlot {
+    min-height: 64px;
   }
 
   .brand {

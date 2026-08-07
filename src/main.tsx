@@ -15,6 +15,7 @@ const BlogPostPage = lazy(() => import('./components/blog/BlogPostPage.tsx'))
 const DocsIndexPage = lazy(() => import('./pages/DocsIndexPage.tsx'))
 const DiscordVideoWorkflowPage = lazy(() => import('./pages/DiscordVideoWorkflowPage.tsx'))
 const Demo2Page = lazy(() => import('./pages/Demo2Page.tsx'))
+const Demo3Page = lazy(() => import('./pages/Demo3Page.tsx'))
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -32,6 +33,7 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/docs" element={<DocsIndexPage />} />
             <Route path="/docs/discord-video-workflow" element={<DiscordVideoWorkflowPage />} />
             <Route path="/demo2" element={<Demo2Page />} />
+            <Route path="/demo3" element={<Demo3Page />} />
             <Route path="*" element={<HomeFilmPage />} />
           </Routes>
         </Suspense>

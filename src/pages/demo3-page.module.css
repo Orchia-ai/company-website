@@ -1,0 +1,1453 @@
+:global(body.demo3-mode) {
+  min-width: 0;
+  height: 100dvh;
+  overflow: hidden;
+  background: #1d1b16;
+}
+
+:global(body.demo3-mode)::before,
+:global(body.demo3-mode)::after {
+  display: none;
+}
+
+:global(html:has(body.demo3-mode)) {
+  height: 100%;
+  overflow: hidden;
+}
+
+:global(body.demo3-mode #root) {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.page {
+  --header-height: 72px;
+  --ink: #1d1b16;
+  --paper: #fff9ee;
+  --paper-dim: #9a938a;
+  --paper-warm: #fff3cb;
+  --outline: #161613;
+  --coral: #f45136;
+  --lime: #cfff3d;
+  --sans: "Helvetica Neue", "Inter", "Arial Nova", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--ink);
+  background-image:
+    linear-gradient(rgb(255 249 238 / 3%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 249 238 / 3%) 1px, transparent 1px);
+  background-size: 64px 64px;
+  color: var(--paper);
+  font-family: var(--sans);
+}
+
+.story {
+  position: relative;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-color: var(--lime) rgb(15 14 13 / 88%);
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  touch-action: pan-y;
+}
+
+.story::-webkit-scrollbar {
+  width: 8px;
+}
+
+.story::-webkit-scrollbar-track {
+  border-left: 1px solid rgb(255 249 238 / 8%);
+  background: rgb(15 14 13 / 88%);
+}
+
+.story::-webkit-scrollbar-thumb {
+  border: 2px solid rgb(15 14 13 / 88%);
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--lime), #8fae2f);
+}
+
+.story:focus-visible {
+  outline: 1px solid rgb(207 255 61 / 54%);
+  outline-offset: -1px;
+}
+
+.sceneViewport {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  width: 100%;
+  height: calc(100dvh - var(--header-height));
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.heroScene,
+.workflowScene {
+  position: absolute;
+  inset: 0;
+}
+
+.heroScene {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  align-items: center;
+  padding-inline: clamp(48px, 7vw, 132px);
+}
+
+.heroCopy {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: clamp(14px, 2vw, 28px);
+  min-width: 0;
+  will-change: opacity, transform;
+}
+
+.heroKicker {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.5vw, 20px);
+  margin: 0;
+  color: var(--paper-dim);
+  font-size: clamp(14px, 1.3vw, 24px);
+  font-weight: 540;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.heroKicker::before {
+  width: clamp(34px, 3.3vw, 62px);
+  height: 2px;
+  flex: none;
+  background: linear-gradient(90deg, rgb(255 79 163 / 72%), rgb(255 249 238 / 18%));
+  content: "";
+}
+
+.heroTitle {
+  width: 12.5ch;
+  margin: 0;
+  color: var(--paper);
+  font-size: clamp(48px, 5.7vw, 108px);
+  font-weight: 740;
+  letter-spacing: -0.052em;
+  line-height: 0.91;
+  text-wrap: balance;
+}
+
+.heroTitle span {
+  display: block;
+  margin-top: 0.12em;
+  color: #e4ff91;
+}
+
+.heroVisual {
+  position: relative;
+  z-index: 1;
+  width: min(48vw, 930px);
+  margin-left: clamp(-82px, -4vw, -28px);
+  will-change: opacity, transform;
+}
+
+.heroVisual > div {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.workflowScene {
+  display: grid;
+  justify-items: center;
+  padding: clamp(12px, 1.7vh, 20px) clamp(18px, 4vw, 64px) 8px;
+}
+
+.workflowClaim {
+  position: absolute;
+  z-index: 7;
+  top: clamp(10px, 1.6vh, 18px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  max-width: min(880px, calc(100vw - 48px));
+  margin: 0;
+  color: rgb(255 249 238 / 88%);
+  font-family: var(--sans);
+  font-size: clamp(15px, 1.08vw, 20px);
+  font-weight: 620;
+  letter-spacing: -0.012em;
+  line-height: 1.35;
+  text-align: center;
+  text-shadow: 0 2px 18px rgb(0 0 0 / 58%);
+  will-change: opacity, transform;
+}
+
+.workflowClaimDot {
+  flex: none;
+  color: var(--lime);
+  font-size: 0.72em;
+}
+
+.workflowClaimCopy {
+  display: grid;
+  min-width: 0;
+}
+
+.workflowClaimText {
+  grid-area: 1 / 1;
+  will-change: opacity, transform;
+}
+
+.workflowDiagram {
+  position: relative;
+  width: min(820px, 92vw);
+  height: calc(100% - 46px);
+  margin-top: 44px;
+}
+
+.workflowContext {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  transform-origin: center 54%;
+  will-change: opacity, filter, transform;
+}
+
+.workflowVersionNext {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.workflowVersionTag {
+  position: absolute;
+  z-index: 6;
+  top: 20%;
+  display: grid;
+  gap: 3px;
+  min-width: 92px;
+  padding: 8px 10px;
+  border: 1px solid rgb(255 249 238 / 16%);
+  background: rgb(28 27 23 / 88%);
+  color: var(--paper);
+  text-align: center;
+  transform: translateX(-50%);
+  will-change: left, opacity;
+  pointer-events: none;
+}
+
+.workflowVersionTag span {
+  font: 500 11px/1.1 var(--sans);
+}
+
+.workflowVersionTag small {
+  color: var(--paper-dim);
+  font: 400 9px/1.1 var(--sans);
+}
+
+.workflowVersionTagPrevious {
+  border-color: rgb(255 249 238 / 12%);
+  filter: grayscale(1);
+}
+
+.workflowVersionTagNext {
+  border-color: rgb(207 255 61 / 48%);
+  box-shadow: 0 0 18px rgb(207 255 61 / 14%);
+}
+
+.workflowVersionTagNext small {
+  color: var(--lime);
+}
+
+.workflowConnections {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.workflowConnector,
+.workflowArrow {
+  fill: none;
+  stroke: rgb(255 249 238 / 52%);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.workflowConnector {
+  stroke-width: 1.5;
+  stroke-dasharray: 1;
+}
+
+.workflowArrow {
+  stroke: var(--lime);
+  stroke-width: 2.4;
+  filter: drop-shadow(0 0 3px rgb(207 255 61 / 34%));
+}
+
+.workflowNode,
+.outputNode {
+  border: 1px solid rgb(255 249 238 / 18%);
+  background: rgb(35 33 28 / 88%);
+  box-shadow: 5px 5px 0 rgb(0 0 0 / 28%);
+  color: var(--paper);
+}
+
+.workflowNode {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  will-change: opacity, filter, transform;
+}
+
+.workflowNode {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  align-items: center;
+  width: clamp(190px, 23vw, 230px);
+  min-height: clamp(48px, 6.2vh, 60px);
+  padding: 7px 12px 7px 8px;
+  border-left: 4px solid var(--node-accent);
+}
+
+.workflowNode::after {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 7px;
+  height: 7px;
+  background: var(--node-accent);
+  content: "";
+}
+
+.workflowNodeReviewReady::before {
+  position: absolute;
+  z-index: -1;
+  inset: -7px;
+  border: 1px solid var(--lime);
+  box-shadow: 0 0 22px rgb(207 255 61 / 28%);
+  content: "";
+  pointer-events: none;
+  animation: nodeReviewPulse 1.15s ease-in-out infinite;
+}
+
+.workflowNodeActive {
+  border-color: rgb(207 255 61 / 56%);
+  background: rgb(207 255 61 / 8%);
+  box-shadow: 5px 5px 0 rgb(207 255 61 / 18%);
+}
+
+.nodeIndex {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  place-items: center;
+  border: 1px solid rgb(255 249 238 / 16%);
+  color: var(--node-accent);
+  font: 650 10px/1 var(--mono);
+}
+
+.workflowNode > div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.nodeLabel {
+  color: rgb(255 249 238 / 42%);
+  font: 500 8px/1 var(--mono);
+  letter-spacing: 0.03em;
+}
+
+.workflowNode strong {
+  overflow: hidden;
+  font-size: clamp(13px, 1.1vw, 17px);
+  font-weight: 760;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workflowNode small {
+  overflow: hidden;
+  color: var(--paper-dim);
+  font: 500 clamp(8px, 0.72vw, 11px)/1.2 var(--mono);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nodeBrief { top: 8%; }
+.nodeStory { top: 20%; }
+.nodeCharacter { top: 33%; left: 31.5%; }
+.nodeShots { top: 33%; left: 68.5%; }
+.nodePrompt { top: 46%; }
+.nodeVideo { top: 59%; }
+
+.nodeIssueBadge {
+  position: absolute;
+  z-index: 4;
+  top: -22px;
+  right: -1px;
+  padding: 5px 7px;
+  border: 1px solid rgb(244 81 54 / 58%);
+  background: var(--coral);
+  color: var(--paper);
+  font: 500 8px/1 var(--sans);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transform-origin: right bottom;
+}
+
+.nodeIssueBadgeEditing {
+  border-color: rgb(95 140 255 / 72%);
+  background: #5f8cff;
+}
+
+.nodeIssueBadgeUpdated {
+  border-color: rgb(207 255 61 / 72%);
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.nodeIssueBadgeReview {
+  border-color: rgb(207 255 61 / 72%);
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.nodeReviewTarget {
+  position: absolute;
+  z-index: 6;
+  inset: -7px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.nodeReviewTarget:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+}
+
+.nodeScanLayer {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.nodeScanner {
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 44%;
+  border-bottom: 2px solid var(--lime);
+  background: linear-gradient(180deg, transparent 4%, rgb(207 255 61 / 5%) 46%, rgb(207 255 61 / 24%));
+  box-shadow: 0 8px 18px rgb(207 255 61 / 22%);
+  will-change: top, opacity;
+}
+
+.outputAnchor {
+  position: absolute;
+  z-index: 5;
+  top: 83%;
+  left: 50%;
+  width: clamp(88px, 13.5vh, 150px);
+  aspect-ratio: 9 / 16;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  will-change: top, width;
+}
+
+.workflowMiniOutput {
+  position: absolute;
+  z-index: 2;
+  top: 72%;
+  left: 50%;
+  width: 150px;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border: 1px solid rgb(255 249 238 / 18%);
+  background: #0f0e0d;
+  box-shadow: 5px 5px 0 rgb(0 0 0 / 28%);
+  color: var(--paper);
+  transform: translateX(-50%);
+}
+
+.workflowMiniOutput img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.workflowMiniOutput span {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 7px;
+  background: linear-gradient(180deg, transparent, rgb(15 14 13 / 88%));
+  font: 500 10px/1.2 var(--sans);
+  text-align: center;
+}
+
+.outputNode {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transform-origin: center;
+  pointer-events: auto;
+  will-change: opacity, filter, transform;
+}
+
+.outputHeader {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 36px;
+  padding: 6px 7px;
+  border-bottom: 1px solid rgb(255 249 238 / 14%);
+  background: linear-gradient(180deg, rgb(15 14 13 / 96%), rgb(15 14 13 / 72%));
+  will-change: opacity, transform;
+}
+
+.outputHeader > div {
+  display: grid;
+  gap: 2px;
+}
+
+.outputHeader span {
+  color: var(--paper-dim);
+  font: 500 8px/1 var(--sans);
+  letter-spacing: 0.01em;
+}
+
+.outputHeader strong {
+  font-size: 10px;
+  letter-spacing: -0.01em;
+}
+
+.outputHeader .outputStatus {
+  padding: 4px 5px;
+  border: 1px solid rgb(207 255 61 / 34%);
+  color: var(--lime);
+}
+
+.outputNode video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #0f0e0d;
+  object-fit: contain;
+}
+
+.chatPanel {
+  position: absolute;
+  z-index: 9;
+  top: clamp(58px, 7vh, 68px);
+  right: clamp(24px, 2.4vw, 40px);
+  bottom: 16px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: clamp(360px, 30vw, 420px);
+  overflow: hidden;
+  border: 1px solid rgb(255 249 238 / 22%);
+  background: rgb(28 27 23 / 96%);
+  box-shadow:
+    8px 8px 0 rgb(0 0 0 / 34%),
+    0 24px 70px rgb(0 0 0 / 26%);
+  color: var(--paper);
+  transform-origin: right center;
+  will-change: opacity, filter, transform;
+}
+
+.chatHeader {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) 8px;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 14px;
+  border-bottom: 1px solid rgb(255 249 238 / 12%);
+  background: rgb(255 249 238 / 3%);
+}
+
+.chatAvatar {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgb(207 255 61 / 48%);
+  border-radius: 50%;
+  background: rgb(207 255 61 / 10%);
+  color: var(--lime);
+  font: 700 13px/1 var(--mono);
+}
+
+.chatHeader > div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.chatTitle {
+  overflow: hidden;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chatSubtitle {
+  overflow: hidden;
+  color: var(--paper-dim);
+  font: 400 10px/1.2 var(--sans);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chatPresence {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 12px rgb(207 255 61 / 50%);
+}
+
+.chatBody {
+  display: grid;
+  grid-auto-rows: max-content;
+  align-content: start;
+  gap: 16px;
+  min-height: 0;
+  overflow: hidden;
+  padding: 18px 16px;
+}
+
+.chatQuestion,
+.chatFeedback p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.chatQuestion {
+  justify-self: start;
+  max-width: 76%;
+  padding: 10px 12px;
+  border: 1px solid rgb(255 249 238 / 14%);
+  background: rgb(255 249 238 / 6%);
+  color: rgb(255 249 238 / 88%);
+  transform-origin: left bottom;
+  will-change: opacity, filter, transform;
+}
+
+.chatFeedback {
+  display: grid;
+  justify-self: end;
+  gap: 6px;
+  width: 88%;
+  transform-origin: right bottom;
+  will-change: opacity, filter, transform;
+}
+
+.chatFeedback > span {
+  justify-self: end;
+  color: rgb(255 249 238 / 48%);
+  font: 400 9px/1 var(--sans);
+  letter-spacing: 0.01em;
+}
+
+.chatFeedback p {
+  padding: 11px 12px;
+  border: 1px solid rgb(207 255 61 / 38%);
+  background: var(--lime);
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.chatAgentStatus {
+  display: flex;
+  align-items: center;
+  justify-self: start;
+  gap: 7px;
+  padding: 8px 10px;
+  border: 1px solid rgb(207 255 61 / 24%);
+  background: rgb(207 255 61 / 6%);
+  color: rgb(255 249 238 / 68%);
+  font: 400 10px/1.2 var(--sans);
+  will-change: opacity, filter, transform;
+}
+
+.chatAgentActivity {
+  display: grid;
+  min-height: 68px;
+  align-items: start;
+  justify-items: start;
+}
+
+.chatAgentActivity > * {
+  grid-area: 1 / 1;
+}
+
+.chatStatusSpinner {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  border: 2px solid rgb(207 255 61 / 22%);
+  border-top-color: var(--lime);
+  border-radius: 50%;
+  transform-origin: center;
+}
+
+.chatAgentResponse {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 11px;
+  width: 100%;
+  padding: 13px;
+  border: 1px solid rgb(244 81 54 / 46%);
+  background: rgb(244 81 54 / 9%);
+  color: var(--paper);
+  transform-origin: left bottom;
+  will-change: opacity, filter, transform;
+}
+
+.chatReplyAvatar {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  background: var(--coral);
+  color: var(--paper);
+  font: 750 10px/1 var(--mono);
+}
+
+.chatAgentResponseBody {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.chatAgentResponse p {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.chatResponseTitle {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.chatResponseCopy {
+  color: rgb(255 249 238 / 64%);
+  font-weight: 400;
+}
+
+.chatApprovedStatus {
+  display: inline-flex;
+  min-width: 104px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+  gap: 7px;
+  padding: 0 12px;
+  border: 1px solid rgb(207 255 61 / 48%);
+  background: rgb(207 255 61 / 12%);
+  color: var(--lime);
+  font: 400 11px/1 var(--sans);
+  opacity: 1;
+}
+
+.chatApprovedStatus:disabled {
+  opacity: 1;
+}
+
+.promptApproveActions {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  min-width: 132px;
+  min-height: 36px;
+  overflow: visible;
+}
+
+.promptApprove {
+  min-width: 124px;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--lime);
+  background: var(--lime);
+  color: var(--ink);
+  font: 400 11px/1 var(--sans);
+  letter-spacing: -0.01em;
+  transform-origin: center;
+  will-change: opacity, filter, transform, box-shadow;
+  pointer-events: auto;
+}
+
+.promptApprove:disabled {
+  cursor: default;
+}
+
+.promptApproveReady {
+  cursor: pointer;
+  animation: approveReadyPulse 1.05s ease-in-out infinite;
+}
+
+.promptApproveReady:hover,
+.promptApproveReady:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+}
+
+.promptApproveApproved {
+  border-color: rgb(207 255 61 / 48%);
+  background: rgb(207 255 61 / 12%);
+  color: var(--lime);
+}
+
+.chatComposer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 54px;
+  align-items: center;
+  gap: 10px;
+  margin: 0 16px 16px;
+  padding: 7px 7px 7px 11px;
+  border: 1px solid rgb(255 249 238 / 16%);
+  background: rgb(10 10 9 / 36%);
+  color: rgb(255 249 238 / 34%);
+  font-size: 11px;
+  will-change: opacity, filter, transform;
+}
+
+.chatComposerCopy {
+  display: grid;
+  min-width: 0;
+}
+
+.chatComposerPlaceholder,
+.chatComposerValue {
+  grid-area: 1 / 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  will-change: opacity;
+}
+
+.chatComposerValue {
+  color: rgb(255 249 238 / 82%);
+}
+
+.chatCaret {
+  display: inline-block;
+  width: 1px;
+  height: 1em;
+  margin-left: 2px;
+  background: var(--lime);
+  vertical-align: -0.15em;
+}
+
+.chatSend {
+  display: grid;
+  width: 54px;
+  height: 30px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid transparent;
+  background: var(--coral);
+  color: var(--paper);
+  font: 400 10px/1 var(--sans);
+  letter-spacing: 0.01em;
+  transform-origin: center;
+  transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
+  will-change: transform, box-shadow;
+}
+
+.chatSend:disabled {
+  cursor: default;
+  opacity: 0.74;
+}
+
+.chatSendReady {
+  border-color: var(--lime);
+  cursor: pointer;
+  opacity: 1 !important;
+  animation: sendReadyPulse 1.05s ease-in-out infinite;
+}
+
+.chatSendReady:hover,
+.chatSendReady:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+}
+
+.chatSendSent {
+  border-color: rgb(207 255 61 / 48%);
+  background: rgb(207 255 61 / 12%);
+  color: var(--lime);
+  opacity: 1 !important;
+}
+
+.promptModalBackdrop {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  background: rgb(10 10 9 / 62%);
+  backdrop-filter: blur(3px);
+  transition: opacity 120ms linear;
+  pointer-events: none;
+}
+
+.promptModalLayer {
+  position: absolute;
+  z-index: 14;
+  top: 84px;
+  right: calc(clamp(360px, 30vw, 420px) + clamp(24px, 2.4vw, 40px) + 24px);
+  bottom: 40px;
+  left: clamp(48px, 6vw, 96px);
+  display: grid;
+  place-items: stretch;
+  pointer-events: none;
+}
+
+.promptModal {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  overflow: hidden;
+  border: 1px solid rgb(255 249 238 / 26%);
+  background: rgb(25 24 21 / 98%);
+  box-shadow:
+    8px 8px 0 rgb(0 0 0 / 38%),
+    0 28px 80px rgb(0 0 0 / 42%);
+  color: var(--paper);
+  transform-origin: center 22%;
+  will-change: opacity, filter, transform;
+}
+
+.promptModalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgb(255 249 238 / 12%);
+  background: rgb(255 249 238 / 3%);
+}
+
+.promptModalHeader > div {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+.promptModalHeader > div > div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.promptModalTitle {
+  overflow: hidden;
+  font-size: 15px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.promptModalSubtitle {
+  color: var(--paper-dim);
+  font: 400 11px/1.25 var(--sans);
+}
+
+.promptModalIcon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  place-items: center;
+  border: 1px solid rgb(95 140 255 / 52%);
+  background: rgb(95 140 255 / 12%);
+  color: #8ba9ff !important;
+  font: 720 16px/1 var(--sans) !important;
+}
+
+.promptModalState {
+  flex: none;
+  padding: 6px 8px;
+  border: 1px solid rgb(255 249 238 / 18%);
+  color: rgb(255 249 238 / 56%);
+  font: 400 9px/1 var(--sans);
+  letter-spacing: 0.01em;
+}
+
+.promptFileBar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 9px 14px;
+  border-bottom: 1px solid rgb(255 249 238 / 10%);
+  background: rgb(10 10 9 / 28%);
+  color: rgb(255 249 238 / 58%);
+  font: 400 10px/1.25 var(--sans);
+}
+
+.promptFileBar > span:last-child {
+  justify-self: end;
+}
+
+.promptScrollHint {
+  color: rgb(207 255 61 / 66%);
+  text-align: center;
+}
+
+.promptCompareViewport {
+  min-width: 0;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: var(--lime) rgb(15 14 13 / 80%);
+  scrollbar-width: thin;
+  touch-action: pan-y;
+}
+
+.promptCompareViewport::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.promptCompareViewport::-webkit-scrollbar-track {
+  background: rgb(15 14 13 / 80%);
+}
+
+.promptCompareViewport::-webkit-scrollbar-thumb {
+  border: 2px solid rgb(15 14 13 / 80%);
+  border-radius: 999px;
+  background: var(--lime);
+}
+
+.promptCompareViewport:focus-visible {
+  outline: 1px solid rgb(207 255 61 / 52%);
+  outline-offset: -1px;
+}
+
+.promptCompare {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  width: 100%;
+  min-width: 0;
+  min-height: 100%;
+  align-items: start;
+}
+
+.promptPane {
+  width: 100%;
+  min-width: 0;
+  min-height: 100%;
+  border-right: 1px solid rgb(255 249 238 / 12%);
+  background: rgb(255 249 238 / 1.5%);
+}
+
+.promptPane:last-child {
+  border-right: 0;
+  background: rgb(95 140 255 / 2%);
+}
+
+.promptPaneHeader {
+  position: sticky;
+  z-index: 3;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 58px;
+  padding: 11px 14px;
+  border-bottom: 1px solid rgb(255 249 238 / 12%);
+  background: rgb(28 27 23 / 98%);
+  box-shadow: 0 8px 18px rgb(0 0 0 / 14%);
+}
+
+.promptPaneHeader > div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.promptPaneTitle {
+  font-size: clamp(17px, 1.3vw, 22px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.promptPaneSubtitle {
+  color: var(--paper-dim);
+  font: 400 11px/1.25 var(--sans);
+}
+
+.promptPaneBadge {
+  flex: none;
+  padding: 5px 7px;
+  border: 1px solid rgb(244 81 54 / 40%);
+  color: #ff927e;
+  font: 400 9px/1 var(--sans);
+  letter-spacing: 0.01em;
+}
+
+.promptPaneBadgeAfter {
+  border-color: rgb(86 211 100 / 40%);
+  color: #8bea94;
+}
+
+.promptPaneBody {
+  display: grid;
+  align-content: start;
+}
+
+.promptLine {
+  display: grid;
+  gap: 7px;
+  min-height: 76px;
+  align-content: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgb(255 249 238 / 6%);
+  border-left: 3px solid transparent;
+  color: rgb(255 249 238 / 72%);
+  font-family: var(--sans);
+}
+
+.promptInstructionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.promptInstructionHeader > span:first-child {
+  color: rgb(255 249 238 / 48%);
+  font: 400 10px/1.15 var(--sans);
+  letter-spacing: 0.01em;
+}
+
+.promptLine p {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: inherit;
+  font: 400 clamp(12px, 0.95vw, 14px)/1.48 var(--sans);
+  transition: opacity 120ms linear;
+}
+
+.promptChangeLabel {
+  flex: none;
+  padding: 5px 7px;
+  border: 1px solid rgb(244 81 54 / 42%);
+  background: rgb(244 81 54 / 10%);
+  color: #ffad9e;
+  font: 400 8px/1 var(--sans);
+  letter-spacing: 0.01em;
+}
+
+.promptChangeLabelAdded {
+  border-color: rgb(86 211 100 / 42%);
+  background: rgb(86 211 100 / 10%);
+  color: #aaf0b0;
+}
+
+.promptLineRemoved {
+  color: inherit;
+}
+
+.promptLineAdded {
+  color: inherit;
+}
+
+.promptTextRemoved,
+.promptTextAdded {
+  padding: 1px 2px;
+  color: inherit;
+  font: inherit;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.promptTextRemoved {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.promptTextAdded {
+  text-decoration: none;
+}
+
+.promptModalFooter {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 14px;
+  border-top: 1px solid rgb(255 249 238 / 12%);
+  color: rgb(255 249 238 / 44%);
+  font: 400 11px/1.35 var(--sans);
+}
+
+.scrollTrack {
+  position: relative;
+  z-index: 1;
+  width: 1px;
+  height: 1360dvh;
+  pointer-events: none;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@keyframes sendReadyPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(207 255 61 / 0%), 0 0 10px rgb(244 81 54 / 34%);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 0 0 5px rgb(207 255 61 / 14%), 0 0 22px rgb(207 255 61 / 34%);
+    transform: scale(1.06);
+  }
+}
+
+@keyframes nodeReviewPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(0.98);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes approveReadyPulse {
+  0%,
+  100% {
+    box-shadow: 3px 3px 0 rgb(0 0 0 / 28%), 0 0 12px rgb(207 255 61 / 16%);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 3px 3px 0 rgb(0 0 0 / 28%), 0 0 24px rgb(207 255 61 / 38%);
+    transform: scale(1.04);
+  }
+}
+
+@media (max-width: 760px) {
+  .page {
+    --header-height: 64px;
+  }
+
+  .heroScene {
+    grid-template-columns: 1fr;
+    padding: 28px 24px;
+  }
+
+  .heroCopy {
+    z-index: 3;
+  }
+
+  .heroKicker {
+    white-space: normal;
+  }
+
+  .heroTitle {
+    width: min(100%, 12ch);
+    font-size: clamp(44px, 13vw, 66px);
+  }
+
+  .heroVisual {
+    position: absolute;
+    z-index: 1;
+    right: -28%;
+    bottom: 8%;
+    width: 112vw;
+    margin: 0;
+    opacity: 0.48;
+  }
+
+  .workflowScene {
+    padding-inline: 8px;
+  }
+
+  .workflowDiagram {
+    width: 100%;
+  }
+
+  .workflowNode {
+    grid-template-columns: 32px minmax(0, 1fr);
+    width: min(43vw, 176px);
+    min-height: 58px;
+    padding: 8px;
+    border-left-width: 3px;
+  }
+
+  .nodeIndex {
+    width: 24px;
+    height: 24px;
+    font-size: 8px;
+  }
+
+  .workflowNode strong {
+    font-size: 12px;
+  }
+
+  .workflowNode small {
+    font-size: 7px;
+  }
+
+  .nodeLabel {
+    font-size: 7px;
+  }
+
+  .nodeCharacter { left: 26%; }
+  .nodeShots { left: 74%; }
+
+  .outputAnchor {
+    width: clamp(82px, 13vh, 112px);
+  }
+
+  .chatPanel {
+    top: 72px;
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    width: auto;
+  }
+
+  .chatAgentResponse p {
+    font-size: 12px;
+  }
+
+  .chatResponseTitle {
+    font-size: 13px;
+  }
+
+  .promptModalLayer {
+    top: 68px;
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+  }
+
+  .promptModalHeader {
+    padding: 11px 12px;
+  }
+
+  .promptModalState {
+    display: none;
+  }
+
+  .promptFileBar {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .promptScrollHint {
+    display: none;
+  }
+
+  .promptLine {
+    min-height: 70px;
+    padding: 12px;
+  }
+
+  .promptInstructionHeader {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroCopy,
+  .heroVisual,
+  .workflowClaim,
+  .workflowContext,
+  .workflowNode,
+  .outputAnchor,
+  .outputNode,
+  .nodeScanLayer,
+  .nodeIssueBadge,
+  .chatPanel,
+  .chatQuestion,
+  .chatFeedback,
+  .chatAgentStatus,
+  .chatAgentResponse,
+  .chatApprovedStatus,
+  .promptApprove,
+  .promptModalBackdrop,
+  .promptModal,
+  .promptLine,
+  .promptChangeLabel,
+  .chatComposer {
+    filter: none !important;
+  }
+
+  .chatPanel,
+  .chatQuestion,
+  .chatFeedback,
+  .chatAgentStatus,
+  .chatAgentResponse,
+  .chatApprovedStatus,
+  .promptApprove,
+  .promptModalBackdrop,
+  .promptModal,
+  .promptLine,
+  .promptChangeLabel,
+  .chatComposer {
+    transform: none !important;
+  }
+
+  .workflowNodeReviewReady::before,
+  .chatSendReady,
+  .promptApproveReady {
+    animation: none !important;
+  }
+}

@@ -1,8 +1,48 @@
 .workflowSection {
   display: grid;
   justify-items: center;
+  gap: clamp(24px, 3vw, 40px);
   width: 100%;
   padding-inline: var(--stage-gutter);
+}
+
+.demoEvidence {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 1120px);
+  padding: clamp(22px, 3.2vw, 42px) clamp(20px, 4vw, 54px);
+  border: 1px solid rgb(255 249 238 / 12%);
+  border-left: 5px solid var(--data);
+  background:
+    linear-gradient(90deg, rgb(255 79 163 / 8%), transparent 32%),
+    rgb(22 22 19 / 54%);
+  box-shadow: 9px 9px 0 rgb(40 100 255 / 24%);
+}
+
+.demoEvidence::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(255 249 238 / 3%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 249 238 / 3%) 1px, transparent 1px);
+  background-size: 38px 38px;
+  content: "";
+  pointer-events: none;
+}
+
+.demoEvidence p {
+  margin: 0;
+  color: var(--paper-dim);
+  font-size: clamp(1rem, 1.48vw, 1.28rem);
+  letter-spacing: -0.012em;
+  line-height: 1.62;
+  text-wrap: pretty;
+}
+
+.demoEvidence strong {
+  color: var(--paper);
+  font-weight: 760;
 }
 
 .demoMount {
@@ -35,7 +75,7 @@
   --workflow-gray: #d9d5cd;
 
   display: grid;
-  grid-template-rows: 104px minmax(0, 1fr);
+  grid-template-rows: 78px minmax(0, 1fr);
   gap: 18px;
   width: 1920px;
   height: 1080px;
@@ -51,74 +91,60 @@
 }
 
 .demoTopbar {
-  display: grid;
-  grid-template-columns: minmax(420px, 1fr) 600px auto;
+  display: flex;
   align-items: center;
-  gap: 24px;
   min-width: 0;
-  padding: 12px 16px 12px 20px;
-  border: 2px solid var(--outline);
-  border-radius: 2px;
-  background: #f4f0e9;
-  color: var(--outline);
-  box-shadow: 6px 6px 0 var(--workflow-blue);
+  padding: 0 4px;
+  color: var(--paper);
 }
 
 .demoHeading {
   display: flex;
   align-items: center;
-  gap: 14px;
   min-width: 0;
-}
-
-.demoHeadingSignal {
-  width: 10px;
-  height: 54px;
-  flex: none;
-  background: var(--coral);
-  box-shadow: 3px 3px 0 var(--outline);
 }
 
 .demoHeading h2 {
   margin: 0;
   overflow: hidden;
-  font-size: 32px;
-  font-weight: 850;
+  font-size: 56px;
+  font-weight: 780;
   letter-spacing: -0.035em;
   line-height: 1;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.demoHeading p {
-  margin: 7px 0 0;
-  color: #6c665c;
-  font-family: var(--mono);
-  font-size: 16px;
-  font-weight: 650;
-  letter-spacing: 0.025em;
-}
-
 .versionSelector {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  gap: 0;
+  min-width: 0;
+  overflow: hidden;
+  border: 2px solid var(--outline);
+  border-radius: 1px;
+  background: #ded8ce;
 }
 
 .versionSelector button {
   display: grid;
   align-content: center;
   gap: 5px;
-  min-height: 62px;
-  padding: 8px 14px;
-  border: 2px solid var(--outline);
-  border-radius: 1px;
-  background: var(--paper-warm);
+  min-height: 58px;
+  padding: 7px 14px;
+  border: 0;
+  border-right: 1px solid rgb(22 22 19 / 34%);
+  border-radius: 0;
+  background: transparent;
   color: var(--outline);
   font: inherit;
   text-align: left;
   cursor: pointer;
-  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.versionSelector button:last-child {
+  border-right: 0;
 }
 
 .versionSelector button:not(:disabled):hover,
@@ -149,9 +175,9 @@
 
 .versionSelector .versionButtonActive {
   background: #ff4fa3;
-  box-shadow: 4px 4px 0 var(--outline);
+  box-shadow: inset 0 -5px 0 var(--outline);
   opacity: 1;
-  transform: translate(-2px, -2px);
+  transform: none;
 }
 
 .versionSelector button.versionButtonActive:disabled {
@@ -249,55 +275,86 @@
 
 .workflowCanvas {
   display: grid;
-  grid-template-rows: 62px minmax(0, 1fr);
+  grid-template-rows: 88px minmax(0, 1fr);
   background: #f4f0e9;
   box-shadow: 7px 7px 0 #ff4fa3;
 }
 
 .workflowCanvasHeader {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: 248px minmax(470px, 1fr) auto;
   align-items: center;
-  gap: 18px;
-  padding: 9px 16px;
+  gap: 14px;
+  padding: 8px 13px;
   border-bottom: 2px solid var(--outline);
   background: var(--paper-warm);
 }
 
-.workflowCanvasHeader > div {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
+.workflowCanvasIdentity {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
 }
 
-.workflowCanvasHeader span,
-.workflowCanvasHeader p {
+.workflowCanvasIdentity > span,
+.workflowCanvasIdentity p,
+.workflowCanvasState {
   font-family: var(--mono);
-  font-size: 13px;
   font-weight: 620;
   letter-spacing: 0.025em;
 }
 
-.workflowCanvasHeader > div > span {
+.workflowCanvasIdentity > span {
   color: #6c665c;
+  font-size: 10px;
+  text-transform: uppercase;
 }
 
-.workflowCanvasHeader strong {
+.workflowCanvasIdentity strong {
+  overflow: hidden;
   font-size: 18px;
   font-weight: 850;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.workflowCanvasHeader p {
+.workflowCanvasIdentity p {
+  overflow: hidden;
   margin: 0;
   color: #6c665c;
-  text-align: center;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workflowCanvasTools {
+  display: grid;
+  justify-items: end;
+  gap: 6px;
+  min-width: 0;
 }
 
 .workflowCanvasState {
-  padding: 6px 9px;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 4px 7px;
   border: 1px solid var(--outline);
   background: #f4f0e9;
+  font-size: 9px;
   font-variant-numeric: tabular-nums;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workflowCanvasTools .demoActions {
+  gap: 7px;
+}
+
+.workflowCanvasTools .demoActions button {
+  min-height: 34px;
+  padding-inline: 11px;
+  font-size: 12px;
 }
 
 .workflowGraphViewport {

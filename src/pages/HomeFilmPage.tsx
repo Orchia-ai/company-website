@@ -60,7 +60,7 @@ export default function HomeFilmPage() {
 
       <div className={styles.page}>
         <div className={styles.intro}>
-          <StudioSiteHeader />
+          <StudioSiteHeader sticky />
 
           <section className={styles.hero} aria-labelledby="home-hero-title">
             <div className={styles.heroCopy}>

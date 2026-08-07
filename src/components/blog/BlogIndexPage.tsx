@@ -1,25 +1,16 @@
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 // The shared site stylesheet used to arrive via App.tsx; routes are now
 // code-split, so each page that needs it declares the dependency itself.
 import '../../App.css'
-import Header from '../Header'
 import Footer from '../Footer'
 import OrchiaBackground from '../OrchiaBackground'
 import { getAllPosts } from '../../content/loadPosts'
+import StudioSiteHeader from '../../pages/StudioSiteHeader'
 
 export default function BlogIndexPage() {
-  const [scrolled, setScrolled] = useState(false)
   const posts = getAllPosts()
   const total = String(posts.length).padStart(2, '0')
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   return (
     <>
@@ -28,8 +19,8 @@ export default function BlogIndexPage() {
         <meta name="description" content="Case studies and field notes from Orchia Studio." />
       </Helmet>
       <OrchiaBackground />
-      <Header scrolled={scrolled} />
-      <div className="site-shell site-enter site-visible" style={{ position: 'relative', zIndex: 1 }}>
+      <StudioSiteHeader sticky />
+      <div className="site-shell shared-header-shell site-enter site-visible" style={{ position: 'relative', zIndex: 1 }}>
         <main>
           <section className="section-block blog-index-section">
             <div className="section-heading">

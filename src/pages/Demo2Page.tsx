@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async'
 
 import IntegratedDemoFilm from '../features/demo2/IntegratedDemoFilm'
 import styles from './demo2-page.module.css'
+import StudioSiteHeader from './StudioSiteHeader'
 
 const STAGE_WIDTH = 1920
 const STAGE_HEIGHT = 1080
@@ -47,16 +48,7 @@ export default function Demo2Page() {
       </Helmet>
 
       <div className={styles.page}>
-        <header className={styles.pageHeader}>
-          <a href="/" aria-label="Back to Orchia home">
-            <strong>Orchia</strong>
-            <span>Studio</span>
-          </a>
-          <div>
-            <span className={styles.liveDot} />
-            Demo 2 · Integrated prototype
-          </div>
-        </header>
+        <StudioSiteHeader sticky />
 
         <main className={styles.stageFrame}>
           <div className={styles.stageMount} ref={mountRef}>

@@ -210,6 +210,12 @@ body:has(.splash) {
   padding: 130px 32px 100px;
 }
 
+/* Side pages reserve the shared homepage header in normal flow, so they only
+   need the remaining breathing room that used to sit below the floating pill. */
+.site-shell.shared-header-shell {
+  padding-top: 58px;
+}
+
 .site-enter {
   opacity: 0;
   transform: translateY(10px);
@@ -2846,6 +2852,10 @@ body:has(.splash) {
   .site-shell {
     padding: 80px 16px 96px;
     max-width: 100%;
+  }
+
+  .site-shell.shared-header-shell {
+    padding-top: 16px;
   }
 
   /* ── Header ── */

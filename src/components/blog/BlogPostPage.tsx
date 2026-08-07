@@ -9,24 +9,16 @@ import 'highlight.js/styles/github.css'
 // The shared site stylesheet used to arrive via App.tsx; routes are now
 // code-split, so each page that needs it declares the dependency itself.
 import '../../App.css'
-import Header from '../Header'
 import Footer from '../Footer'
 import OrchiaBackground from '../OrchiaBackground'
 import { getPostBySlug } from '../../content/loadPosts'
+import StudioSiteHeader from '../../pages/StudioSiteHeader'
 
 export default function BlogPostPage() {
   const { slug = '' } = useParams()
   const navigate = useNavigate()
   const post = getPostBySlug(slug)
-  const [scrolled, setScrolled] = useState(false)
   const [embedUrl, setEmbedUrl] = useState<string | null>(null)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -109,8 +101,8 @@ export default function BlogPostPage() {
         {ogImage && <meta name="twitter:image:alt" content={post ? post.title : ''} />}
       </Helmet>
       <OrchiaBackground />
-      <Header scrolled={scrolled} />
-      <div className="site-shell site-enter site-visible" style={{ position: 'relative', zIndex: 1 }}>
+      <StudioSiteHeader sticky />
+      <div className="site-shell shared-header-shell site-enter site-visible" style={{ position: 'relative', zIndex: 1 }}>
         <main>
           <article className="blog-post">
             {post ? (
@@ -197,11 +189,8 @@ export default function BlogPostPage() {
 
 function ShareRow({ title }: { title: string }) {
   const [copied, setCopied] = useState(false)
-  const [nativeSupported, setNativeSupported] = useState(false)
-
-  useEffect(() => {
-    setNativeSupported(typeof navigator !== 'undefined' && typeof navigator.share === 'function')
-  }, [])
+  const nativeSupported =
+    typeof navigator !== 'undefined' && typeof navigator.share === 'function'
 
   const url = typeof window !== 'undefined' ? window.location.href : ''
   const enc = encodeURIComponent
@@ -219,7 +208,7 @@ function ShareRow({ title }: { title: string }) {
       input.value = url
       document.body.appendChild(input)
       input.select()
-      try { document.execCommand('copy'); setCopied(true); setTimeout(() => setCopied(false), 1800) } catch {}
+      try { document.execCommand('copy'); setCopied(true); setTimeout(() => setCopied(false), 1800) } catch { /* Copy is unavailable. */ }
       document.body.removeChild(input)
     }
   }

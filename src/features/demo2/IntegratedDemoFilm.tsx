@@ -118,19 +118,141 @@ function versionForBeat(beat: DemoBeat) {
   return ['evolve', 'run_v2', 'play_v2'].includes(beat.id) ? 2 : 1
 }
 
+function WorkflowVersionCard({
+  version,
+  beat,
+  progress,
+  inactive = false,
+}: {
+  version: 1 | 2
+  beat: DemoBeat
+  progress: number
+  inactive?: boolean
+}) {
+  const running = version === 2 && beat.id === 'run_v2'
+  const playing = version === 2 && beat.id === 'play_v2'
+  const runIndex = running
+    ? Math.min(WORKFLOW_NODES.length - 1, Math.floor(progress * WORKFLOW_NODES.length))
+    : -1
+  const activeNode = version === 2 && beat.id === 'evolve'
+    ? 'character'
+    : playing
+      ? 'output'
+      : running
+        ? WORKFLOW_NODES[runIndex]?.id
+        : null
+  const media = VERSION_MEDIA[version]
+
+  return (
+    <article
+      className={`${styles.workflowVersionCard} ${inactive ? styles.workflowVersionCardPrevious : styles.workflowVersionCardCurrent} ${playing ? styles.workflowVersionCardPlaying : ''}`}
+      aria-label={`Workflow version ${version}, ${inactive ? 'previous and inactive' : 'current and active'}`}
+    >
+      <header className={styles.workflowVersionHeader}>
+        <div>
+          <span>v{version}</span>
+          <div>
+            <strong>{inactive ? 'Previous workflow' : 'Current workflow'}</strong>
+            <small>{inactive ? 'History retained' : 'Working version'}</small>
+          </div>
+        </div>
+        <b>{inactive ? 'Inactive' : 'Active'}</b>
+      </header>
+
+      <div className={`${styles.workflowVersionFlow} ${playing ? styles.workflowVersionFlowPlaying : ''}`}>
+        {WORKFLOW_NODES.map((node, index) => {
+          const missing = version === 1 && node.id === 'character'
+          const active = activeNode === node.id
+          const complete = !missing && (inactive || playing || (running && index < runIndex))
+          const entering = version === 2 && node.id === 'character' && beat.id === 'evolve'
+          const output = node.id === 'output'
+          const Icon = node.Icon
+          const state = missing
+            ? 'Not in v1'
+            : active
+              ? node.id === 'character'
+                ? 'Adding step…'
+                : playing
+                  ? 'Playing result'
+                  : 'Working…'
+              : complete
+                ? 'Complete'
+                : 'Waiting'
+
+          return (
+            <div className={styles.workflowVersionStep} key={`${version}-${node.id}`}>
+              <div
+                className={`${styles.workflowVersionNode} ${active ? styles.workflowVersionNodeActive : ''} ${complete ? styles.workflowVersionNodeDone : ''} ${entering ? styles.workflowVersionNodeEntering : ''} ${missing ? styles.workflowVersionNodeMissing : ''} ${output ? styles.workflowVersionNodeOutput : ''} ${playing && output ? styles.workflowVersionNodeOutputPlaying : ''}`}
+              >
+                <div className={styles.workflowVersionNodeIcon}>
+                  <Icon size={19} strokeWidth={1.9} />
+                </div>
+                <div className={styles.workflowVersionNodeCopy}>
+                  <span>{missing ? 'Difference' : node.kind}</span>
+                  <strong>{node.label}</strong>
+                </div>
+                <div className={styles.workflowVersionNodeState}>
+                  <small>{state}</small>
+                  {complete ? <Check size={14} /> : null}
+                </div>
+
+                {output ? (
+                  playing ? (
+                    <div className={styles.workflowVersionOutputVideo}>
+                      <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="auto"
+                        poster={media.poster}
+                        src={media.src}
+                        aria-label={`${media.label} generated output video`}
+                      />
+                      <span><i /> Playing {media.label}</span>
+                    </div>
+                  ) : version === 1 ? (
+                    <div className={styles.workflowVersionOutputThumb}>
+                      <img src={media.poster} alt="" />
+                      <span><Play size={12} fill="currentColor" /></span>
+                    </div>
+                  ) : (
+                    <div className={`${styles.workflowVersionOutputPending} ${running ? styles.workflowVersionOutputGenerating : ''}`}>
+                      <i />
+                      <span>{running ? 'Generating' : 'Waiting'}</span>
+                    </div>
+                  )
+                ) : null}
+              </div>
+
+              {index < WORKFLOW_NODES.length - 1 ? (
+                <span
+                  className={`${styles.workflowVersionEdge} ${complete && !missing ? styles.workflowVersionEdgeDone : ''} ${running && runIndex === index + 1 ? styles.workflowVersionEdgeRunning : ''} ${missing || (version === 1 && WORKFLOW_NODES[index + 1].id === 'character') ? styles.workflowVersionEdgeMuted : ''}`}
+                  aria-hidden="true"
+                >
+                  <i />
+                </span>
+              ) : null}
+            </div>
+          )
+        })}
+      </div>
+    </article>
+  )
+}
+
 function WorkflowScene({ beat, progress }: { beat: DemoBeat; progress: number }) {
   const version = versionForBeat(beat)
-  const showCharacter = ['evolve', 'run_v2', 'play_v2'].includes(beat.id)
-  const visibleNodes = WORKFLOW_NODES.filter((node) => node.id !== 'character' || showCharacter)
-  const positions = showCharacter ? POSITIONS_V2 : POSITIONS_V1
-  const running = beat.id === 'run_v1' || beat.id === 'run_v2'
+  const comparisonMode = ['evolve', 'run_v2', 'play_v2'].includes(beat.id)
+  const visibleNodes = WORKFLOW_NODES.filter((node) => node.id !== 'character')
+  const positions = POSITIONS_V1
+  const running = beat.id === 'run_v1'
   const runIndex = running
     ? Math.min(visibleNodes.length - 1, Math.floor(progress * visibleNodes.length))
     : -1
-  const activeNode = beat.id === 'evolve' ? 'character' : running ? visibleNodes[runIndex]?.id : null
-  const videoVersion = beat.id === 'play_v2' ? 2 : 1
-  const playerOpen = beat.id === 'play_v1' || beat.id === 'play_v2'
-  const media = VERSION_MEDIA[videoVersion]
+  const activeNode = running ? visibleNodes[runIndex]?.id : null
+  const playerOpen = beat.id === 'play_v1'
+  const media = VERSION_MEDIA[1]
   const feedbackDraft = beat.id === 'human_feedback'
     ? FEEDBACK.slice(0, Math.floor(clamp01((progress - 0.08) / 0.64) * FEEDBACK.length))
     : ''
@@ -150,8 +272,8 @@ function WorkflowScene({ beat, progress }: { beat: DemoBeat; progress: number })
             : 'The project is moving through the workflow.'
 
   return (
-    <section className={styles.scene} key={beat.id}>
-      <div className={styles.sceneCopy}>
+    <section className={styles.scene}>
+      <div className={styles.sceneCopy} key={beat.id}>
         <span>{beat.eyebrow}</span>
         <h1>{beat.headline}</h1>
         <p>{beat.detail}</p>
@@ -162,60 +284,75 @@ function WorkflowScene({ beat, progress }: { beat: DemoBeat; progress: number })
           <div>
             <span className={styles.statusDot} />
             <strong>Short drama production</strong>
-            <small>End-to-end workflow</small>
+            <small>{comparisonMode ? 'Connected version history' : 'End-to-end workflow'}</small>
           </div>
-          <div className={styles.versionChip} key={version}>v{version}</div>
+          <div className={styles.versionChip} key={comparisonMode ? 'compare' : version}>
+            {comparisonMode ? 'v1 → v2' : `v${version}`}
+          </div>
         </header>
 
-        <div className={`${styles.workflowGrid} ${playerOpen ? styles.workflowGridDimmed : ''}`}>
-          {visibleNodes.slice(0, -1).map((node, index) => {
-            const next = visibleNodes[index + 1]
-            const left = positions[node.id] + 178
-            const width = Math.max(20, positions[next.id] - left)
-            return (
-              <span
-                className={`${styles.workflowEdge} ${running && runIndex === index + 1 ? styles.workflowEdgeRunning : ''} ${running && runIndex > index + 1 ? styles.workflowEdgeDone : ''}`}
-                key={`${node.id}-${next.id}`}
-                style={{ '--edge-left': `${left}px`, '--edge-width': `${width}px` } as CSSProperties}
-              />
-            )
-          })}
+        {comparisonMode ? (
+          <div className={styles.workflowComparison}>
+            <WorkflowVersionCard version={1} beat={beat} progress={progress} inactive />
 
-          {visibleNodes.map((node, index) => {
-            const active = activeNode === node.id
-            const done = running && index < runIndex
-            const entering = node.id === 'character' && beat.id === 'evolve'
-            const output = node.id === 'output'
-            const Icon = node.Icon
-            return (
-              <article
-                className={`${styles.workflowNode} ${active ? styles.workflowNodeActive : ''} ${done ? styles.workflowNodeDone : ''} ${entering ? styles.workflowNodeEntering : ''} ${output ? styles.outputNode : ''}`}
-                key={node.id}
-                style={{ '--node-left': `${positions[node.id]}px` } as CSSProperties}
-              >
-                {output ? (
-                  <div className={styles.outputPoster}>
-                    <img src={media.poster} alt="" />
-                    <span><Play size={15} fill="currentColor" /></span>
-                    <small>{running && runIndex < visibleNodes.length - 1 ? 'Waiting' : media.label}</small>
-                    <strong>{running && runIndex < visibleNodes.length - 1 ? 'Generating…' : 'Ready to play'}</strong>
-                  </div>
-                ) : (
-                  <>
-                    <div className={styles.nodeIcon}><Icon size={23} strokeWidth={1.8} /></div>
-                    <span className={styles.nodeKind}>{node.kind}</span>
-                    <strong>{node.label}</strong>
-                    <small>{active ? node.id === 'character' ? 'Adding step…' : 'Working…' : done ? 'Complete' : 'Standing by'}</small>
-                    {done ? <Check className={styles.nodeCheck} size={16} /> : null}
-                  </>
-                )}
-              </article>
-            )
-          })}
-        </div>
+            <div className={`${styles.workflowVersionConnector} ${beat.id === 'run_v2' ? styles.workflowVersionConnectorRunning : ''}`}>
+              <span>Human feedback</span>
+              <i><b /></i>
+              <strong>Iterate</strong>
+            </div>
+
+            <WorkflowVersionCard version={2} beat={beat} progress={progress} />
+          </div>
+        ) : (
+          <div className={`${styles.workflowGrid} ${playerOpen ? styles.workflowGridDimmed : ''}`}>
+            {visibleNodes.slice(0, -1).map((node, index) => {
+              const next = visibleNodes[index + 1]
+              const left = positions[node.id] + 178
+              const width = Math.max(20, positions[next.id] - left)
+              return (
+                <span
+                  className={`${styles.workflowEdge} ${running && runIndex === index + 1 ? styles.workflowEdgeRunning : ''} ${running && runIndex > index + 1 ? styles.workflowEdgeDone : ''}`}
+                  key={`${node.id}-${next.id}`}
+                  style={{ '--edge-left': `${left}px`, '--edge-width': `${width}px` } as CSSProperties}
+                />
+              )
+            })}
+
+            {visibleNodes.map((node, index) => {
+              const active = activeNode === node.id
+              const done = running && index < runIndex
+              const output = node.id === 'output'
+              const Icon = node.Icon
+              return (
+                <article
+                  className={`${styles.workflowNode} ${active ? styles.workflowNodeActive : ''} ${done ? styles.workflowNodeDone : ''} ${output ? styles.outputNode : ''}`}
+                  key={node.id}
+                  style={{ '--node-left': `${positions[node.id]}px` } as CSSProperties}
+                >
+                  {output ? (
+                    <div className={styles.outputPoster}>
+                      <img src={media.poster} alt="" />
+                      <span><Play size={15} fill="currentColor" /></span>
+                      <small>{running && runIndex < visibleNodes.length - 1 ? 'Waiting' : media.label}</small>
+                      <strong>{running && runIndex < visibleNodes.length - 1 ? 'Generating…' : 'Ready to play'}</strong>
+                    </div>
+                  ) : (
+                    <>
+                      <div className={styles.nodeIcon}><Icon size={23} strokeWidth={1.8} /></div>
+                      <span className={styles.nodeKind}>{node.kind}</span>
+                      <strong>{node.label}</strong>
+                      <small>{active ? 'Working…' : done ? 'Complete' : 'Standing by'}</small>
+                      {done ? <Check className={styles.nodeCheck} size={16} /> : null}
+                    </>
+                  )}
+                </article>
+              )
+            })}
+          </div>
+        )}
 
         {playerOpen ? (
-          <div className={styles.videoPlayer} key={`player-${videoVersion}`}>
+          <div className={styles.videoPlayer} key="player-1">
             <div className={styles.videoBackdrop} style={{ backgroundImage: `url(${media.poster})` }} />
             <video
               autoPlay
@@ -255,8 +392,12 @@ function WorkflowScene({ beat, progress }: { beat: DemoBeat; progress: number })
               <span>{agentCopy}</span>
             </div>
           ) : null}
-          {beat.id === 'run_v1' ? (
-            <div className={styles.runStatus}><i /><span>Generating Version 1…</span><b>{Math.round(progress * 100)}%</b></div>
+          {beat.id === 'run_v1' || beat.id === 'run_v2' ? (
+            <div className={styles.runStatus}>
+              <i />
+              <span>Generating Version {beat.id === 'run_v2' ? '2' : '1'}…</span>
+              <b>{Math.round(progress * 100)}%</b>
+            </div>
           ) : null}
         </div>
 

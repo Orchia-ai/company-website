@@ -1,0 +1,461 @@
+.scroller {
+  --social-card-width: clamp(190px, 15.3vw, 238px);
+
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  isolation: isolate;
+}
+
+.scroller::before,
+.scroller::after {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  bottom: 48px;
+  width: clamp(18px, 3vw, 44px);
+  content: "";
+  pointer-events: none;
+}
+
+.scroller::before {
+  left: 0;
+  background: linear-gradient(90deg, #1d1b16, transparent);
+}
+
+.scroller::after {
+  right: 0;
+  background: linear-gradient(270deg, #1d1b16, transparent);
+}
+
+.viewport {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: grab;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.viewportDragging {
+  cursor: grabbing;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  min-height: calc((var(--social-card-width) * 16 / 9) + 46px);
+  align-items: flex-start;
+  gap: 18px;
+  padding: 24px 42px 22px;
+}
+
+.videoCard {
+  position: relative;
+  width: var(--social-card-width);
+  aspect-ratio: 9 / 16;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border: 2px solid rgb(255 249 238 / 88%);
+  border-radius: clamp(18px, 1.8vw, 25px);
+  background: #0c0c0b;
+  box-shadow: 7px 7px 0 #ff4fa3;
+  color: #fff;
+  contain: paint;
+}
+
+.videoCard:nth-child(3n + 2) {
+  margin-top: 28px;
+  box-shadow: 7px 7px 0 #cfff3d;
+}
+
+.videoCard:nth-child(3n + 3) {
+  margin-top: 11px;
+  box-shadow: 7px 7px 0 #f45136;
+}
+
+.video,
+.videoShade,
+.socialUi {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video {
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.videoShade {
+  background:
+    linear-gradient(180deg, rgb(0 0 0 / 42%) 0, transparent 22%),
+    linear-gradient(0deg, rgb(0 0 0 / 78%) 0, transparent 39%);
+  pointer-events: none;
+}
+
+.socialUi {
+  z-index: 2;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  pointer-events: none;
+}
+
+.avatar {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1.5px solid rgb(255 255 255 / 92%);
+  border-radius: 50%;
+  background: #cfff3d;
+  color: #171714;
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
+.action {
+  display: grid;
+  place-items: center;
+  color: #fff;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 72%));
+}
+
+.action i {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  animation: reactionPop 4.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  animation-delay: var(--reaction-delay);
+  font-style: normal;
+  transform-origin: 50% 65%;
+}
+
+.action svg {
+  width: 22px;
+  height: 22px;
+  fill: rgb(20 20 18 / 28%);
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.actionAccent i {
+  color: #ff4f78;
+}
+
+.actionAccent svg {
+  fill: currentColor;
+}
+
+.action small {
+  margin-top: 1px;
+  color: #fff;
+  font-size: 0.44rem;
+  font-weight: 720;
+  line-height: 1;
+}
+
+.sideActions {
+  position: absolute;
+  right: 9px;
+  bottom: 51px;
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+}
+
+.videoCaption {
+  position: absolute;
+  right: 46px;
+  bottom: 18px;
+  left: 11px;
+  display: grid;
+  gap: 3px;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 75%);
+}
+
+.videoCaption strong {
+  font-size: 0.61rem;
+  font-weight: 760;
+}
+
+.videoCaption span,
+.videoCaption small {
+  font-size: 0.49rem;
+  line-height: 1.25;
+}
+
+.videoCaption small {
+  margin-top: 3px;
+  opacity: 0.9;
+}
+
+.tiktokTabs {
+  position: absolute;
+  top: 13px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 0.53rem;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.tiktokTabs span {
+  opacity: 0.74;
+}
+
+.tiktokTabs strong {
+  position: relative;
+}
+
+.tiktokTabs strong::after {
+  position: absolute;
+  right: 8px;
+  bottom: -5px;
+  left: 8px;
+  height: 2px;
+  background: #fff;
+  content: "";
+}
+
+.videoProgress {
+  position: absolute;
+  right: 0;
+  bottom: 3px;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #fff 0 38%, rgb(255 255 255 / 30%) 38%);
+}
+
+.instagramTop,
+.xPostHeader {
+  position: absolute;
+  top: 11px;
+  right: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 70%);
+}
+
+.instagramTop > div,
+.xPostHeader > div {
+  display: grid;
+  min-width: 0;
+  flex: 1;
+  gap: 1px;
+}
+
+.instagramTop strong,
+.xPostHeader strong {
+  overflow: hidden;
+  font-size: 0.55rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.instagramTop small,
+.xPostHeader small {
+  font-size: 0.43rem;
+  opacity: 0.85;
+}
+
+.instagramTop > i,
+.xPostHeader > i {
+  font-size: 0.58rem;
+  font-style: normal;
+}
+
+.instagramNav {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  height: 24px;
+  align-items: center;
+  justify-content: space-around;
+  border-top: 1px solid rgb(255 255 255 / 32%);
+  background: rgb(0 0 0 / 38%);
+  font-size: 0.72rem;
+  backdrop-filter: blur(5px);
+}
+
+.instagramUi .sideActions {
+  bottom: 56px;
+}
+
+.instagramUi .videoCaption {
+  bottom: 34px;
+}
+
+.xUi {
+  background: linear-gradient(180deg, rgb(0 0 0 / 36%), transparent 24%, transparent 72%, rgb(0 0 0 / 68%));
+}
+
+.xPostHeader {
+  top: 12px;
+}
+
+.xPostHeader .avatar {
+  background: #ff4fa3;
+  color: #fff;
+}
+
+.xPostCopy {
+  position: absolute;
+  top: 53px;
+  right: 14px;
+  left: 14px;
+  font-size: 0.53rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 75%);
+}
+
+.xActions {
+  position: absolute;
+  right: 9px;
+  bottom: 11px;
+  left: 9px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  padding: 7px 8px;
+  border: 1px solid rgb(255 255 255 / 24%);
+  border-radius: 999px;
+  background: rgb(9 13 17 / 62%);
+  backdrop-filter: blur(7px);
+}
+
+.xActions .action {
+  display: flex;
+  gap: 2px;
+}
+
+.xActions .action i {
+  width: 17px;
+  height: 17px;
+}
+
+.xActions .action svg {
+  width: 15px;
+  height: 15px;
+}
+
+.xActions .action small {
+  font-size: 0.38rem;
+}
+
+.scrollerControls {
+  position: relative;
+  z-index: 8;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 0 18px 0 0;
+}
+
+.scrollerControls button {
+  display: grid;
+  width: 37px;
+  height: 37px;
+  place-items: center;
+  border: 1.5px solid rgb(255 249 238 / 48%);
+  border-radius: 50%;
+  background: rgb(255 249 238 / 8%);
+  color: #fff9ee;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1rem;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.scrollerControls button:hover,
+.scrollerControls button:focus-visible {
+  border-color: #cfff3d;
+  outline: none;
+  background: #cfff3d;
+  color: #161613;
+  transform: translateY(-2px);
+}
+
+@keyframes reactionPop {
+  0%,
+  13%,
+  100% {
+    filter: none;
+    transform: scale(1) rotate(0);
+  }
+
+  4% {
+    filter: drop-shadow(0 0 7px currentColor);
+    transform: scale(1.48) rotate(-8deg);
+  }
+
+  8% {
+    transform: scale(0.88) rotate(3deg);
+  }
+}
+
+@media (max-width: 1040px) {
+  .scroller {
+    --social-card-width: clamp(176px, 18vw, 206px);
+  }
+
+  .track {
+    padding-inline: 28px;
+  }
+}
+
+@media (max-width: 820px) {
+  .scroller {
+    --social-card-width: clamp(176px, 38vw, 220px);
+  }
+
+  .track {
+    padding-inline: 22px;
+  }
+}
+
+@media (max-width: 520px) {
+  .scroller {
+    --social-card-width: min(62vw, 214px);
+  }
+
+  .track {
+    gap: 14px;
+    padding: 18px 18px 20px;
+  }
+
+  .videoCard:nth-child(3n + 2) {
+    margin-top: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .action i {
+    animation: none;
+  }
+
+  .scrollerControls button {
+    transition: none;
+  }
+}

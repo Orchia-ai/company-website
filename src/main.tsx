@@ -16,6 +16,7 @@ const DocsIndexPage = lazy(() => import('./pages/DocsIndexPage.tsx'))
 const DiscordVideoWorkflowPage = lazy(() => import('./pages/DiscordVideoWorkflowPage.tsx'))
 const Demo2Page = lazy(() => import('./pages/Demo2Page.tsx'))
 const Demo3Page = lazy(() => import('./pages/Demo3Page.tsx'))
+const HomeV2Page = lazy(() => import('./pages/HomeV2Page.tsx'))
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -24,6 +25,7 @@ createRoot(document.getElementById('root')!).render(
         <Suspense fallback={null}>
           <Routes>
             <Route path="/" element={<HomeFilmPage />} />
+            <Route path="/v2" element={<HomeV2Page />} />
             {/* The previous marketing site stays reachable for internal use;
                 it is no longer linked from anywhere. */}
             <Route path="/studio" element={<App />} />

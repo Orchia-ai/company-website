@@ -1701,6 +1701,380 @@
   border: 0;
 }
 
+/* ── Beta video pricing ───────────────────────────────── */
+
+.pricingSection {
+  width: 100%;
+  padding-inline: max(var(--stage-gutter), 10px);
+  scroll-margin-top: 92px;
+}
+
+.pricingFrame {
+  position: relative;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: clamp(26px, 4vw, 58px);
+  border: 3px solid var(--outline);
+  border-radius: 2px;
+  background-color: var(--slide-surface);
+  background-image:
+    linear-gradient(rgb(22 22 19 / 3.8%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(22 22 19 / 3.8%) 1px, transparent 1px);
+  background-size: 48px 48px;
+  box-shadow: min(14px, 1.5vw) min(14px, 1.5vw) 0 var(--data);
+  color: var(--outline);
+}
+
+.pricingFrame::before,
+.pricingFrame::after {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: var(--outline);
+  border-style: solid;
+  content: "";
+  pointer-events: none;
+}
+
+.pricingFrame::before {
+  top: 15px;
+  left: 15px;
+  border-width: 2px 0 0 2px;
+}
+
+.pricingFrame::after {
+  right: 15px;
+  bottom: 15px;
+  border-width: 0 2px 2px 0;
+}
+
+.pricingHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.72fr);
+  gap: clamp(28px, 5vw, 84px);
+  align-items: end;
+  margin-bottom: clamp(28px, 4vw, 48px);
+  padding-bottom: clamp(24px, 3vw, 38px);
+  border-bottom: 3px solid var(--outline);
+}
+
+.pricingEyebrow {
+  margin: 0 0 12px;
+  color: #6c665c;
+  font-family: var(--mono);
+  font-size: clamp(0.68rem, 0.9vw, 0.8rem);
+  font-weight: 750;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.pricingEyebrow::before {
+  margin-right: 9px;
+  color: var(--data);
+  content: "●";
+}
+
+.pricingHeading {
+  max-width: 11ch;
+  margin: 0;
+  color: var(--outline);
+  font-size: clamp(2.45rem, 5vw, 5.7rem);
+  font-weight: 850;
+  letter-spacing: -0.062em;
+  line-height: 0.88;
+}
+
+.pricingHeading span {
+  display: block;
+  margin-top: 0.13em;
+  color: #8a4b3e;
+}
+
+.pricingIntro {
+  max-width: 39ch;
+  margin: 0;
+  color: #5d574e;
+  font-size: clamp(0.95rem, 1.35vw, 1.16rem);
+  font-weight: 620;
+  line-height: 1.55;
+}
+
+.pricingGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 2.6vw, 36px);
+}
+
+.pricingCard {
+  position: relative;
+  display: flex;
+  min-height: 570px;
+  flex-direction: column;
+  padding: clamp(24px, 3vw, 40px);
+  border: 3px solid var(--outline);
+  border-radius: 2px;
+  background: var(--paper-warm);
+  box-shadow: 8px 8px 0 var(--coral);
+}
+
+.pricingCardFeatured {
+  background: var(--outline);
+  box-shadow: 8px 8px 0 var(--lime);
+  color: var(--paper);
+}
+
+.pricingCardMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 30px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--outline);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.pricingCardFeatured .pricingCardMeta {
+  border-color: rgb(255 249 238 / 32%);
+}
+
+.pricingCardMeta strong {
+  padding: 5px 8px;
+  border: 2px solid var(--outline);
+  background: var(--data);
+  color: var(--outline);
+  font-size: 0.61rem;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.pricingCardFeatured .pricingCardMeta strong {
+  background: var(--lime);
+}
+
+.pricingDuration {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.pricingDuration > span {
+  color: inherit;
+  font-size: clamp(4.7rem, 9vw, 9rem);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.09em;
+  line-height: 0.72;
+}
+
+.pricingDuration small {
+  padding-bottom: 2px;
+  color: #6c665c;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pricingCardFeatured .pricingDuration small {
+  color: var(--paper-dim);
+}
+
+.pricingPrice {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: baseline;
+  gap: 10px 14px;
+  margin-bottom: 22px;
+}
+
+.pricingRegular {
+  position: relative;
+  color: #6c665c;
+  font-family: var(--mono);
+  font-size: clamp(1.08rem, 1.35vw, 1.35rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+}
+
+.pricingRegular::after {
+  position: absolute;
+  top: 50%;
+  right: -3px;
+  left: -3px;
+  height: 3px;
+  background: var(--coral);
+  content: "";
+  transform: rotate(-8deg);
+}
+
+.pricingPrice strong {
+  color: #a43d2f;
+  font-size: clamp(2.3rem, 4.2vw, 4.2rem);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+}
+
+.pricingPrice small {
+  color: #6c665c;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pricingCardFeatured .pricingRegular,
+.pricingCardFeatured .pricingPrice small {
+  color: var(--paper-dim);
+}
+
+.pricingCardFeatured .pricingRegular::after {
+  background: var(--data);
+}
+
+.pricingCardFeatured .pricingPrice strong {
+  color: var(--lime);
+}
+
+.pricingDescription {
+  margin: 0 0 24px;
+  color: #4f4a43;
+  font-size: 0.96rem;
+  font-weight: 620;
+  line-height: 1.5;
+}
+
+.pricingCardFeatured .pricingDescription {
+  color: var(--paper-dim);
+}
+
+.pricingDetails {
+  display: grid;
+  margin: 0 0 30px;
+  padding: 0;
+  list-style: none;
+}
+
+.pricingDetails li {
+  position: relative;
+  padding: 10px 0 10px 22px;
+  border-top: 1px solid rgb(22 22 19 / 20%);
+  font-size: 0.84rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.pricingDetails li:last-child {
+  border-bottom: 1px solid rgb(22 22 19 / 20%);
+}
+
+.pricingDetails li::before {
+  position: absolute;
+  top: 14px;
+  left: 1px;
+  width: 7px;
+  height: 7px;
+  border: 2px solid var(--outline);
+  background: var(--lime);
+  content: "";
+}
+
+.pricingCardFeatured .pricingDetails li {
+  border-color: rgb(255 249 238 / 18%);
+}
+
+.pricingCardFeatured .pricingDetails li::before {
+  border-color: var(--paper);
+  background: var(--data);
+}
+
+.pricingCheckout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  min-height: 52px;
+  margin-top: auto;
+  padding: 0 18px;
+  border: 3px solid var(--outline);
+  border-radius: 2px;
+  background: var(--coral);
+  box-shadow: 5px 5px 0 var(--lime);
+  color: var(--paper);
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+}
+
+.pricingCardFeatured .pricingCheckout {
+  border-color: var(--paper-warm);
+  background: var(--lime);
+  box-shadow: 5px 5px 0 var(--data);
+  color: var(--outline);
+}
+
+.pricingCheckout:hover,
+.pricingCheckout:focus-visible {
+  background: var(--coral-hot);
+  outline: none;
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--lime);
+}
+
+.pricingCardFeatured .pricingCheckout:hover,
+.pricingCardFeatured .pricingCheckout:focus-visible {
+  background: var(--paper-warm);
+  box-shadow: 7px 7px 0 var(--data);
+}
+
+.pricingCheckoutPending {
+  cursor: wait;
+  opacity: 0.56;
+  filter: grayscale(0.35);
+}
+
+.pricingCheckoutPending:hover {
+  transform: none;
+  box-shadow: 5px 5px 0 var(--lime);
+}
+
+.pricingFootnote {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: clamp(24px, 3vw, 36px);
+  padding-top: 18px;
+  border-top: 2px solid var(--outline);
+}
+
+.pricingFootnote > span {
+  color: var(--data);
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.pricingFootnote p {
+  max-width: 90ch;
+  margin: 0;
+  color: #5d574e;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 650;
+  letter-spacing: 0.025em;
+  line-height: 1.55;
+  text-transform: uppercase;
+}
+
 /* ── Footer ─────────────────────────────────────────────── */
 
 .footer {
@@ -1899,6 +2273,138 @@
 
 /* ── Responsive ─────────────────────────────────────────── */
 
+/* A 15-inch laptop browser is wide but vertically constrained. Keep the full
+   offer, including both checkout buttons, inside the first pricing viewport. */
+@media (min-width: 781px) and (max-height: 1250px) {
+  .pricingFrame {
+    padding: clamp(22px, 2.1vw, 30px);
+  }
+
+  .pricingFrame::before,
+  .pricingFrame::after {
+    width: 18px;
+    height: 18px;
+  }
+
+  .pricingFrame::before {
+    top: 11px;
+    left: 11px;
+  }
+
+  .pricingFrame::after {
+    right: 11px;
+    bottom: 11px;
+  }
+
+  .pricingHeader {
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+    gap: clamp(28px, 4vw, 64px);
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+  }
+
+  .pricingEyebrow {
+    margin-bottom: 7px;
+    font-size: 0.65rem;
+  }
+
+  .pricingHeading {
+    max-width: none;
+    font-size: clamp(3rem, 4.15vw, 4.25rem);
+    line-height: 0.84;
+  }
+
+  .pricingHeading span {
+    margin-top: 0.09em;
+  }
+
+  .pricingIntro {
+    max-width: 42ch;
+    font-size: 0.92rem;
+    line-height: 1.42;
+  }
+
+  .pricingGrid {
+    gap: clamp(18px, 2vw, 28px);
+  }
+
+  .pricingCard {
+    min-height: 0;
+    padding: clamp(20px, 2vw, 28px);
+    box-shadow: 6px 6px 0 var(--coral);
+  }
+
+  .pricingCardFeatured {
+    box-shadow: 6px 6px 0 var(--lime);
+  }
+
+  .pricingCardMeta {
+    margin-bottom: 14px;
+    padding-bottom: 9px;
+    font-size: 0.64rem;
+  }
+
+  .pricingCardMeta strong {
+    padding: 4px 7px;
+  }
+
+  .pricingDuration {
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .pricingDuration > span {
+    font-size: clamp(4.6rem, 6.2vw, 6.1rem);
+  }
+
+  .pricingPrice {
+    gap: 8px 12px;
+    margin-bottom: 13px;
+  }
+
+  .pricingPrice strong {
+    font-size: clamp(2.8rem, 3.5vw, 3.6rem);
+  }
+
+  .pricingDescription {
+    margin-bottom: 13px;
+    font-size: 0.86rem;
+    line-height: 1.35;
+  }
+
+  .pricingDetails {
+    margin-bottom: 16px;
+  }
+
+  .pricingDetails li {
+    padding: 6px 0 6px 20px;
+    font-size: 0.77rem;
+    line-height: 1.3;
+  }
+
+  .pricingDetails li::before {
+    top: 9px;
+    width: 6px;
+    height: 6px;
+  }
+
+  .pricingCheckout {
+    min-height: 46px;
+    padding-inline: 15px;
+    font-size: 0.84rem;
+  }
+
+  .pricingFootnote {
+    margin-top: 16px;
+    padding-top: 11px;
+  }
+
+  .pricingFootnote p {
+    font-size: 0.59rem;
+    line-height: 1.4;
+  }
+}
+
 @media (max-width: 780px) {
   .intro {
     gap: clamp(14px, 4vw, 22px);
@@ -1952,6 +2458,46 @@
 
   .heroLoopNearShell {
     filter: drop-shadow(3px 4px 0 rgb(0 0 0 / 22%));
+  }
+
+  .pricingSection {
+    padding-inline: 10px;
+    scroll-margin-top: 78px;
+  }
+
+  .pricingFrame {
+    padding: 28px 18px 30px;
+    box-shadow: 8px 8px 0 var(--data);
+  }
+
+  .pricingHeader {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .pricingHeading {
+    font-size: clamp(2.35rem, 12vw, 4.2rem);
+  }
+
+  .pricingGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pricingCard {
+    min-height: 0;
+    padding: 26px 22px;
+  }
+
+  .pricingDuration > span {
+    font-size: clamp(4.4rem, 23vw, 7.2rem);
+  }
+
+  .pricingPrice {
+    grid-template-columns: auto auto;
+  }
+
+  .pricingPrice small {
+    grid-column: 1 / -1;
   }
 
   .footer {
@@ -2194,5 +2740,877 @@
 
   .dataLink:hover svg {
     transform: none;
+  }
+}
+
+/* ── Vertical Basic / Premium pricing layout ───────────── */
+
+.pricingFrame {
+  width: 100%;
+  padding: clamp(24px, 3vw, 44px);
+}
+
+.pricingHeader {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  margin-bottom: clamp(18px, 2.4vw, 30px);
+  padding-bottom: clamp(18px, 2.2vw, 28px);
+}
+
+.pricingEyebrow {
+  margin-bottom: 8px;
+}
+
+.pricingHeading {
+  max-width: none;
+  font-size: clamp(2.35rem, 4vw, 4.5rem);
+  letter-spacing: -0.052em;
+  line-height: 0.94;
+}
+
+.pricingHeading .pricingHeadingLine {
+  display: block;
+  margin: 0;
+  color: inherit;
+}
+
+@media (min-width: 781px) {
+  .pricingHeadingLine {
+    white-space: nowrap;
+  }
+}
+
+.pricingIntro {
+  max-width: 38ch;
+  font-size: clamp(0.92rem, 1.2vw, 1.08rem);
+  line-height: 1.45;
+}
+
+.pricingGrid {
+  grid-template-columns: minmax(250px, 0.72fr) minmax(0, 1.28fr);
+  align-items: stretch;
+  gap: clamp(28px, 4vw, 64px);
+}
+
+.pricingVideoColumn {
+  display: grid;
+  min-width: 0;
+  place-items: center start;
+}
+
+.pricingProducts {
+  display: grid;
+  min-width: 0;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 2vw, 28px);
+}
+
+.pricingCard {
+  display: block;
+  min-height: 0;
+  padding: clamp(16px, 2vw, 26px);
+  box-shadow: 7px 7px 0 var(--coral);
+  transition:
+    box-shadow 260ms ease,
+    opacity 260ms ease,
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pricingCardFeatured {
+  box-shadow: 7px 7px 0 var(--lime);
+}
+
+.pricingCardActive {
+  transform: translateX(-7px);
+}
+
+.pricingCardActive:not(.pricingCardFeatured) {
+  box-shadow: 11px 11px 0 var(--coral);
+}
+
+.pricingCardFeatured.pricingCardActive {
+  box-shadow: 11px 11px 0 var(--lime);
+}
+
+.pricingCard:focus-visible {
+  outline: 3px solid var(--data);
+  outline-offset: 4px;
+}
+
+.pricingMedia {
+  position: relative;
+  justify-self: start;
+  width: min(100%, 330px);
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border: 2px solid var(--outline);
+  border-radius: 12px;
+  background: #080807;
+  box-shadow: 5px 5px 0 var(--data);
+  isolation: isolate;
+  transition: box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pricingMedia[data-active-video="1"] {
+  box-shadow: 5px 5px 0 var(--lime);
+}
+
+.pricingVideoTrack {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  width: 100%;
+  height: 200%;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  transform: translateY(0);
+  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.pricingVideoTrack[data-active-video="1"] {
+  transform: translateY(-50%);
+}
+
+.pricingVideoSlide {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.pricingVideoSlide:not(.pricingVideoSlideActive) .pricingLike,
+.pricingVideoSlide:not(.pricingVideoSlideActive) .pricingLike::after,
+.pricingVideoSlide:not(.pricingVideoSlideActive) .pricingSave,
+.pricingVideoSlide:not(.pricingVideoSlideActive) .pricingSave::after {
+  animation-play-state: paused;
+}
+
+.pricingVideo,
+.pricingVideoShade,
+.pricingTikTok {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.pricingVideo {
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.pricingVideoShade {
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgb(0 0 0 / 24%), transparent 24%),
+    linear-gradient(0deg, rgb(0 0 0 / 72%), transparent 42%);
+  pointer-events: none;
+}
+
+.pricingTikTok {
+  z-index: 2;
+  color: #fff;
+  font-family: var(--mono);
+  pointer-events: none;
+  text-shadow: 0 1px 5px rgb(0 0 0 / 75%);
+}
+
+.pricingTikTokActions {
+  position: absolute;
+  right: 10px;
+  bottom: 58px;
+  display: grid;
+  gap: 15px;
+}
+
+.pricingTikTokAction {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  color: #fff;
+  transform-origin: 50% 60%;
+}
+
+.pricingTikTokAction svg {
+  width: 25px;
+  height: 25px;
+  overflow: visible;
+  filter: drop-shadow(0 1px 3px rgb(0 0 0 / 75%));
+}
+
+.pricingTikTokAction path {
+  fill: currentColor;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.25;
+}
+
+.pricingTikTokAction small {
+  font-size: 0.48rem;
+  font-weight: 750;
+}
+
+.pricingTikTokAction::after {
+  position: absolute;
+  top: -6px;
+  width: 36px;
+  height: 36px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  content: "";
+  opacity: 0;
+}
+
+.pricingLike {
+  animation: pricingSocialClick 4s ease-in-out infinite;
+}
+
+.pricingLike::after {
+  animation: pricingSocialRipple 4s ease-out infinite;
+}
+
+.pricingSave {
+  animation: pricingSocialClick 4s 2s ease-in-out infinite;
+}
+
+.pricingSave::after {
+  animation: pricingSocialRipple 4s 2s ease-out infinite;
+}
+
+.pricingTikTokCaption {
+  position: absolute;
+  right: 46px;
+  bottom: 17px;
+  left: 11px;
+  display: grid;
+  gap: 3px;
+  font-size: 0.5rem;
+  line-height: 1.3;
+}
+
+.pricingTikTokCaption strong {
+  font-size: 0.55rem;
+}
+
+.pricingTikTokProgress {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #fff 0 38%, rgb(255 255 255 / 35%) 38% 100%);
+}
+
+.pricingCardBody {
+  display: flex;
+  height: 100%;
+  min-width: 0;
+  flex-direction: column;
+  padding-block: 2px;
+}
+
+.pricingTierLine {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--outline);
+}
+
+.pricingCardFeatured .pricingTierLine {
+  border-color: rgb(255 249 238 / 32%);
+}
+
+.pricingTier {
+  margin: 0 0 3px;
+  color: #6c665c;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.035em;
+  text-transform: none;
+}
+
+.pricingCardFeatured .pricingTier {
+  color: var(--paper-dim);
+}
+
+.pricingTierLine h3 {
+  margin: 0;
+  color: inherit;
+  font-size: clamp(2.45rem, 4.3vw, 4.8rem);
+  font-weight: 900;
+  letter-spacing: -0.065em;
+  line-height: 0.9;
+}
+
+.pricingPrice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 7px 13px;
+  margin-bottom: 12px;
+}
+
+.pricingRegular {
+  font-size: clamp(1.15rem, 1.55vw, 1.55rem);
+  font-weight: 850;
+}
+
+.pricingPrice strong {
+  font-size: clamp(2.65rem, 4.1vw, 4.4rem);
+}
+
+.pricingPrice small {
+  font-size: 0.64rem;
+  text-transform: none;
+}
+
+.pricingDescription {
+  max-width: 58ch;
+  margin: 0 0 13px;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.pricingCustomNote {
+  display: grid;
+  gap: 3px;
+  max-width: 64ch;
+  margin: 0 0 15px;
+  padding: 10px 12px;
+  border-left: 4px solid var(--lime);
+  background: rgb(199 255 49 / 13%);
+  color: #4f4a43;
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.pricingCustomNote strong {
+  color: var(--outline);
+}
+
+.pricingCardFeatured .pricingCustomNote {
+  border-color: var(--data);
+  background: rgb(255 58 160 / 12%);
+  color: var(--paper-dim);
+}
+
+.pricingCardFeatured .pricingCustomNote strong {
+  color: var(--paper);
+}
+
+.pricingCheckout {
+  width: min(100%, 440px);
+  min-height: 48px;
+  margin-top: auto;
+}
+
+.pricingFootnote {
+  margin-top: clamp(15px, 2vw, 24px);
+  padding-top: 11px;
+}
+
+.pricingFootnote p {
+  text-transform: none;
+}
+
+@keyframes pricingSocialClick {
+  0%,
+  17%,
+  100% {
+    color: #fff;
+    transform: scale(1);
+  }
+
+  4% {
+    transform: scale(0.78);
+  }
+
+  8%,
+  13% {
+    color: #ff3d85;
+    transform: scale(1.22) rotate(-5deg);
+  }
+}
+
+@keyframes pricingSocialRipple {
+  0%,
+  3%,
+  18%,
+  100% {
+    opacity: 0;
+    transform: scale(0.45);
+  }
+
+  7% {
+    opacity: 0.72;
+  }
+
+  14% {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+
+@media (min-width: 781px) and (max-height: 1250px) {
+  .pricingFrame {
+    padding: 18px;
+  }
+
+  .pricingHeader {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+  }
+
+  .pricingEyebrow {
+    margin-bottom: 4px;
+    font-size: 0.62rem;
+  }
+
+  .pricingHeading {
+    max-width: none;
+    font-size: clamp(2.15rem, 2.7vw, 2.75rem);
+    line-height: 0.96;
+  }
+
+  .pricingIntro {
+    font-size: 0.84rem;
+    line-height: 1.35;
+  }
+
+  .pricingGrid {
+    grid-template-columns: minmax(230px, 0.62fr) minmax(0, 1.38fr);
+    gap: 24px;
+  }
+
+  .pricingProducts {
+    gap: 12px;
+  }
+
+  .pricingCard {
+    display: block;
+    padding: 12px;
+    box-shadow: 4px 4px 0 var(--coral);
+  }
+
+  .pricingCardFeatured {
+    box-shadow: 4px 4px 0 var(--lime);
+  }
+
+  .pricingCardActive {
+    transform: translateX(-4px);
+  }
+
+  .pricingCardActive:not(.pricingCardFeatured) {
+    box-shadow: 7px 7px 0 var(--coral);
+  }
+
+  .pricingCardFeatured.pricingCardActive {
+    box-shadow: 7px 7px 0 var(--lime);
+  }
+
+  .pricingMedia {
+    width: min(100%, 280px);
+    border-radius: 9px;
+    box-shadow: 3px 3px 0 var(--data);
+  }
+
+  .pricingMedia[data-active-video="1"] {
+    box-shadow: 3px 3px 0 var(--lime);
+  }
+
+  .pricingTikTokActions {
+    right: 7px;
+    bottom: 48px;
+    gap: 10px;
+  }
+
+  .pricingTikTokAction svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .pricingTikTokCaption {
+    right: 35px;
+    bottom: 12px;
+    left: 8px;
+  }
+
+  .pricingTierLine {
+    margin-bottom: 8px;
+    padding-bottom: 7px;
+  }
+
+  .pricingTier {
+    font-size: 0.62rem;
+  }
+
+  .pricingTierLine h3 {
+    font-size: clamp(2rem, 2.6vw, 2.65rem);
+  }
+
+  .pricingPrice {
+    margin-bottom: 6px;
+  }
+
+  .pricingRegular {
+    font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  }
+
+  .pricingPrice strong {
+    font-size: clamp(2.25rem, 2.9vw, 3rem);
+  }
+
+  .pricingPrice small {
+    font-size: 0.58rem;
+  }
+
+  .pricingDescription {
+    margin-bottom: 7px;
+    font-size: 0.8rem;
+    line-height: 1.3;
+  }
+
+  .pricingCustomNote {
+    gap: 1px;
+    margin-bottom: 8px;
+    padding: 7px 9px;
+    font-size: 0.72rem;
+    line-height: 1.25;
+  }
+
+  .pricingCheckout {
+    min-height: 42px;
+    font-size: 0.79rem;
+  }
+
+  .pricingFootnote {
+    margin-top: 10px;
+    padding-top: 7px;
+  }
+
+  .pricingFootnote p {
+    font-size: 0.56rem;
+  }
+}
+
+/* Homepage V2 deliberately uses the compact offer at every desktop height so
+   its pricing chapter can share the same 800px, 16:10-height stage as the hero
+   and demonstration without changing the pricing layout on the main page. */
+@media (min-width: 821px) {
+  .pricingSectionCompact .pricingFrame {
+    display: grid;
+    height: 100%;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    padding: 18px;
+  }
+
+  .pricingSectionCompact .pricingHeader {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+  }
+
+  .pricingSectionCompact .pricingHeading {
+    max-width: none;
+    font-size: clamp(2.15rem, 2.7vw, 2.75rem);
+    line-height: 0.96;
+  }
+
+  .pricingSectionCompact .pricingGrid {
+    min-height: 0;
+    grid-template-columns: minmax(230px, 0.62fr) minmax(0, 1.38fr);
+    gap: 24px;
+  }
+
+  .pricingSectionCompact .pricingVideoColumn,
+  .pricingSectionCompact .pricingProducts {
+    min-height: 0;
+  }
+
+  .pricingSectionCompact .pricingProducts {
+    gap: 12px;
+  }
+
+  .pricingSectionCompact .pricingCard {
+    display: block;
+    padding: 12px;
+    box-shadow: 4px 4px 0 var(--coral);
+  }
+
+  .pricingSectionCompact .pricingCardFeatured {
+    box-shadow: 4px 4px 0 var(--lime);
+  }
+
+  .pricingSectionCompact .pricingCardActive {
+    transform: translateX(-4px);
+  }
+
+  .pricingSectionCompact .pricingCardActive:not(.pricingCardFeatured) {
+    box-shadow: 7px 7px 0 var(--coral);
+  }
+
+  .pricingSectionCompact .pricingCardFeatured.pricingCardActive {
+    box-shadow: 7px 7px 0 var(--lime);
+  }
+
+  .pricingSectionCompact .pricingMedia {
+    width: min(100%, 280px);
+    border-radius: 9px;
+    box-shadow: 3px 3px 0 var(--data);
+  }
+
+  .pricingSectionCompact .pricingMedia[data-active-video="1"] {
+    box-shadow: 3px 3px 0 var(--lime);
+  }
+
+  .pricingSectionCompact .pricingTikTokActions {
+    right: 7px;
+    bottom: 48px;
+    gap: 10px;
+  }
+
+  .pricingSectionCompact .pricingTikTokAction svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .pricingSectionCompact .pricingTikTokCaption {
+    right: 35px;
+    bottom: 12px;
+    left: 8px;
+  }
+
+  .pricingSectionCompact .pricingTierLine {
+    margin-bottom: 8px;
+    padding-bottom: 7px;
+  }
+
+  .pricingSectionCompact .pricingTier {
+    font-size: 0.62rem;
+  }
+
+  .pricingSectionCompact .pricingTierLine h3 {
+    font-size: clamp(2rem, 2.6vw, 2.65rem);
+  }
+
+  .pricingSectionCompact .pricingPrice {
+    margin-bottom: 6px;
+  }
+
+  .pricingSectionCompact .pricingRegular {
+    font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  }
+
+  .pricingSectionCompact .pricingPrice strong {
+    font-size: clamp(2.25rem, 2.9vw, 3rem);
+  }
+
+  .pricingSectionCompact .pricingPrice small {
+    font-size: 0.58rem;
+  }
+
+  .pricingSectionCompact .pricingCustomNote {
+    gap: 1px;
+    margin-bottom: 8px;
+    padding: 7px 9px;
+    font-size: 0.72rem;
+    line-height: 1.25;
+  }
+
+  .pricingSectionCompact .pricingCheckout {
+    min-height: 42px;
+    font-size: 0.79rem;
+  }
+
+  .pricingSectionCompact .pricingFootnote {
+    margin-top: 10px;
+    padding-top: 7px;
+  }
+
+  .pricingSectionCompact .pricingFootnote p {
+    font-size: 0.56rem;
+  }
+}
+
+@media (max-width: 780px) {
+  .pricingFrame {
+    padding: 22px 12px 24px;
+  }
+
+  .pricingHeader {
+    gap: 10px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+  }
+
+  .pricingHeading {
+    max-width: none;
+    font-size: clamp(1.9rem, 8vw, 2.8rem);
+    line-height: 0.98;
+  }
+
+  .pricingIntro {
+    font-size: 0.82rem;
+  }
+
+  .pricingGrid {
+    grid-template-columns: clamp(106px, 31vw, 148px) minmax(0, 1fr);
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .pricingVideoColumn {
+    display: block;
+    align-self: stretch;
+  }
+
+  .pricingProducts {
+    gap: 14px;
+  }
+
+  .pricingCard {
+    display: block;
+    padding: 12px;
+    box-shadow: 4px 4px 0 var(--coral);
+  }
+
+  .pricingCardFeatured {
+    box-shadow: 4px 4px 0 var(--lime);
+  }
+
+  .pricingCardActive {
+    transform: translateX(-3px);
+  }
+
+  .pricingCardActive:not(.pricingCardFeatured) {
+    box-shadow: 6px 6px 0 var(--coral);
+  }
+
+  .pricingCardFeatured.pricingCardActive {
+    box-shadow: 6px 6px 0 var(--lime);
+  }
+
+  .pricingMedia {
+    position: sticky;
+    top: 76px;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 3px 3px 0 var(--data);
+  }
+
+  .pricingMedia[data-active-video="1"] {
+    box-shadow: 3px 3px 0 var(--lime);
+  }
+
+  .pricingTikTokActions {
+    right: 6px;
+    bottom: 43px;
+    gap: 9px;
+  }
+
+  .pricingTikTokAction svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .pricingTikTokAction small {
+    font-size: 0.42rem;
+  }
+
+  .pricingTikTokCaption {
+    right: 31px;
+    bottom: 10px;
+    left: 7px;
+    font-size: 0.4rem;
+  }
+
+  .pricingTikTokCaption strong {
+    font-size: 0.44rem;
+  }
+
+  .pricingTierLine {
+    gap: 8px;
+    margin-bottom: 8px;
+    padding-bottom: 7px;
+  }
+
+  .pricingTier {
+    font-size: 0.56rem;
+  }
+
+  .pricingTierLine h3 {
+    font-size: clamp(1.45rem, 6.5vw, 2.15rem);
+    line-height: 0.95;
+  }
+
+  .pricingPrice {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    gap: 3px 8px;
+    margin-bottom: 7px;
+  }
+
+  .pricingRegular {
+    font-size: 0.94rem;
+  }
+
+  .pricingPrice strong {
+    font-size: clamp(1.9rem, 8vw, 2.4rem);
+  }
+
+  .pricingPrice small {
+    grid-column: 1 / -1;
+    font-size: 0.5rem;
+  }
+
+  .pricingDescription {
+    margin-bottom: 7px;
+    font-size: 0.72rem;
+    line-height: 1.27;
+  }
+
+  .pricingCustomNote {
+    margin-bottom: 8px;
+    padding: 6px 7px;
+    font-size: 0.66rem;
+    line-height: 1.25;
+  }
+
+  .pricingCheckout {
+    min-height: 40px;
+    padding-inline: 9px;
+    border-width: 2px;
+    box-shadow: 3px 3px 0 var(--lime);
+    font-size: 0.68rem;
+  }
+
+  .pricingFootnote {
+    margin-top: 12px;
+    padding-top: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pricingVideoTrack,
+  .pricingCard,
+  .pricingMedia {
+    transition: none;
+  }
+
+  .pricingLike,
+  .pricingLike::after,
+  .pricingSave,
+  .pricingSave::after {
+    animation: none;
   }
 }

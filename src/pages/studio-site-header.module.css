@@ -48,6 +48,7 @@
 .headerNav {
   display: flex;
   align-items: center;
+  gap: clamp(14px, 2.4vw, 30px);
   color: #a9a197;
   font-size: 0.82rem;
 }

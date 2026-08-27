@@ -7,6 +7,7 @@ import HeroFeedbackLoop from './HeroFeedbackLoop'
 import PrivateAccessModal from './PrivateAccessModal'
 import SiteFooter from './SiteFooter'
 import StudioSiteHeader from './StudioSiteHeader'
+import VideoBetaPricing from './VideoBetaPricing'
 import WorkflowIterationSection from './WorkflowIterationSection'
 import styles from './home-film-page.module.css'
 
@@ -24,6 +25,29 @@ export default function HomeFilmPage() {
     // to the linen marketing pages, not this dark one.
     document.body.classList.add('film-mode')
     return () => document.body.classList.remove('film-mode')
+  }, [])
+
+  useEffect(() => {
+    if (window.location.hash !== '#pricing') return
+
+    const alignPricing = () => {
+      const root = document.documentElement
+      const previousScrollBehavior = root.style.scrollBehavior
+
+      root.style.scrollBehavior = 'auto'
+      document.getElementById('pricing')?.scrollIntoView({ block: 'start' })
+      root.style.scrollBehavior = previousScrollBehavior
+    }
+
+    const frame = window.requestAnimationFrame(alignPricing)
+    const settleTimer = window.setTimeout(alignPricing, 300)
+    const mediaTimer = window.setTimeout(alignPricing, 1400)
+
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.clearTimeout(settleTimer)
+      window.clearTimeout(mediaTimer)
+    }
   }, [])
 
   return (
@@ -101,6 +125,7 @@ export default function HomeFilmPage() {
           </div>
         </section>
 
+        <VideoBetaPricing />
         <SiteFooter onRequestAccess={openPrivateAccess} />
       </div>
 

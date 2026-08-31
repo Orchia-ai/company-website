@@ -60,6 +60,7 @@
   font-weight: 500;
   letter-spacing: 0.01em;
   text-decoration: none;
+  white-space: nowrap;
   transition: border-color 160ms ease, color 160ms ease;
 }
 
@@ -91,6 +92,7 @@
   }
 
   .headerNav {
+    gap: clamp(8px, 2vw, 14px);
     font-size: 0.74rem;
   }
 }

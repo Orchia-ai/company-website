@@ -29,13 +29,15 @@ const escapeHtml = (value: unknown) =>
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') return res.status(405).end()
 
-  const { name, email, message, source, website } = req.body
+  const { name, email, message, source, website } = req.body ?? {}
   const smtpUser = process.env.SMTP_USER
   const emailPass = process.env.EMAIL_PASS
   const contactEmail = process.env.CONTACT_EMAIL
   const isVideoLead = source === 'video-lead'
+  const normalizedWebsite = typeof website === 'string' ? website.trim() : ''
+  const hasContactFields = Boolean(name && email && message)
 
-  if (!name || !email || !message || (isVideoLead && !website)) {
+  if ((isVideoLead && !normalizedWebsite) || (!isVideoLead && !hasContactFields)) {
     return res.status(400).json({ error: 'Missing required fields' })
   }
 
@@ -61,20 +63,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     await transporter.sendMail({
       from: `"Orchia Website" <${smtpUser}>`,
-      replyTo: email,
       to: contactEmail,
-      subject: subjectFor(source, String(name)),
-      html: `
-        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-        ${isVideoLead ? `
-          <p><strong>Company website:</strong> ${escapeHtml(website)}</p>
+      subject: subjectFor(source, String(name || 'website visitor')),
+      ...(typeof email === 'string' && email.trim() ? { replyTo: email.trim() } : {}),
+      html: isVideoLead
+        ? `
+          <p><strong>Company website:</strong> ${escapeHtml(normalizedWebsite)}</p>
           <p><strong>Source:</strong> Homepage V2 — Unlock your company video</p>
           <p><strong>Received at:</strong> ${escapeHtml(new Date().toISOString())}</p>
-        ` : ''}
-        <p><strong>Message:</strong></p>
-        <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
-      `,
+          <p><strong>Next step:</strong> Customer is choosing a Stripe package. Stripe checkout collects email, full name, business name, and company website.</p>
+        `
+        : `
+          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+          <p><strong>Message:</strong></p>
+          <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
+        `,
     })
     res.status(200).json({ success: true })
   } catch (err) {

@@ -7,7 +7,7 @@ type Status = 'idle' | 'sending' | 'sent' | 'error'
 
 /** Pages that do not exist yet. Rendered as pending rather than as links so a
  *  dead destination never looks like a working one. */
-const PENDING_PAGES = ['About us', 'Work', 'Careers'] as const
+const PENDING_PAGES = ['Work', 'Careers'] as const
 
 export default function SiteFooter({ onRequestAccess }: { onRequestAccess: () => void }) {
   const fieldId = useId()
@@ -54,6 +54,9 @@ export default function SiteFooter({ onRequestAccess }: { onRequestAccess: () =>
           <nav className={styles.footerNav} aria-label="Footer">
             <Link className={styles.footerLink} to="/docs">
               Documentation
+            </Link>
+            <Link className={styles.footerLink} to="/about-us">
+              About us
             </Link>
             {PENDING_PAGES.map((page) => (
               <span key={page} className={styles.footerLinkPending}>

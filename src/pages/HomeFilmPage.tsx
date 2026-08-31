@@ -12,7 +12,7 @@ import WorkflowIterationSection from './WorkflowIterationSection'
 import styles from './home-film-page.module.css'
 
 /**
- * The landing page: a workflow iteration demo, the production data, the
+ * The About us page: a workflow iteration demo, the production data, the
  * product film, then the footer.
  */
 export default function HomeFilmPage() {
@@ -53,27 +53,27 @@ export default function HomeFilmPage() {
   return (
     <>
       <Helmet>
-        <title>Orchia Studio — Every specialist. One shared production.</title>
+        <title>About Orchia Studio — Every specialist. One shared production.</title>
         <meta
           name="description"
           content="Orchia connects writing, art, camera, and audience decisions so every specialist keeps control of their craft while the production stays in sync."
         />
-        <link rel="canonical" href="https://orchia.studio/" />
+        <link rel="canonical" href="https://orchia.studio/about-us" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Orchia Studio" />
-        <meta property="og:title" content="Orchia Studio — Every specialist. One shared production." />
+        <meta property="og:title" content="About Orchia Studio — Every specialist. One shared production." />
         <meta
           property="og:description"
           content="Orchia connects writing, art, camera, and audience decisions so every specialist keeps control of their craft while the production stays in sync."
         />
-        <meta property="og:url" content="https://orchia.studio/" />
+        <meta property="og:url" content="https://orchia.studio/about-us" />
         <meta property="og:image" content="https://orchia.studio/og-home-2026-08-v3.png" />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Content that gets better over time — Orchia Studio" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Orchia Studio — Every specialist. One shared production." />
+        <meta name="twitter:title" content="About Orchia Studio — Every specialist. One shared production." />
         <meta
           name="twitter:description"
           content="Orchia connects writing, art, camera, and audience decisions so every specialist keeps control of their craft while the production stays in sync."

@@ -19,7 +19,17 @@ const SITE_URL = 'https://orchia.studio'
 
 const PAGES: Record<string, SharePage> = {
   '/': {
-    title: 'Orchia Studio — Every specialist. One shared production.',
+    title: 'Orchia Promotion Video — Custom social videos for your company',
+    description: 'Turn one company website into an affordable, custom AI-generated social video designed to bring your business more attention.',
+    ogImage: `${SITE_URL}/og-home-2026-08-v3.png`,
+    imageAlt: 'Content that gets better over time — Orchia Studio',
+    type: 'website',
+    imageType: 'image/png',
+    imageWidth: 1200,
+    imageHeight: 630,
+  },
+  '/about-us': {
+    title: 'About Orchia Studio — Every specialist. One shared production.',
     description: 'Orchia connects writing, art, camera, and audience decisions so every specialist keeps control of their craft while the production stays in sync.',
     ogImage: `${SITE_URL}/og-home-2026-08-v3.png`,
     imageAlt: 'Content that gets better over time — Orchia Studio',
@@ -139,5 +149,5 @@ ${imageDetails}
 }
 
 export const config = {
-  matcher: ['/', '/docs', '/docs/:path*', '/blog/:slug*'],
+  matcher: ['/', '/about-us', '/docs', '/docs/:path*', '/blog/:slug*'],
 }

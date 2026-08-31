@@ -25,19 +25,26 @@ const LOOP_DURATION_MS = 28_000
 const FINAL_VIDEO_URL =
   'https://tm9ilj7n5ftxczdh.public.blob.vercel-storage.com/company-site/videos/data/07-14-import-LK31t0kKpAmxFm23y6N0ZNQTTJ22Ah.mp4'
 
-const HERO_VIDEOS: readonly SocialVideoItem[] = PLAYABLE_SOCIAL_PERFORMANCE_VIDEOS.map(
-  (video) => ({
+const FEATURED_PRODUCTION_VIDEO: SocialVideoItem = {
+  id: 'orchia-promotion-video-37-1',
+  src: '/videos/orchia-promotion-video-37-1.mp4',
+  poster: '/videos/orchia-promotion-video-37-1.jpg',
+  handle: '@orchia.studio',
+  caption: 'Orchia Promotional Video · one idea becomes a vertical world.',
+}
+
+const HERO_VIDEOS: readonly SocialVideoItem[] = [
+  FEATURED_PRODUCTION_VIDEO,
+  ...PLAYABLE_SOCIAL_PERFORMANCE_VIDEOS.map((video) => ({
     id: `${video.date}-${video.title}`,
     src: video.videoSrc,
     poster: video.thumbnail,
     handle: '@orchia.studio',
     caption: `${video.viewsDisplay} views · ${video.ca}% watched to the end.`,
-  }),
-)
+  })),
+]
 
 type LeadDetails = {
-  name: string
-  email: string
   website: string
 }
 
@@ -639,19 +646,11 @@ function PromotionWorkflowDemo() {
   )
 }
 
-function checkoutUrlWithEmail(checkoutUrl: string, email: string) {
-  const url = new URL(checkoutUrl)
-  if (email.trim()) url.searchParams.set('prefilled_email', email.trim())
-  return url.toString()
-}
-
 function HeroProductModal({
   open,
-  email,
   onClose,
 }: {
   open: boolean
-  email: string
   onClose: () => void
 }) {
   const dialogRef = useRef<HTMLElement | null>(null)
@@ -725,6 +724,10 @@ function HeroProductModal({
           ×
         </button>
 
+        <p className={styles.productModalNotice}>
+          Stripe collects your email, full name, business name, and company website at checkout.
+        </p>
+
         <div className={styles.productModalGrid}>
           {VIDEO_PACKAGES.map((videoPackage, index) => (
             <article
@@ -741,7 +744,7 @@ function HeroProductModal({
                 <small>USD · one time</small>
               </div>
               <a
-                href={checkoutUrlWithEmail(videoPackage.checkoutUrl, email)}
+                href={videoPackage.checkoutUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Choose ${videoPackage.tier} for ${videoPackage.betaPrice} and continue to Stripe`}
@@ -762,8 +765,6 @@ export default function HomeV2Page() {
   const [productModalOpen, setProductModalOpen] = useState(false)
   const [leadSubmitStatus, setLeadSubmitStatus] = useState<LeadSubmitStatus>('idle')
   const [leadDetails, setLeadDetails] = useState<LeadDetails>({
-    name: '',
-    email: '',
     website: '',
   })
   const openPrivateAccess = useCallback(() => setPrivateAccessOpen(true), [])
@@ -780,8 +781,6 @@ export default function HomeV2Page() {
     if (leadSubmitStatus === 'sending') return
 
     const normalizedLead = {
-      name: leadDetails.name.trim(),
-      email: leadDetails.email.trim(),
       website: leadDetails.website.trim(),
     }
     const savedAt = new Date().toISOString()
@@ -829,17 +828,17 @@ export default function HomeV2Page() {
   return (
     <>
       <Helmet>
-        <title>Orchia Promotion Video — Homepage V2</title>
+        <title>Orchia Promotion Video — Custom social videos for your company</title>
         <meta
           name="description"
           content="Turn one company website into an affordable, custom AI-generated social video designed to bring your business more attention."
         />
-        <link rel="canonical" href="https://orchia.studio/v2" />
+        <link rel="canonical" href="https://orchia.studio/" />
       </Helmet>
 
       <div className={`${filmStyles.page} ${styles.v2Page}`}>
         <div className={styles.intro}>
-          <StudioSiteHeader sticky homePath="/v2" pricingHref="/v2#pricing" />
+          <StudioSiteHeader sticky />
 
           <section className={styles.hero} aria-labelledby="v2-hero-title">
             <div className={styles.heroSignup}>
@@ -848,30 +847,6 @@ export default function HomeV2Page() {
               </h1>
 
               <form className={styles.heroForm} onSubmit={handleLeadSubmit}>
-                <label>
-                  <span className={filmStyles.srOnly}>Name</span>
-                  <input
-                    type="text"
-                    name="name"
-                    value={leadDetails.name}
-                    onChange={(event) => updateLeadDetail('name', event.target.value)}
-                    placeholder="Name"
-                    autoComplete="name"
-                    required
-                  />
-                </label>
-                <label>
-                  <span className={filmStyles.srOnly}>Email</span>
-                  <input
-                    type="email"
-                    name="email"
-                    value={leadDetails.email}
-                    onChange={(event) => updateLeadDetail('email', event.target.value)}
-                    placeholder="Email"
-                    autoComplete="email"
-                    required
-                  />
-                </label>
                 <label>
                   <span className={filmStyles.srOnly}>Company website</span>
                   <input
@@ -892,7 +867,7 @@ export default function HomeV2Page() {
                 >
                   <span>
                     {leadSubmitStatus === 'sending'
-                      ? 'Saving your details…'
+                      ? 'Saving your website…'
                       : 'Unlock your company video'}
                   </span>
                   <span aria-hidden="true">→</span>
@@ -900,7 +875,7 @@ export default function HomeV2Page() {
 
                 {leadSubmitStatus === 'error' ? (
                   <p className={styles.heroFormError} role="alert">
-                    We couldn’t record your details. Please try again.
+                    We couldn’t record your company website. Please try again.
                   </p>
                 ) : null}
               </form>
@@ -942,11 +917,7 @@ export default function HomeV2Page() {
       </div>
 
       <PrivateAccessModal open={privateAccessOpen} onClose={closePrivateAccess} />
-      <HeroProductModal
-        open={productModalOpen}
-        email={leadDetails.email}
-        onClose={closeProductModal}
-      />
+      <HeroProductModal open={productModalOpen} onClose={closeProductModal} />
     </>
   )
 }

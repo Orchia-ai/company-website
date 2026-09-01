@@ -277,6 +277,7 @@ export default function SocialVideoScroller({
       firstStart: first.offsetLeft,
       middleStart: middle.offsetLeft,
       thirdStart: third.offsetLeft,
+      cardWidth: middle.offsetWidth,
       segmentWidth: third.offsetLeft - middle.offsetLeft,
     }
   }, [])
@@ -308,7 +309,10 @@ export default function SocialVideoScroller({
 
     const alignToMiddleCopy = () => {
       const metrics = getLoopMetrics()
-      if (metrics) viewport.scrollLeft = metrics.middleStart
+      if (!metrics) return
+
+      const centeredOffset = Math.max(0, (viewport.clientWidth - metrics.cardWidth) / 2)
+      viewport.scrollLeft = metrics.middleStart - centeredOffset
     }
 
     const frame = window.requestAnimationFrame(alignToMiddleCopy)

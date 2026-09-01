@@ -3600,6 +3600,228 @@
   }
 }
 
+/* Mobile offer: the video becomes the chapter preview, followed by two
+   full-width products. Nothing important is forced into a narrow side rail. */
+@media (max-width: 780px) {
+  .pricingSection {
+    padding-inline: 0;
+    scroll-margin-top: 64px;
+  }
+
+  .pricingFrame {
+    padding: 26px 16px 30px;
+    border-right: 0;
+    border-left: 0;
+    box-shadow: inset 0 -5px 0 var(--data);
+  }
+
+  .pricingFrame::before {
+    left: 12px;
+  }
+
+  .pricingFrame::after {
+    right: 12px;
+  }
+
+  .pricingHeader {
+    gap: 0;
+    margin-bottom: 20px;
+    padding-bottom: 18px;
+  }
+
+  .pricingHeading {
+    font-size: clamp(1.95rem, 9.4vw, 2.75rem);
+    line-height: 0.98;
+  }
+
+  .pricingGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+
+  .pricingVideoColumn {
+    display: grid;
+    align-self: auto;
+    place-items: center;
+  }
+
+  .pricingMedia {
+    position: relative;
+    top: auto;
+    width: min(62vw, 230px);
+    justify-self: center;
+    border-radius: 12px;
+    box-shadow: 5px 5px 0 var(--data);
+  }
+
+  .pricingMedia[data-active-video="1"] {
+    box-shadow: 5px 5px 0 var(--lime);
+  }
+
+  .pricingProducts {
+    grid-template-rows: none;
+    grid-auto-rows: auto;
+    gap: 18px;
+  }
+
+  .pricingCard {
+    padding: 18px;
+    border-width: 2px;
+    box-shadow: 6px 6px 0 var(--coral);
+    transform: none;
+  }
+
+  .pricingCardFeatured {
+    box-shadow: 6px 6px 0 var(--lime);
+  }
+
+  .pricingCardActive {
+    transform: translateY(-2px);
+  }
+
+  .pricingCardActive:not(.pricingCardFeatured) {
+    box-shadow: 8px 8px 0 var(--coral);
+  }
+
+  .pricingCardFeatured.pricingCardActive {
+    box-shadow: 8px 8px 0 var(--lime);
+  }
+
+  .pricingTierLine {
+    margin-bottom: 11px;
+    padding-bottom: 10px;
+  }
+
+  .pricingTier {
+    font-size: 0.62rem;
+  }
+
+  .pricingTierLine h3 {
+    font-size: clamp(2.25rem, 12vw, 3.2rem);
+  }
+
+  .pricingPrice {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 10px;
+    margin-bottom: 10px;
+  }
+
+  .pricingRegular {
+    font-size: 1.08rem;
+  }
+
+  .pricingPrice strong {
+    font-size: clamp(2.65rem, 14vw, 3.45rem);
+  }
+
+  .pricingPrice small {
+    flex-basis: 100%;
+    font-size: 0.56rem;
+  }
+
+  .pricingCustomNote {
+    margin-bottom: 12px;
+    padding: 9px 10px;
+    font-size: 0.76rem;
+    line-height: 1.32;
+  }
+
+  .pricingCheckout {
+    width: 100%;
+    min-height: 50px;
+    padding-inline: 13px;
+    border-width: 2px;
+    font-size: 0.8rem;
+  }
+
+  .pricingFootnote {
+    margin-top: 20px;
+    padding-top: 12px;
+  }
+
+  .pricingFootnote p {
+    font-size: 0.58rem;
+    line-height: 1.45;
+  }
+
+  .footer {
+    margin-top: -20px;
+    padding: 32px 18px 20px;
+  }
+
+  .footerGrid {
+    gap: 22px;
+  }
+
+  .footerBrand {
+    margin-bottom: 9px;
+    font-size: 1.45rem;
+  }
+
+  .footerTagline {
+    margin-bottom: 14px;
+    font-size: 0.84rem;
+    line-height: 1.42;
+  }
+
+  .footerNav {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    gap: 8px 16px;
+  }
+
+  .footerLink,
+  .footerLinkPending {
+    font-size: 0.86rem;
+  }
+
+  .contactHeading {
+    margin-bottom: 10px;
+  }
+
+  .contact {
+    gap: 9px;
+  }
+
+  .field {
+    gap: 4px;
+  }
+
+  .input {
+    min-height: 44px;
+    padding: 9px 11px;
+    font-size: 0.9rem;
+  }
+
+  .textarea {
+    min-height: 82px;
+  }
+
+  .send {
+    min-height: 46px;
+  }
+
+  .footerBase {
+    margin-top: 24px;
+    padding-top: 13px;
+  }
+}
+
+@media (max-width: 380px) {
+  .pricingMedia {
+    width: min(66vw, 218px);
+  }
+
+  .pricingCard {
+    padding: 16px;
+  }
+
+  .footerNav {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .pricingVideoTrack,
   .pricingCard,

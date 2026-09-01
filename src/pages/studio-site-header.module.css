@@ -80,7 +80,7 @@
   .siteHeader {
     --site-header-height: 64px;
 
-    padding-inline: 20px;
+    padding-inline: 14px;
   }
 
   .stickySlot {
@@ -88,12 +88,41 @@
   }
 
   .brand {
-    font-size: 1.05rem;
+    min-height: 44px;
+    align-items: center;
+    font-size: 1rem;
   }
 
   .headerNav {
-    gap: clamp(8px, 2vw, 14px);
-    font-size: 0.74rem;
+    gap: clamp(9px, 3vw, 14px);
+    font-size: 0.72rem;
+  }
+
+  .headerLink {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    padding-block: 0;
+  }
+}
+
+@media (max-width: 360px) {
+  .siteHeader {
+    padding-inline: 11px;
+  }
+
+  .brand {
+    gap: 0.22em;
+    font-size: 0.94rem;
+  }
+
+  .brandSuffix {
+    font-size: 0.68em;
+  }
+
+  .headerNav {
+    gap: 8px;
+    font-size: 0.66rem;
   }
 }
 

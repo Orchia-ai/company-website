@@ -437,16 +437,36 @@
 
 @media (max-width: 520px) {
   .scroller {
-    --social-card-width: min(62vw, 214px);
+    --social-card-width: clamp(170px, 50vw, 188px);
   }
 
   .track {
-    gap: 14px;
-    padding: 18px 18px 20px;
+    gap: 12px;
+    padding: 14px 16px 16px;
   }
 
   .videoCard:nth-child(3n + 2) {
-    margin-top: 18px;
+    margin-top: 14px;
+  }
+
+  .videoCard:nth-child(3n + 3) {
+    margin-top: 7px;
+  }
+
+  .scroller::before,
+  .scroller::after {
+    bottom: 42px;
+    width: 16px;
+  }
+
+  .scrollerControls {
+    justify-content: center;
+    padding-right: 0;
+  }
+
+  .scrollerControls button {
+    width: 34px;
+    height: 34px;
   }
 }
 

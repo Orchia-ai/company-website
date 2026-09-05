@@ -9,6 +9,7 @@ import {
   useState,
 } from 'react'
 import { Helmet } from 'react-helmet-async'
+import { Link } from 'react-router-dom'
 
 import PrivateAccessModal from './PrivateAccessModal'
 import SiteFooter from './SiteFooter'
@@ -879,6 +880,12 @@ export default function HomeV2Page() {
                   </p>
                 ) : null}
               </form>
+
+              <p className={styles.heroCreateAlt}>
+                Or skip the wait —{' '}
+                <Link to="/new-project">create a social video from your idea</Link>{' '}
+                and watch the production live.
+              </p>
             </div>
 
             <div className={styles.heroVideoWall}>

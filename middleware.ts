@@ -58,6 +58,26 @@ const PAGES: Record<string, SharePage> = {
     imageWidth: 1200,
     imageHeight: 630,
   },
+  '/new-project': {
+    title: 'Create a video · Orchia',
+    description: 'Turn an idea, product, or business story into a social video with automatic production. Create, follow progress, and download without signing in.',
+    ogImage: `${SITE_URL}/og-home-2026-08-v3.png`,
+    imageAlt: 'Create a social video with Orchia',
+    type: 'website',
+    imageType: 'image/png',
+    imageWidth: 1200,
+    imageHeight: 630,
+  },
+  '/create': {
+    title: 'Create a video · Orchia',
+    description: 'Turn an idea, product, or business story into a social video with automatic production. Create, follow progress, and download without signing in.',
+    ogImage: `${SITE_URL}/og-home-2026-08-v3.png`,
+    imageAlt: 'Create a social video with Orchia',
+    type: 'website',
+    imageType: 'image/png',
+    imageWidth: 1200,
+    imageHeight: 630,
+  },
 }
 
 const POSTS: Record<string, Omit<SharePage, 'type'>> = {

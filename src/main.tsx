@@ -17,6 +17,11 @@ const DiscordVideoWorkflowPage = lazy(() => import('./pages/DiscordVideoWorkflow
 const Demo2Page = lazy(() => import('./pages/Demo2Page.tsx'))
 const Demo3Page = lazy(() => import('./pages/Demo3Page.tsx'))
 const HomeV2Page = lazy(() => import('./pages/HomeV2Page.tsx'))
+const PublicCreatePage = lazy(() => import('./pages/PublicCreatePage.tsx'))
+const PublicResultPage = lazy(() => import('./pages/PublicResultPage.tsx'))
+const PublicWatchPage = lazy(() => import('./pages/PublicWatchPage.tsx'))
+const ManagerLoginPage = lazy(() => import('./pages/ManagerLoginPage.tsx'))
+const ManagerDashboardPage = lazy(() => import('./pages/ManagerDashboardPage.tsx'))
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -37,6 +42,16 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/docs/discord-video-workflow" element={<DiscordVideoWorkflowPage />} />
             <Route path="/demo2" element={<Demo2Page />} />
             <Route path="/demo3" element={<Demo3Page />} />
+            {/* Public video funnel: create → progress/result. /agent/results/:publicId
+                is the path the backend returns in its player links; /video/:publicId and
+                /new-project, /create are aliases. */}
+            <Route path="/new-project" element={<PublicCreatePage />} />
+            <Route path="/create" element={<PublicCreatePage />} />
+            <Route path="/agent/results/:publicId" element={<PublicResultPage />} />
+            <Route path="/video/:publicId" element={<PublicResultPage />} />
+            <Route path="/watch/:publicId" element={<PublicWatchPage />} />
+            <Route path="/manager/login" element={<ManagerLoginPage />} />
+            <Route path="/manager" element={<ManagerDashboardPage />} />
             <Route path="*" element={<HomeV2Page />} />
           </Routes>
         </Suspense>

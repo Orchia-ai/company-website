@@ -155,6 +155,28 @@
   line-height: 1.4;
 }
 
+.heroCreateAlt {
+  margin: 14px 0 0;
+  color: rgba(255, 249, 238, 0.72);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.heroCreateAlt a {
+  color: #fff9ee;
+  font-weight: 650;
+  text-decoration: underline;
+  text-decoration-color: var(--v2-pink, #ff9bc9);
+  text-underline-offset: 4px;
+  transition: color 160ms ease;
+}
+
+.heroCreateAlt a:hover,
+.heroCreateAlt a:focus-visible {
+  color: var(--v2-pink, #ff9bc9);
+}
+
 .heroVideoWall {
   min-width: 0;
   align-self: center;

@@ -1,6 +1,20 @@
 {
   "rewrites": [
     { "source": "/print.html", "destination": "/print.html" },
+    { "source": "/api/public/agent/openapi", "destination": "/api/public/p?kind=openapi" },
+    { "source": "/api/public/agent/projects", "destination": "/api/public/p?kind=projects" },
+    { "source": "/api/public/agent/projects/([^/]+)/feedback/([^/]+)", "destination": "/api/public/p?kind=feedback-status&id=$1&op=$2" },
+    { "source": "/api/public/agent/projects/([^/]+)/feedback", "destination": "/api/public/p?kind=feedback&id=$1" },
+    { "source": "/api/public/agent/projects/([^/]+)/media", "destination": "/api/public/p?kind=media&id=$1" },
+    { "source": "/api/public/agent/projects/([^/]+)/completion-email", "destination": "/api/public/p?kind=completion-email&id=$1" },
+    { "source": "/api/public/agent/projects/([^/]+)/references/([^/]+)", "destination": "/api/public/p?kind=reference&id=$1&artifact=$2" },
+    { "source": "/api/public/agent/projects/([^/]+)", "destination": "/api/public/p?kind=project&id=$1" },
+    { "source": "/api/public/video-batches/([^/]+)/media", "destination": "/api/public/p?kind=batch-media&id=$1" },
+    { "source": "/api/public/video-batches/([^/]+)/feedback", "destination": "/api/public/p?kind=batch-feedback&id=$1" },
+    { "source": "/api/public/video-batches/([^/]+)", "destination": "/api/public/p?kind=batch&id=$1" },
+    { "source": "/api/auth/login", "destination": "/api/auth?action=login" },
+    { "source": "/api/auth/logout", "destination": "/api/auth?action=logout" },
+    { "source": "/api/auth/session", "destination": "/api/auth?action=session" },
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/((?!.*\\.).*)", "destination": "/index.html" }
   ]

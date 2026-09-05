@@ -1,8 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 
+/** vercel.json rewrites /api/auth/{login,logout,session} onto this single
+ *  function (Hobby plan caps deployments at 12 serverless functions). The
+ *  relay core is inlined because underscore-prefixed api/ modules are not
+ *  bundled into serverless functions. */
 const BACKEND_URL = (process.env.VSA_BACKEND_URL ?? 'https://alpha.lingyizhou.com').replace(/\/$/, '')
-
-const ALLOWED_PATHS = new Set(['login', 'logout', 'session'])
 
 /** The backend trusts a fixed list of browser origins (AUTH_BRAND_ORIGINS)
  *  for CSRF checks. This site's apex origin is not in that list, so the BFF
@@ -24,15 +26,14 @@ function rewriteSetCookie(value: string, secure: boolean) {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const suffix = Array.isArray(req.query.path) ? req.query.path.join('/') : String(req.query.path ?? '')
-  if (!ALLOWED_PATHS.has(suffix)) {
-    res.status(404).json({ error: { message: 'Unknown auth endpoint.' } })
-    return
+  const action = String(req.query.action ?? '')
+  if (action !== 'login' && action !== 'logout' && action !== 'session') {
+    return res.status(404).json({ error: { message: 'Unknown auth endpoint.' } })
   }
 
   const method = (req.method ?? 'GET').toUpperCase()
-  if (suffix === 'session' && method !== 'GET') return void res.status(405).end()
-  if ((suffix === 'login' || suffix === 'logout') && method !== 'POST') return void res.status(405).end()
+  if (action === 'session' && method !== 'GET') return void res.status(405).end()
+  if ((action === 'login' || action === 'logout') && method !== 'POST') return void res.status(405).end()
 
   const headers = new Headers()
   const cookie = req.headers.cookie
@@ -46,10 +47,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     headers.set('origin', backendOrigin())
   }
 
-  const body = suffix === 'login' && req.body ? JSON.stringify(req.body) : undefined
+  const body = action === 'login' && req.body ? JSON.stringify(req.body) : undefined
   let upstream: Response
   try {
-    upstream = await fetch(`${BACKEND_URL}/api/auth/${suffix}`, {
+    upstream = await fetch(`${BACKEND_URL}/api/auth/${action}`, {
       method,
       headers,
       body,

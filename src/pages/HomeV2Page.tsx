@@ -11,6 +11,9 @@ import {
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 
+import { SHOWCASE_VIDEOS } from '../lib/showcaseVideos'
+import { useCachedVideoSource } from '../lib/useCachedVideoSource'
+
 import PrivateAccessModal from './PrivateAccessModal'
 import SiteFooter from './SiteFooter'
 import SocialVideoScroller, { type SocialVideoItem } from './SocialVideoScroller'
@@ -19,30 +22,103 @@ import VideoBetaPricing from './VideoBetaPricing'
 import { VIDEO_PACKAGES } from './videoPackages'
 import filmStyles from './home-film-page.module.css'
 import styles from './home-v2-page.module.css'
-import { PLAYABLE_SOCIAL_PERFORMANCE_VIDEOS } from './socialPerformanceVideos'
 
 const COMPANY_URL = 'https://succulent.co'
 const LOOP_DURATION_MS = 28_000
-const FINAL_VIDEO_URL =
-  'https://tm9ilj7n5ftxczdh.public.blob.vercel-storage.com/company-site/videos/data/07-14-import-LK31t0kKpAmxFm23y6N0ZNQTTJ22Ah.mp4'
+const FINAL_VIDEO_URL = SHOWCASE_VIDEOS.flowerpot.preview
 
-const FEATURED_PRODUCTION_VIDEO: SocialVideoItem = {
-  id: 'orchia-promotion-video-37-1',
-  src: '/videos/orchia-promotion-video-37-1.mp4',
-  poster: '/videos/orchia-promotion-video-37-1.jpg',
-  handle: '@orchia.studio',
-  caption: 'Orchia Promotional Video · one idea becomes a vertical world.',
-}
-
-const HERO_VIDEOS: readonly SocialVideoItem[] = [
-  FEATURED_PRODUCTION_VIDEO,
-  ...PLAYABLE_SOCIAL_PERFORMANCE_VIDEOS.map((video) => ({
-    id: `${video.date}-${video.title}`,
-    src: video.videoSrc,
-    poster: video.thumbnail,
+// Add hero videos here with a unique id, name, full URL, and poster image.
+const HERO_VIDEOS: readonly (SocialVideoItem & { name: string })[] = [
+  {
+    id: 'orchia-promotion-video-37-1',
+    name: 'Orchia Promotional Video',
+    src: SHOWCASE_VIDEOS.promotion.preview,
+    fullSrc: SHOWCASE_VIDEOS.promotion.full,
+    poster: '/videos/orchia-promotion-video-37-1.jpg',
     handle: '@orchia.studio',
-    caption: `${video.viewsDisplay} views · ${video.ca}% watched to the end.`,
-  })),
+    caption: 'Orchia Promotional Video · one idea becomes a vertical world.',
+  },
+  {
+    id: '07-14-import',
+    name: 'Your brother wants an imported flowerpot',
+    src: SHOWCASE_VIDEOS.flowerpot.preview,
+    fullSrc: SHOWCASE_VIDEOS.flowerpot.full,
+    poster: '/data-slides/thumbnails/07-14-import.jpg',
+    handle: '@orchia.studio',
+    caption: '1.45M views · 67% watched to the end.',
+  },
+  {
+    id: '07-23-returned-with-99-doubles',
+    name: 'I returned with 99 doubles to reclaim my home',
+    src: SHOWCASE_VIDEOS.doubles.preview,
+    fullSrc: SHOWCASE_VIDEOS.doubles.full,
+    poster: '/data-slides/thumbnails/07-23.jpg',
+    handle: '@orchia.studio',
+    caption: '633K views · 40% watched to the end.',
+  },
+  {
+    id: 'BrotherNeedBetterPot',
+    name: 'BrotherNeedBetterPot',
+    src: 'https://media.lingyizhou.com/Compressed/BrotherNeedBetterPot-540p.mp4',
+    fullSrc: 'https://media.lingyizhou.com/high-res/BrotherNeedBetterPot.MOV',
+    poster: '/videos/BrotherNeedBetterPot-540p.jpg',
+    handle: '@orchia.studio',
+    caption: 'An Orchia video production.',
+  },
+  {
+    id: 'ForYou',
+    name: 'ForYou',
+    src: 'https://media.lingyizhou.com/Compressed/ForYou-540p.mp4',
+    fullSrc: 'https://media.lingyizhou.com/high-res/ForYou.MOV',
+    poster: '/videos/ForYou-540p.jpg',
+    handle: '@orchia.studio',
+    caption: 'An Orchia video production.',
+  },
+  {
+    id: 'GardenMaster',
+    name: 'GardenMaster',
+    src: SHOWCASE_VIDEOS.doubles.preview,
+    fullSrc: SHOWCASE_VIDEOS.doubles.full,
+    poster: '/videos/GardenMaster-540p.jpg',
+    handle: '@orchia.studio',
+    caption: 'An Orchia video production.',
+  },
+  {
+    id: 'LoveWho',
+    name: 'LoveWho',
+    src: 'https://media.lingyizhou.com/Compressed/LoveWho-540p.mp4',
+    fullSrc: 'https://media.lingyizhou.com/high-res/LoveWho.MP4',
+    poster: '/videos/LoveWho-540p.jpg',
+    handle: '@orchia.studio',
+    caption: 'An Orchia video production.',
+  },
+  {
+    id: 'NameBook',
+    name: 'NameBook',
+    src: 'https://media.lingyizhou.com/Compressed/NameBook-540p.mp4',
+    fullSrc: 'https://media.lingyizhou.com/high-res/NameBook.MP4',
+    poster: '/videos/NameBook-540p.jpg',
+    handle: '@orchia.studio',
+    caption: 'An Orchia video production.',
+  },
+  {
+    id: 'Yuna-Day-One-clean',
+    name: 'Yuna · Day One',
+    src: SHOWCASE_VIDEOS.yuna.preview,
+    fullSrc: SHOWCASE_VIDEOS.yuna.full,
+    poster: SHOWCASE_VIDEOS.yuna.poster,
+    handle: '@orchia.studio',
+    caption: 'Yuna · Day One.',
+  },
+  {
+    id: 'seattle-home-tour',
+    name: 'Seattle Home Tour',
+    src: SHOWCASE_VIDEOS.seattleHomeTour.preview,
+    fullSrc: SHOWCASE_VIDEOS.seattleHomeTour.full,
+    poster: SHOWCASE_VIDEOS.seattleHomeTour.poster,
+    handle: '@orchia.studio',
+    caption: 'A Seattle home tour.',
+  },
 ]
 
 type LeadDetails = {
@@ -373,6 +449,7 @@ function FinalVideoReveal({
   visible: boolean
   videoRef: RefObject<HTMLVideoElement | null>
 }) {
+  const cachedSource = useCachedVideoSource(visible ? FINAL_VIDEO_URL : undefined)
   return (
     <div
       className={`${styles.finalReveal} ${visible ? styles.finalRevealVisible : ''}`}
@@ -386,7 +463,8 @@ function FinalVideoReveal({
       </div>
       <video
         ref={videoRef}
-        src={FINAL_VIDEO_URL}
+        src={cachedSource}
+        autoPlay={visible}
         poster="/data-slides/thumbnails/07-14-import.jpg"
         muted
         loop

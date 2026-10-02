@@ -1,3 +1,5 @@
+import VideoLoadingIndicator from '../components/VideoLoadingIndicator'
+import { useCachedVideoSource } from '../lib/useCachedVideoSource'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -441,6 +443,9 @@ function FloatingVideoPlayer({
   onClose: () => void
   returnFocusTo: SVGGElement | null
 }) {
+  const [loading, setLoading] = useState(true)
+  const [failed, setFailed] = useState(false)
+  const cachedSource = useCachedVideoSource(video.videoSrc)
   const dialogRef = useRef<HTMLDivElement>(null)
   const closeButtonRef = useRef<HTMLButtonElement>(null)
 
@@ -527,8 +532,12 @@ function FloatingVideoPlayer({
         <div className={styles.videoPlayerStage}>
           <video
             className={styles.videoPlayer}
-            src={video.videoSrc}
-            poster={video.thumbnail}
+            src={cachedSource}
+            onLoadedData={() => setLoading(false)}
+            onPlaying={() => setLoading(false)}
+            onWaiting={() => setLoading(true)}
+            onCanPlay={() => setLoading(false)}
+            onError={() => { setFailed(true); setLoading(false) }}
             controls
             controlsList="nodownload noremoteplayback nofullscreen"
             disablePictureInPicture
@@ -539,6 +548,8 @@ function FloatingVideoPlayer({
             tabIndex={0}
             aria-label={`Playing ${video.title}`}
           />
+          {loading ? <VideoLoadingIndicator /> : null}
+          {failed ? <p className={styles.videoPlayerNote} role="alert">This video couldn’t load. Please try again later.</p> : null}
         </div>
       </div>
     </div>,

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useCachedVideoSource } from '../lib/useCachedVideoSource'
 import styles from './home-film-page.module.css'
 import { VIDEO_PACKAGES } from './videoPackages'
 
@@ -19,6 +20,7 @@ function BookmarkIcon() {
 }
 
 function VerticalSocialVideoDeck({ activeIndex }: { activeIndex: number }) {
+  const cacheReady = Boolean(useCachedVideoSource('ready'))
   const videoRefs = useRef<Array<HTMLVideoElement | null>>([])
 
   useEffect(() => {
@@ -31,7 +33,7 @@ function VerticalSocialVideoDeck({ activeIndex }: { activeIndex: number }) {
         video.pause()
       }
     })
-  }, [activeIndex])
+  }, [activeIndex, cacheReady])
 
   return (
     <div className={styles.pricingVideoColumn}>
@@ -55,13 +57,13 @@ function VerticalSocialVideoDeck({ activeIndex }: { activeIndex: number }) {
                 ref={(element) => {
                   videoRefs.current[index] = element
                 }}
-                src={videoPackage.videoSrc}
+                src={cacheReady ? videoPackage.videoSrc : undefined}
                 poster={videoPackage.poster}
                 autoPlay={index === 0}
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload="none"
               />
               <div className={styles.pricingVideoShade} aria-hidden="true" />
               <div className={styles.pricingTikTok} aria-hidden="true">

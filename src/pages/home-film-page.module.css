@@ -1470,6 +1470,7 @@
 }
 
 .videoPlayerStage {
+  position: relative;
   display: grid;
   min-height: 0;
   place-items: center;

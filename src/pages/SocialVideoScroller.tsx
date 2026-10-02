@@ -8,11 +8,18 @@ import {
   useState,
 } from 'react'
 
+import { createPortal } from 'react-dom'
+
+import VideoLoadingIndicator from '../components/VideoLoadingIndicator'
+import { invalidateCachedVideoSource, useCachedVideoSource } from '../lib/useCachedVideoSource'
+
 import styles from './social-video-scroller.module.css'
 
 export type SocialVideoItem = {
   id: string
   src: string
+  fullSrc?: string
+  name?: string
   poster: string
   handle: string
   caption: string
@@ -251,18 +258,83 @@ function SocialOverlay({ video }: { video: SpawnedVideo }) {
   return <TikTokOverlay video={video} />
 }
 
+function VideoViewer({ video, onClose }: { video: SocialVideoItem; onClose: () => void }) {
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const playerRef = useRef<HTMLVideoElement>(null)
+  const [failed, setFailed] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const dialog = dialogRef.current
+    const player = playerRef.current
+    const focused = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    const overflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const playingPreviews = [...document.querySelectorAll('video')].filter((video) => video !== player && !video.paused)
+    playingPreviews.forEach((video) => video.pause())
+    dialog?.showModal()
+    void player?.play().catch(() => undefined)
+    return () => {
+      player?.pause()
+      dialog?.close()
+      document.body.style.overflow = overflow
+      focused?.focus({ preventScroll: true })
+      playingPreviews.forEach((video) => { void video.play().catch(() => undefined) })
+    }
+  }, [])
+
+  return createPortal(
+    <dialog ref={dialogRef} className={styles.videoDialog} aria-label={video.name ?? video.caption}
+      onCancel={(event) => { event.preventDefault(); onClose() }}
+      onClick={(event) => { if (event.target === event.currentTarget) onClose() }}>
+      <div className={styles.viewerContent}>
+        <button type="button" className={styles.viewerClose} aria-label="Close video" onClick={onClose} autoFocus>×</button>
+        <video ref={playerRef} className={styles.viewerVideo} src={video.fullSrc ?? video.src}
+          controls autoPlay playsInline preload="auto"
+          onLoadedData={() => setLoading(false)}
+          onPlaying={() => setLoading(false)}
+          onWaiting={() => setLoading(true)}
+          onCanPlay={() => setLoading(false)}
+          onError={() => { setFailed(true); setLoading(false) }} />
+        {loading ? <VideoLoadingIndicator /> : null}
+        {failed ? <p className={styles.viewerError} role="alert">This video couldn’t load. Please try again later.</p> : null}
+      </div>
+    </dialog>, document.body,
+  )
+}
+
 export default function SocialVideoScroller({
   videos,
   pixelsPerSecond = 24,
   ariaLabel = 'Social video previews',
   className,
 }: SocialVideoScrollerProps) {
+  const cacheReady = Boolean(useCachedVideoSource('ready'))
   const spawnedVideos = useMemo(() => createSpawnedVideos(videos), [videos])
   const viewportRef = useRef<HTMLDivElement | null>(null)
   const dragPointerRef = useRef<number | null>(null)
   const dragStartXRef = useRef(0)
   const dragStartScrollRef = useRef(0)
   const [isDragging, setIsDragging] = useState(false)
+  const [selectedVideo, setSelectedVideo] = useState<SocialVideoItem | null>(null)
+  const viewerOpenRef = useRef(false)
+  const didDragRef = useRef(false)
+  const velocityRef = useRef(pixelsPerSecond)
+  const pauseUntilRef = useRef(0)
+  const motionRef = useRef<{ start: number; target: number; started: number; duration: number; velocity: number } | null>(null)
+
+  const openVideo = (video: SocialVideoItem) => {
+    if (didDragRef.current) return
+    viewerOpenRef.current = true
+    motionRef.current = null
+    setSelectedVideo(video)
+  }
+  const closeVideo = () => {
+    viewerOpenRef.current = false
+    velocityRef.current = 0
+    pauseUntilRef.current = performance.now() + 500
+    setSelectedVideo(null)
+  }
 
   const getLoopMetrics = useCallback(() => {
     const viewport = viewportRef.current
@@ -308,6 +380,7 @@ export default function SocialVideoScroller({
     if (!viewport) return
 
     const alignToMiddleCopy = () => {
+      motionRef.current = null
       const metrics = getLoopMetrics()
       if (!metrics) return
 
@@ -342,7 +415,8 @@ export default function SocialVideoScroller({
           Math.min(videoBounds.right, viewportBounds.right) -
           Math.max(videoBounds.left, viewportBounds.left)
         const isVisible =
-          document.visibilityState === 'visible' &&
+          document.visibilityState === 'visible' && !viewerOpenRef.current &&
+          viewportBounds.bottom > 0 && viewportBounds.top < window.innerHeight &&
           horizontalOverlap > Math.min(videoBounds.width * 0.16, 32)
 
         if (isVisible) {
@@ -362,6 +436,7 @@ export default function SocialVideoScroller({
     const readyTimer = window.setTimeout(syncPlayback, 280)
     viewport.addEventListener('scroll', schedulePlaybackSync, { passive: true })
     window.addEventListener('resize', schedulePlaybackSync)
+    window.addEventListener('scroll', schedulePlaybackSync, { passive: true })
     document.addEventListener('visibilitychange', syncPlayback)
     videosInTrack.forEach((video) => video.addEventListener('canplay', schedulePlaybackSync))
 
@@ -371,14 +446,14 @@ export default function SocialVideoScroller({
       window.clearTimeout(syncTimer)
       viewport.removeEventListener('scroll', schedulePlaybackSync)
       window.removeEventListener('resize', schedulePlaybackSync)
+      window.removeEventListener('scroll', schedulePlaybackSync)
       document.removeEventListener('visibilitychange', syncPlayback)
       videosInTrack.forEach((video) => video.removeEventListener('canplay', schedulePlaybackSync))
     }
-  }, [spawnedVideos])
+  }, [spawnedVideos, selectedVideo, cacheReady])
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion) return
 
     let frame = 0
     let previousTime = window.performance.now()
@@ -388,9 +463,28 @@ export default function SocialVideoScroller({
       const deltaSeconds = Math.min((now - previousTime) / 1000, 0.05)
       previousTime = now
 
-      if (viewport && dragPointerRef.current === null && document.visibilityState === 'visible') {
-        viewport.scrollLeft += pixelsPerSecond * deltaSeconds
-        normalizeScroll()
+      if (viewport && dragPointerRef.current === null && !viewerOpenRef.current && document.visibilityState === 'visible') {
+        const motion = motionRef.current
+        if (motion) {
+          const t = Math.min(1, (now - motion.started) / motion.duration)
+          const distance = motion.target - motion.start
+          const tangent = motion.velocity * motion.duration / 1000
+          // Cubic Hermite: continue the current velocity and land with zero velocity.
+          viewport.scrollLeft = motion.start + (-2 * t ** 3 + 3 * t ** 2) * distance + (t ** 3 - 2 * t ** 2 + t) * tangent
+          velocityRef.current = ((-6 * t ** 2 + 6 * t) * distance + (3 * t ** 2 - 4 * t + 1) * tangent) / (motion.duration / 1000)
+          const shift = normalizeScroll()
+          motion.start += shift
+          motion.target += shift
+          if (t === 1) {
+            motionRef.current = null
+            velocityRef.current = 0
+            pauseUntilRef.current = now + 2000
+          }
+        } else if (!prefersReducedMotion && now >= pauseUntilRef.current) {
+          velocityRef.current += (pixelsPerSecond - velocityRef.current) * (1 - Math.exp(-deltaSeconds * 4))
+          viewport.scrollLeft += velocityRef.current * deltaSeconds
+          normalizeScroll()
+        }
       }
 
       frame = window.requestAnimationFrame(advance)
@@ -400,21 +494,43 @@ export default function SocialVideoScroller({
     return () => window.cancelAnimationFrame(frame)
   }, [normalizeScroll, pixelsPerSecond])
 
+  useEffect(() => {
+    const releasePendingPointer = (event: PointerEvent) => {
+      if (dragPointerRef.current !== event.pointerId) return
+      dragPointerRef.current = null
+      setIsDragging(false)
+      velocityRef.current = 0
+      pauseUntilRef.current = performance.now() + 500
+      normalizeScroll()
+    }
+    window.addEventListener('pointerup', releasePendingPointer)
+    window.addEventListener('pointercancel', releasePendingPointer)
+    return () => {
+      window.removeEventListener('pointerup', releasePendingPointer)
+      window.removeEventListener('pointercancel', releasePendingPointer)
+    }
+  }, [normalizeScroll])
+
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     const viewport = viewportRef.current
     if (!viewport || event.button !== 0) return
 
+    motionRef.current = null
+    didDragRef.current = false
     dragPointerRef.current = event.pointerId
     dragStartXRef.current = event.clientX
     dragStartScrollRef.current = viewport.scrollLeft
-    viewport.setPointerCapture(event.pointerId)
-    setIsDragging(true)
+
   }
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
     const viewport = viewportRef.current
     if (!viewport || dragPointerRef.current !== event.pointerId) return
 
+    if (!didDragRef.current && Math.abs(event.clientX - dragStartXRef.current) < 6) return
+    didDragRef.current = true
+    viewport.setPointerCapture(event.pointerId)
+    setIsDragging(true)
     viewport.scrollLeft = dragStartScrollRef.current - (event.clientX - dragStartXRef.current)
     dragStartScrollRef.current += normalizeScroll()
   }
@@ -426,15 +542,26 @@ export default function SocialVideoScroller({
     if (viewport.hasPointerCapture(event.pointerId)) viewport.releasePointerCapture(event.pointerId)
     dragPointerRef.current = null
     setIsDragging(false)
+    velocityRef.current = 0
+    pauseUntilRef.current = performance.now() + 500
     normalizeScroll()
   }
 
   const nudge = (direction: -1 | 1) => {
     const viewport = viewportRef.current
-    const firstCard = viewport?.querySelector<HTMLElement>('[data-video-index="0"]')
-    if (!viewport || !firstCard) return
-
-    viewport.scrollBy({ left: direction * (firstCard.offsetWidth + 18), behavior: 'smooth' })
+    const cards = viewport?.querySelectorAll<HTMLElement>('[data-loop-index="1"]')
+    if (!viewport || !cards?.length) return
+    const stride = cards.length > 1 ? cards[1].getBoundingClientRect().left - cards[0].getBoundingClientRect().left : cards[0].getBoundingClientRect().width
+    const target = (motionRef.current?.target ?? viewport.scrollLeft) + direction * stride
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      viewport.scrollLeft = target
+      normalizeScroll()
+      return
+    }
+    motionRef.current = {
+      start: viewport.scrollLeft, target, started: performance.now(), duration: 600,
+      velocity: velocityRef.current,
+    }
   }
 
   return (
@@ -458,27 +585,37 @@ export default function SocialVideoScroller({
               data-video-index={video.videoIndex}
               data-social-ui={video.ui}
               key={video.instanceId}
+              role="button"
               aria-hidden={video.loopIndex === 1 ? undefined : true}
+              tabIndex={video.loopIndex === 1 ? 0 : -1}
+              onClick={() => openVideo(video)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault()
+                  didDragRef.current = false
+                  openVideo(video)
+                }
+              }}
               aria-label={`${
                 video.ui === 'x'
                   ? 'X'
                   : video.ui === 'tiktok'
                     ? 'TikTok'
                     : 'Instagram'
-              } video preview`}
+              } video preview: ${video.name ?? video.caption}. Play video`}
             >
               <video
                 className={styles.video}
-                src={video.src}
+                src={cacheReady ? video.src : undefined}
                 poster={video.poster}
+                onError={() => invalidateCachedVideoSource(video.src)}
                 onLoadedMetadata={(event) =>
                   cueSpawnedStart(event.currentTarget, video.startFraction)
                 }
-                autoPlay
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload="none"
                 draggable={false}
               />
               <div className={styles.videoShade} aria-hidden="true" />
@@ -487,6 +624,8 @@ export default function SocialVideoScroller({
           ))}
         </div>
       </div>
+
+      {selectedVideo ? <VideoViewer video={selectedVideo} onClose={closeVideo} /> : null}
 
       <div className={styles.scrollerControls}>
         <button type="button" onClick={() => nudge(-1)} aria-label="Show previous video">

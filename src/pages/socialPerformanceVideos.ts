@@ -1,3 +1,5 @@
+import { SHOWCASE_VIDEOS } from '../lib/showcaseVideos'
+
 export type SocialPerformanceVideo = {
   date: string
   title: string
@@ -72,7 +74,7 @@ export const SOCIAL_PERFORMANCE_VIDEOS: readonly SocialPerformanceVideo[] = [
     ca: 67,
     thumbnail: '/data-slides/thumbnails/07-14-import.jpg',
     videoSrc:
-      'https://tm9ilj7n5ftxczdh.public.blob.vercel-storage.com/company-site/videos/data/07-14-import-LK31t0kKpAmxFm23y6N0ZNQTTJ22Ah.mp4',
+      SHOWCASE_VIDEOS.flowerpot.preview,
     videoNote: 'Full-length production video with background music.',
   },
   {
@@ -108,7 +110,7 @@ export const SOCIAL_PERFORMANCE_VIDEOS: readonly SocialPerformanceVideo[] = [
     ca: 40,
     thumbnail: '/data-slides/thumbnails/07-23.jpg',
     videoSrc:
-      'https://tm9ilj7n5ftxczdh.public.blob.vercel-storage.com/company-site/videos/data/07-23-returned-with-99-doubles-8qEF700mxxZdc2MSqE46ZWQtqRooRN.mp4',
+      SHOWCASE_VIDEOS.doubles.preview,
     videoNote: 'Full-length production video with background music.',
   },
   {

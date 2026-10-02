@@ -2,3 +2,6 @@
 public/data-slides/videos/*.mp4
 public/workflow-iteration-demo/*.mp4
 production-runs/
+
+# Original media and compressed backups are hosted on Cloudflare.
+media/

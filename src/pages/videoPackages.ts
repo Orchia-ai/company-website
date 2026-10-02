@@ -1,3 +1,5 @@
+import { SHOWCASE_VIDEOS } from '../lib/showcaseVideos'
+
 export const VIDEO_PACKAGES = [
   {
     tier: 'Basic',
@@ -7,7 +9,7 @@ export const VIDEO_PACKAGES = [
     betaPrice: '$99',
     checkoutUrl: 'https://buy.stripe.com/aFaaEY6p9bWz3FTgTw2go02',
     videoSrc:
-      'https://tm9ilj7n5ftxczdh.public.blob.vercel-storage.com/company-site/videos/data/07-14-import-LK31t0kKpAmxFm23y6N0ZNQTTJ22Ah.mp4',
+      SHOWCASE_VIDEOS.flowerpot.preview,
     poster: '/data-slides/thumbnails/07-14-import.jpg',
   },
   {
@@ -18,7 +20,7 @@ export const VIDEO_PACKAGES = [
     betaPrice: '$199',
     checkoutUrl: 'https://buy.stripe.com/00w14o9BlaSv4JXgTw2go01',
     videoSrc:
-      'https://tm9ilj7n5ftxczdh.public.blob.vercel-storage.com/company-site/videos/data/07-23-returned-with-99-doubles-8qEF700mxxZdc2MSqE46ZWQtqRooRN.mp4',
+      SHOWCASE_VIDEOS.doubles.preview,
     poster: '/data-slides/thumbnails/07-23.jpg',
   },
 ] as const

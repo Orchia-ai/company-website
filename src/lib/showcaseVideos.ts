@@ -16,7 +16,7 @@ export const SHOWCASE_VIDEOS = {
   },
   yuna: {
     preview: 'https://media.lingyizhou.com/Compressed/Yuna-Day-One-clean-540p.mp4',
-    full: 'https://media.lingyizhou.com/high-res/Yuna-Day-One-clean.mp4',
+    full: 'https://media.lingyizhou.com/high-res/Yuna-Day-One-clean.mp4?v=20261002',
     poster: '/videos/Yuna-Day-One-clean-540p.jpg',
   },
   seattleHomeTour: {

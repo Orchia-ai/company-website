@@ -25,6 +25,13 @@ dist-ssr
 .vercel
 .env.local
 
+# Local media assets and reports
+/media/
+
+# Local agent tooling and video production artifacts
+/.qwen/
+/production-runs/
+
 # Local backups for videos served from Vercel Blob
 public/data-slides/videos/*.mp4
 public/workflow-iteration-demo/*.mp4

@@ -32,8 +32,8 @@ const HERO_VIDEOS: readonly (SocialVideoItem & { name: string })[] = [
   {
     id: 'orchia-promotion-video-37-1',
     name: 'Orchia Promotional Video',
-    src: SHOWCASE_VIDEOS.promotion.preview,
-    fullSrc: SHOWCASE_VIDEOS.promotion.full,
+    src: 'https://media.lingyizhou.com/Compressed/orchia-promotion-video-37-1-540p.mp4',
+    fullSrc: 'https://media.lingyizhou.com/high-res/orchia-promotion-video-37-1.mp4',
     poster: '/videos/orchia-promotion-video-37-1.jpg',
     handle: '@orchia.studio',
     caption: 'Orchia Promotional Video · one idea becomes a vertical world.',
@@ -41,8 +41,8 @@ const HERO_VIDEOS: readonly (SocialVideoItem & { name: string })[] = [
   {
     id: '07-14-import',
     name: 'Your brother wants an imported flowerpot',
-    src: SHOWCASE_VIDEOS.flowerpot.preview,
-    fullSrc: SHOWCASE_VIDEOS.flowerpot.full,
+    src: 'https://media.lingyizhou.com/Compressed/07-14-import-540p.mp4',
+    fullSrc: 'https://media.lingyizhou.com/high-res/v2-07-14-import.mp4',
     poster: '/data-slides/thumbnails/07-14-import.jpg',
     handle: '@orchia.studio',
     caption: '1.45M views · 67% watched to the end.',
@@ -50,8 +50,8 @@ const HERO_VIDEOS: readonly (SocialVideoItem & { name: string })[] = [
   {
     id: '07-23-returned-with-99-doubles',
     name: 'I returned with 99 doubles to reclaim my home',
-    src: SHOWCASE_VIDEOS.doubles.preview,
-    fullSrc: SHOWCASE_VIDEOS.doubles.full,
+    src: 'https://media.lingyizhou.com/Compressed/GardenMaster-540p.mp4',
+    fullSrc: 'https://media.lingyizhou.com/high-res/GardenMaster.MP4',
     poster: '/data-slides/thumbnails/07-23.jpg',
     handle: '@orchia.studio',
     caption: '633K views · 40% watched to the end.',
@@ -77,8 +77,8 @@ const HERO_VIDEOS: readonly (SocialVideoItem & { name: string })[] = [
   {
     id: 'GardenMaster',
     name: 'GardenMaster',
-    src: SHOWCASE_VIDEOS.doubles.preview,
-    fullSrc: SHOWCASE_VIDEOS.doubles.full,
+    src: 'https://media.lingyizhou.com/Compressed/GardenMaster-540p.mp4',
+    fullSrc: 'https://media.lingyizhou.com/high-res/GardenMaster.MP4',
     poster: '/videos/GardenMaster-540p.jpg',
     handle: '@orchia.studio',
     caption: 'An Orchia video production.',
@@ -104,18 +104,18 @@ const HERO_VIDEOS: readonly (SocialVideoItem & { name: string })[] = [
   {
     id: 'Yuna-Day-One-clean',
     name: 'Yuna · Day One',
-    src: SHOWCASE_VIDEOS.yuna.preview,
-    fullSrc: SHOWCASE_VIDEOS.yuna.full,
-    poster: SHOWCASE_VIDEOS.yuna.poster,
+    src: 'https://media.lingyizhou.com/Compressed/Yuna-Day-One-clean-540p.mp4',
+    fullSrc: 'https://media.lingyizhou.com/high-res/Yuna-Day-One-clean.mp4',
+    poster: '/videos/Yuna-Day-One-clean-540p.jpg',
     handle: '@orchia.studio',
     caption: 'Yuna · Day One.',
   },
   {
     id: 'seattle-home-tour',
     name: 'Seattle Home Tour',
-    src: SHOWCASE_VIDEOS.seattleHomeTour.preview,
-    fullSrc: SHOWCASE_VIDEOS.seattleHomeTour.full,
-    poster: SHOWCASE_VIDEOS.seattleHomeTour.poster,
+    src: 'https://media.lingyizhou.com/Compressed/final-540p.mp4',
+    fullSrc: 'https://media.lingyizhou.com/high-res/final.mp4',
+    poster: '/videos/final-540p.jpg',
     handle: '@orchia.studio',
     caption: 'A Seattle home tour.',
   },
@@ -998,7 +998,40 @@ export default function HomeV2Page() {
         </section>
 
         <VideoBetaPricing compact />
-        <SiteFooter onRequestAccess={openPrivateAccess} />
+        <section
+          className={styles.bookingSection}
+          id="book-a-call"
+          aria-labelledby="booking-title"
+        >
+          <header className={styles.bookingHeader}>
+            <div>
+              <h2 id="booking-title">Book a call.</h2>
+              <p>
+                Choose a time to talk about your company and the video you have in mind.
+              </p>
+            </div>
+            <a
+              className={styles.bookingLink}
+              href="https://calendar.app.google/6x39SwYvynnyQzHq5"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open booking page <span aria-hidden="true">↗</span>
+              <span className={filmStyles.srOnly}> (opens in a new tab)</span>
+            </a>
+          </header>
+          <div className={styles.bookingViewport}>
+            <iframe
+              className={styles.bookingCalendar}
+              src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ39iVeXrG5uAckjVglfOwUsTWCgZZMgCemIeu1xi9_6M_vlPTpgs6ShCfje-2imMS5GW4C6Alpt?gv=true"
+              title="Book an appointment with Orchia Studio on Google Calendar"
+              width="100%"
+              height="940"
+              loading="lazy"
+            />
+          </div>
+        </section>
+        <SiteFooter className={styles.alignedFooter} onRequestAccess={openPrivateAccess} />
       </div>
 
       <PrivateAccessModal open={privateAccessOpen} onClose={closePrivateAccess} />

@@ -1,18 +1,21 @@
 .siteHeader {
-  --site-header-height: 72px;
-
   z-index: 40;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   width: 100%;
-  min-height: var(--site-header-height);
-  padding: 0 clamp(20px, 5vw, 72px);
+  min-height: 72px;
   border-bottom: 1px solid rgb(255 249 238 / 12%);
   background: rgb(29 27 22 / 88%);
   color: #fff9ee;
   font-family: "Helvetica Neue", "Inter", "Arial Nova", Arial, sans-serif;
   backdrop-filter: blur(18px);
+}
+
+.headerInner {
+  display: flex;
+  width: min(calc(100% - (2 * max(var(--stage-gutter, clamp(0px, 1.6vw, 26px)), 10px))), 1500px);
+  min-height: 72px;
+  align-items: center;
+  gap: clamp(32px, 4vw, 64px);
+  margin-inline: auto;
 }
 
 .stickySlot {
@@ -28,6 +31,7 @@
 
 .brand {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: baseline;
   gap: 0.32em;
   color: #fff9ee;
@@ -47,82 +51,113 @@
 
 .headerNav {
   display: flex;
+  min-width: 0;
+  flex: 1;
   align-items: center;
-  gap: clamp(14px, 2.4vw, 30px);
-  color: #a9a197;
-  font-size: 0.82rem;
+  gap: 24px;
+  font-size: 0.875rem;
+}
+
+.videoLinks {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 clamp(20px, 2.5vw, 36px);
 }
 
 .headerLink {
-  padding-block: 8px;
-  border-bottom: 1px solid rgb(255 249 238 / 18%);
-  color: inherit;
-  font-weight: 500;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding-block: 10px;
+  color: #d0c9bd;
+  font-weight: 550;
   letter-spacing: 0.01em;
   text-decoration: none;
   white-space: nowrap;
-  transition: border-color 160ms ease, color 160ms ease;
+  transition: color 160ms ease, box-shadow 160ms ease;
 }
 
 .headerLink:hover,
-.headerLink:focus-visible,
-.headerLink[aria-current="page"] {
-  border-color: #cfff3d;
-  color: #fff9ee;
-}
-
 .headerLink:focus-visible {
-  outline: 2px solid #cfff3d;
-  outline-offset: 6px;
+  color: #cfff3d;
+  box-shadow: inset 0 -2px #cfff3d;
 }
 
-@media (max-width: 760px) {
-  .siteHeader {
-    --site-header-height: 64px;
+.headerLink[aria-current="page"] {
+  color: #cfff3d;
+  box-shadow: inset 0 -2px #cfff3d;
+}
 
-    padding-inline: 14px;
+.headerLink:focus-visible,
+.brand:focus-visible {
+  outline: 2px solid #cfff3d;
+  outline-offset: 5px;
+}
+
+.toolsLink {
+  position: relative;
+  flex-shrink: 0;
+  margin-left: auto;
+  color: #edbad1;
+}
+
+.toolsLink::before {
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: -24px;
+  width: 1px;
+  background: rgb(255 249 238 / 22%);
+  content: "";
+}
+
+.toolsLink:hover,
+.toolsLink:focus-visible,
+.toolsLink[aria-current="page"] {
+  color: #ff8ec2;
+  box-shadow: inset 0 -2px #ff8ec2;
+}
+
+.toolsLink:focus-visible {
+  outline-color: #ff8ec2;
+}
+
+@media (max-width: 780px) {
+  .siteHeader,
+  .stickySlot {
+    min-height: 132px;
   }
 
-  .stickySlot {
-    min-height: 64px;
+  .headerInner {
+    width: calc(100% - 32px);
+    min-height: 132px;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 4px;
+    padding-block: 8px;
   }
 
   .brand {
-    min-height: 44px;
+    min-height: 24px;
     align-items: center;
+    align-self: flex-start;
     font-size: 1rem;
   }
 
   .headerNav {
-    gap: clamp(9px, 3vw, 14px);
-    font-size: 0.72rem;
+    gap: 32px;
+    font-size: 0.8rem;
   }
 
-  .headerLink {
-    display: inline-flex;
-    min-height: 44px;
-    align-items: center;
-    padding-block: 0;
-  }
-}
-
-@media (max-width: 360px) {
-  .siteHeader {
-    padding-inline: 11px;
+  .videoLinks {
+    gap: 0 18px;
   }
 
-  .brand {
-    gap: 0.22em;
-    font-size: 0.94rem;
-  }
-
-  .brandSuffix {
-    font-size: 0.68em;
-  }
-
-  .headerNav {
-    gap: 8px;
-    font-size: 0.66rem;
+  .toolsLink::before {
+    left: -16px;
   }
 }
 

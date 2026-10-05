@@ -1,0 +1,26 @@
+.comingSoon {
+  margin: 24px 0 0;
+  color: #cfff3d;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  line-height: 1.5;
+}
+
+.page {
+  min-height: 100vh;
+  background: #1d1b16;
+  color: #fff9ee;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+.content {
+  width: min(calc(100% - 32px), 1500px);
+  margin: 0 auto;
+  padding-block: clamp(40px, 6vw, 80px);
+}
+
+.content h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 4rem);
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}

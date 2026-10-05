@@ -7,6 +7,7 @@ const writes = new Map()
 const invalidations = new Map()
 const reloadUrls = new Set()
 const previewUrls = new Set([
+  'https://media.lingyizhou.com/Compressed/house-tour-listing-20261005-540p.mp4?v=20261005',
   'https://media.lingyizhou.com/Compressed/orchia-promotion-video-37-1-540p.mp4',
   'https://media.lingyizhou.com/Compressed/07-14-import-540p.mp4',
   'https://media.lingyizhou.com/Compressed/BrotherNeedBetterPot-540p.mp4',

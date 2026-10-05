@@ -9,7 +9,13 @@ type Status = 'idle' | 'sending' | 'sent' | 'error'
  *  dead destination never looks like a working one. */
 const PENDING_PAGES = ['Work', 'Careers'] as const
 
-export default function SiteFooter({ onRequestAccess }: { onRequestAccess: () => void }) {
+export default function SiteFooter({
+  onRequestAccess,
+  className,
+}: {
+  onRequestAccess: () => void
+  className?: string
+}) {
   const fieldId = useId()
   const [form, setForm] = useState({ name: '', email: '', message: '' })
   const [status, setStatus] = useState<Status>('idle')
@@ -39,7 +45,7 @@ export default function SiteFooter({ onRequestAccess }: { onRequestAccess: () =>
   const sending = status === 'sending'
 
   return (
-    <footer className={styles.footer} id="contact">
+    <footer className={`${styles.footer}${className ? ` ${className}` : ''}`} id="contact">
       <div className={styles.footerGrid}>
         <div>
           <p className={styles.footerBrand}>

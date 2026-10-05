@@ -17,6 +17,8 @@ const DiscordVideoWorkflowPage = lazy(() => import('./pages/DiscordVideoWorkflow
 const Demo2Page = lazy(() => import('./pages/Demo2Page.tsx'))
 const Demo3Page = lazy(() => import('./pages/Demo3Page.tsx'))
 const HomeV2Page = lazy(() => import('./pages/HomeV2Page.tsx'))
+const VideoPageShell = lazy(() => import('./pages/VideoPageShell.tsx'))
+const HouseTourPage = lazy(() => import('./pages/HouseTourPage.tsx'))
 const PublicCreatePage = lazy(() => import('./pages/PublicCreatePage.tsx'))
 const PublicResultPage = lazy(() => import('./pages/PublicResultPage.tsx'))
 const PublicWatchPage = lazy(() => import('./pages/PublicWatchPage.tsx'))
@@ -32,6 +34,9 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/" element={<HomeV2Page />} />
             <Route path="/v2" element={<HomeV2Page />} />
             <Route path="/about-us" element={<HomeFilmPage />} />
+            <Route path="/house-tour-video" element={<HouseTourPage />} />
+            <Route path="/vertical-drama-video" element={<VideoPageShell title="Vertical Drama" />} />
+            <Route path="/company-promotion-video" element={<VideoPageShell title="Company Promotion" />} />
             {/* The previous marketing site stays reachable for internal use;
                 it is no longer linked from anywhere. */}
             <Route path="/studio" element={<App />} />

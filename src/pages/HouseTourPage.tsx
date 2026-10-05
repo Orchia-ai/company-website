@@ -6,6 +6,7 @@ import StudioSiteHeader from './StudioSiteHeader'
 import filmStyles from './home-film-page.module.css'
 import styles from './home-v2-page.module.css'
 import houseStyles from './house-tour-page.module.css'
+import { trackBookingClick } from '../lib/analytics'
 
 const HOUSE_TOUR_VIDEOS: readonly SocialVideoItem[] = [
   {
@@ -71,6 +72,7 @@ export default function HouseTourPage() {
               <a
                 className={styles.bookingLink}
                 href="https://calendar.app.google/6x39SwYvynnyQzHq5"
+                onClick={() => trackBookingClick('house_tour')}
                 target="_blank"
                 rel="noopener noreferrer"
               >

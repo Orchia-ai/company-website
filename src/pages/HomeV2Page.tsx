@@ -10,6 +10,7 @@ import {
 } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
+import { trackBookingClick, trackLead } from '../lib/analytics'
 
 import { SHOWCASE_VIDEOS } from '../lib/showcaseVideos'
 import { useCachedVideoSource } from '../lib/useCachedVideoSource'
@@ -892,6 +893,7 @@ export default function HomeV2Page() {
         throw new Error('Lead email was not accepted')
       }
 
+      trackLead('promotion_video')
       setLeadSubmitStatus('idle')
       setProductModalOpen(true)
     } catch {
@@ -1012,7 +1014,8 @@ export default function HomeV2Page() {
             </div>
             <a
               className={styles.bookingLink}
-              href="https://calendar.app.google/6x39SwYvynnyQzHq5"
+                href="https://calendar.app.google/6x39SwYvynnyQzHq5"
+                onClick={() => trackBookingClick('promotion_video')}
               target="_blank"
               rel="noopener noreferrer"
             >

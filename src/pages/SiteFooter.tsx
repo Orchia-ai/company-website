@@ -1,5 +1,6 @@
 import { useId, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { trackLead } from '../lib/analytics'
 
 import styles from './home-film-page.module.css'
 
@@ -36,6 +37,7 @@ export default function SiteFooter({
       // error page can answer 200 with HTML, and reporting that as delivered
       // would lose the message silently.
       const payload = await response.json().catch(() => null)
+      if (response.ok && payload?.success === true) trackLead('workspace_request')
       setStatus(response.ok && payload?.success === true ? 'sent' : 'error')
     } catch {
       setStatus('error')

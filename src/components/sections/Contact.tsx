@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { trackLead } from '../../lib/analytics'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
@@ -16,7 +17,10 @@ export default function Contact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       })
-      setStatus(res.ok ? 'sent' : 'error')
+      const payload = await res.json().catch(() => null)
+      const sent = res.ok && payload?.success === true
+      if (sent) trackLead('studio_contact')
+      setStatus(sent ? 'sent' : 'error')
     } catch {
       setStatus('error')
     }

@@ -77,12 +77,21 @@
     </script>
 
     <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BDVRJB0DYV"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-BDVRJB0DYV');
+      // Keep local development and deployment previews out of company reports.
+      if (['orchia.studio', 'www.orchia.studio'].includes(window.location.hostname)) {
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () { window.dataLayer.push(arguments); };
+        window.gtag('js', new Date());
+        window.gtag('config', 'G-51XMBQ2Q9N', {
+          allow_google_signals: false,
+          allow_ad_personalization_signals: false,
+        });
+        var analyticsScript = document.createElement('script');
+        analyticsScript.async = true;
+        analyticsScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-51XMBQ2Q9N';
+        document.head.appendChild(analyticsScript);
+      }
     </script>
   </head>
   <body>

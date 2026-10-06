@@ -169,7 +169,7 @@
 
 .intro {
   display: grid;
-  gap: 0;
+  gap: clamp(16px, 2vw, 28px);
 }
 
 .hero {
